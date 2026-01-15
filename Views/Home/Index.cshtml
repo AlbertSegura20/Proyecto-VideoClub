@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="Content grid [grid-template-rows:100px_1fr_auto] [grid-template-areas:'header'_'main'_'footer']">
+    
+    <header class="[grid-area:header]">
+        <div class="">
+            <h1 class="text-2xl font-bold py-5 px-8">Dashboard</h1>
+        </div>
+    </header>
+
+    <main class="[grid-area:main]">
+        
+        <div class="mb-10 container mx-auto">
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-10 text-center text-gray-500">
+                Aquí se cargan las Cards (Resumen)
+            </div>
+        </div>
+        
+        <div class="container mx-auto shadow-2xl rounded-lg bg-white pb-5">
+            
+            <div class="mb-5 pt-5">
+                <span class="text-2xl px-8 font-bold text-gray-800">Ultimas Rentas</span>
+            </div>
+
+            <div class="mb-5 px-8">
+                <input type="text" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200" />
+            </div>
+            
+            <div class="px-8">
+                 <div class="rounded-lg p-10 text-center text-gray-500">
+                  
+
+                    <div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ID</th>
+                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Nombre</th>
+                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Correo</th>
+                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 text-sm">1</td>
+                    <td class="px-4 py-2 text-sm">Juan Pérez</td>
+                    <td class="px-4 py-2 text-sm">juan@email.com</td>
+                    <td class="px-4 py-2 text-sm">
+                        <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
+                            Activo
+                        </span>
+                    </td>
+                </tr>
+
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 text-sm">2</td>
+                    <td class="px-4 py-2 text-sm">María López</td>
+                    <td class="px-4 py-2 text-sm">maria@email.com</td>
+                    <td class="px-4 py-2 text-sm">
+                        <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-700">
+                            Inactivo
+                        </span>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="[grid-area:footer]"></footer>
+</div>

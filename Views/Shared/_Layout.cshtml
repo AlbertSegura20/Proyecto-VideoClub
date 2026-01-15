@@ -1,0 +1,122 @@
+﻿@model ViewPathModel;
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+  
+
+</head>
+<body>
+
+    <div class="SuperContainer min-h-screen grid [grid-template-rows:auto_1fr_auto] md:[grid-template-columns:280px_1fr] [grid-template-columns:auto_1fr] [grid-template-areas:'header_header'_'sidebar_main'_'footer_footer']">
+        
+        <header class="[grid-area:header]"></header>
+
+        <aside class="[grid-area:sidebar] rounded-tr-lg rounded-br-lg flex flex-col shadow-2xl">
+
+            <div class="flex items-center justify-between md:px-7 px-3 py-2 mb-2 gap-2 cursor-pointer hover:text-blue-500 text-sm md:text-base md:font-bold font-medium">
+                <span class="hidden md:block text-xl">VideoClub</span>
+            </div>
+
+            <div class="flex-1 py-8 md:px-5 px-3">
+                <ul class="flex flex-col gap-1 h-full">
+                    
+                    <a href="/">
+                        <li class="flex justify-between py-2 items-center 
+                        md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 
+                        hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all 
+                        duration-300 text-sm md:text-base md:font-bold font-medium mb-4 
+                         scale-[1.02] rounded-lg
+                        @(@Model.Path == "/" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "")">
+                            <span class="hidden md:block">Dashboard</span>
+                        </li>
+                    </a>
+
+                    <div class="text-gray-500 font-medium font-mono">
+                        <span>Catalogo</span>
+                    </div>
+
+                    <a href="/TipoArticulos">
+                        <li class="
+                        flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
+                        @(@Model.Path == "/TipoArticulos" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                            <span class="hidden md:block">Tipos de Articulos</span>
+                        </li>
+                    </a>
+
+                    <a href="/Generos">
+                        <li class="
+                        flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
+                        @(@Model.Path == "/Generos" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                            <span class="hidden md:block">Géneros</span>
+                        </li>
+                    </a>
+
+                    <a href="/Idioma">
+                        <li class="
+                        flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
+                        @(@Model.Path == "/Idioma" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                            <span class="hidden md:block">Idiomas</span>
+                        </li>
+                    </a>
+
+                    <a href="/Elenco">
+                        <li class="
+                        flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
+                        @(@Model.Path == "/Elenco" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                            <span class="hidden md:block">Elenco</span>
+                        </li>
+                    </a>
+
+                    <a href="/Articulos">
+                        <li class="
+                        flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
+                        @(@Model.Path == "/Articulos" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                            <span class="hidden md:block">Articulos</span>
+                        </li>
+                    </a>
+
+                    <div class="mt-4 text-gray-500 font-medium font-mono">
+                        <span>Operaciones</span>
+                    </div>
+
+                    <a href="/D">
+                        <li class="
+                        flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
+                        @(@Model.Path == "/D" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                            <span class="hidden md:block">Example D</span>
+                        </li>
+                    </a>
+
+                    <a href="/B">
+                        <li class="
+                        flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
+                        @(@Model.Path == "/B" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                            <span class="hidden md:block">Example B</span>
+                        </li>
+                    </a>
+
+                </ul>
+            </div>
+
+        </aside>
+        
+        <main class="[grid-area:main] bg-gray-100">
+            <div class="relative h-full rounded-lg p-4">
+                
+                @RenderBody()
+            </div>
+        </main>
+        
+        <!-- <footer class="[grid-area:footer] bg-black text-white text-center">
+            &copy; 2026 VideoClub
+        </footer> -->
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
