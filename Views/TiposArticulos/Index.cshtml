@@ -31,9 +31,9 @@ ViewData["Title"] = "Tipos de Articulos";
             </div>
 
             </div>
-            <div id="modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
+            <div id="modal-create" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
                <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
-               <div id="modal-content" class="relative flex flex-col w-full max-w-xl h-96 bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
+               <div id="modal-content-create" class="relative flex flex-col w-full max-w-xl h-96 bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
                   <div class="flex py-2 px-4">
                      <h1 class="text-2xl font-bold">Tipo de Articulo</h1>
                   </div>
@@ -57,7 +57,7 @@ ViewData["Title"] = "Tipos de Articulos";
                                  </svg>
                                </div>
 
-                              <select name="estado" class="block w-28 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                              <select name="estado" class="block w-32 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
                                  <option value="" selected disabled hidden>Estado</option>
                                  <option value="1" class="text-green-500">Activo</option>
                                  <option value="0" class="text-red-500">Inactivo</option>
@@ -86,8 +86,9 @@ ViewData["Title"] = "Tipos de Articulos";
 
                      </div>
             </div>
+
          </div>
-         
+
          <div class="mb-5 px-8">
             <input type="text" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
          </div>
@@ -115,8 +116,8 @@ ViewData["Title"] = "Tipos de Articulos";
                            </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                           <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
-                           <a href="#" class="text-red-600 hover:text-red-900">Eliminar</a>
+                           <a onclick="handleData(@item.Id, true)" class="text-indigo-600 hover:text-indigo-900 mr-3 hover:cursor-pointer">Editar</a>
+                           <a onclick="deleteData(@item.Id)" class="text-red-600 hover:text-red-900 hover:cursor-pointer">Eliminar</a>
                         </td>
                      </tr>
                   }
@@ -126,12 +127,151 @@ ViewData["Title"] = "Tipos de Articulos";
             </div>
          </div>
       </div>
+
+<div id="modal-update" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
+               <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
+               <div id="modal-content-update" class="relative flex flex-col w-full max-w-xl h-96 bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
+                  <div class="flex py-2 px-4">
+                     <h1 class="text-2xl font-bold">Tipo de Articulo</h1>
+                  </div>
+                     <div class="h-full">
+
+                        <div class="flex flex-col h-full">
+                           <form asp-action="Create" asp-controller="TiposArticulos" method="post" class="flex flex-col gap-1 p-4 h-full">
+                              <div>
+                                 <input type="hidden" id="Id" name="Id" />
+                                 <label class="font-mono " name="Descripcion">Descripción</label>
+                              </div>
+                              <div class="py-2 mb-2">
+                                 <input type="text" id="Descripcion" name="Descripcion" placeholder="Escribe la descripción..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                              </div>
+                              <div class="py-2 mb-4 flex flex-1 justify-end">
+                                 <!-- Select -->
+
+                               <div>
+                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-8">
+                                 <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                   <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                 </svg>
+                               </div>
+
+                              <select id="Estado" name="Estado" class="block w-32 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                 <option value="" selected disabled hidden>Estado</option>
+                                 <option value="1" class="text-green-500">Activo</option>
+                                 <option value="0" class="text-red-500">Inactivo</option>
+                              </select>
+
+                               </div>
+
+                              </div>
+
+                              <div class="flex justify-end mb-2">
+                                 <div class="px-2 py-1">
+                                    <button type="button" class="bg-green-500 px-4 py-2 text-white rounded-md hover:bg-green-600 transition-all duration-300"
+                                       onclick="updateData()">
+                                    Guardar
+                                    </button>
+                                 </div>
+                                 <div class="px-2 py-1">
+                                    <button type="button" class="bg-red-500 px-4 py-2 text-white rounded-md hover:bg-red-600 transition-all duration-300"
+                                       onclick="handleData(false)">
+                                    Cerrar
+                                    </button>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+
+                     </div>
+            </div>
+
+
+
+
+
+
+
+
    </main>
    <footer class="[grid-area:footer]"></footer>
    <script>
+
+      function deleteData(id) {
+          if(!confirm('¿Estás seguro de eliminar el tipo de articulo?')) return;
+
+          fetch('/TiposArticulos/Delete', {
+             method: 'DELETE',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify(parseInt(id))
+         })
+         .then(response => {
+             if (response.ok) {
+                 location.reload();
+             } else {
+                 alert('Error deleting data');
+             }
+         })
+         .catch(error => console.error('Error:', error));
+       }
+
+      function updateData() {
+         const id = document.getElementById('Id').value;
+         const descripcion = document.getElementById('Descripcion').value;
+         const estado = document.getElementById('Estado').value;
+
+         const data = {
+             id: parseInt(id),
+             descripcion: descripcion,
+             estado: parseInt(estado)
+         };
+
+         fetch('/TiposArticulos/Update', {
+             method: 'PUT',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify(data)
+         })
+         .then(response => {
+             if (response.ok) {
+                 location.reload();
+             } else {
+                 alert('Error updating data');
+             }
+         })
+         .catch(error => console.error('Error:', error));
+       }
+
+      function handleData(id, show){
+          const overlay = document.getElementById('modal-update');
+          const content = document.getElementById('modal-content-update');
+          
+          if (!show) {
+              overlay.classList.remove('visible', 'opacity-100');
+              overlay.classList.add('invisible', 'opacity-0');
+              content.classList.remove('scale-100', 'translate-y-0');
+              content.classList.add('scale-95', 'translate-y-4');
+              return;
+          }
+         
+         var allData = @Html.Raw(Json.Serialize(Model));
+         var data = allData.find(item => item.id == id);
+         document.getElementById('Descripcion').value = data.descripcion;
+         document.getElementById('Estado').value = data.estado;
+         document.getElementById('Id').value = data.id;
+        
+          overlay.classList.remove('invisible', 'opacity-0');
+          overlay.classList.add('visible', 'opacity-100');
+          content.classList.remove('scale-95', 'translate-y-4');
+          content.classList.add('scale-100', 'translate-y-0');
+      }
+
+
       function toggleModal(show) {
-          const overlay = document.getElementById('modal-overlay');
-          const content = document.getElementById('modal-content');
+          const overlay = document.getElementById('modal-create');
+          const content = document.getElementById('modal-content-create');
       
           if (show) {
              

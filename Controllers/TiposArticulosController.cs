@@ -40,4 +40,40 @@ public class TiposArticulosController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpPut]
+    public IActionResult Update( [FromBody] TiposArticulos tipoArticulo)
+    {
+        if (tipoArticulo == null)
+        {
+            return BadRequest();
+        }
+
+        var existing = _context.TiposArticulos.Find(tipoArticulo.Id);
+        if(existing == null)
+        {
+            return NotFound();
+        }
+
+        existing.Descripcion = tipoArticulo.Descripcion;
+        existing.Estado = tipoArticulo.Estado;
+        
+        _context.TiposArticulos.Update(existing);
+        _context.SaveChanges();
+
+        return Ok(existing);
+    }
+
+    [HttpDelete]
+    public IActionResult Delete([FromBody] int id)
+    {
+        var data = _context.TiposArticulos.Find(id);
+        if(data == null)
+        {
+            return NotFound();
+        }
+        _context.TiposArticulos.Remove(data);
+        _context.SaveChanges();
+        return Ok(data);
+    }
 }
