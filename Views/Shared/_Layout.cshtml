@@ -1,4 +1,6 @@
-﻿@model ViewPathModel;
+﻿@{
+    var path = Context.Request.Path.Value ?? "";
+}
 
 <!DOCTYPE html>
 <html lang="es">
@@ -25,13 +27,13 @@
             <div class="flex-1 py-8 md:px-5 px-3">
                 <ul class="flex flex-col gap-1 h-full">
                     
-                    <a href="/">
+                    <a href="/Dashboard">
                         <li class="flex justify-between py-2 items-center 
                         md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 
                         hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all 
                         duration-300 text-sm md:text-base md:font-bold font-medium mb-4 
                          scale-[1.02] rounded-lg
-                        @(@Model.Path == "/" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "")">
+                        @(path.Equals("/Dashboard") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "")">
                             <span class="hidden md:block">Dashboard</span>
                         </li>
                     </a>
@@ -40,10 +42,10 @@
                         <span>Catalogo</span>
                     </div>
 
-                    <a href="/TipoArticulos">
+                    <a href="/TiposArticulos">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(@Model.Path == "/TipoArticulos" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                        @(path.Equals("/TiposArticulos") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Tipos de Articulos</span>
                         </li>
                     </a>
@@ -51,7 +53,7 @@
                     <a href="/Generos">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(@Model.Path == "/Generos" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                        @(path.Equals("/Generos") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Géneros</span>
                         </li>
                     </a>
@@ -59,7 +61,7 @@
                     <a href="/Idioma">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(@Model.Path == "/Idioma" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                        @(path.Equals("/Idioma") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Idiomas</span>
                         </li>
                     </a>
@@ -67,7 +69,7 @@
                     <a href="/Elenco">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(@Model.Path == "/Elenco" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                        @(path.Equals("/Elenco") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Elenco</span>
                         </li>
                     </a>
@@ -75,7 +77,7 @@
                     <a href="/Articulos">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(@Model.Path == "/Articulos" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                        @(path.Equals("/Articulos") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Articulos</span>
                         </li>
                     </a>
@@ -87,7 +89,7 @@
                     <a href="/D">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(@Model.Path == "/D" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                        @(path.Equals("/D") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Example D</span>
                         </li>
                     </a>
@@ -95,7 +97,7 @@
                     <a href="/B">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(@Model.Path == "/B" ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                        @(path.Equals("/B") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Example B</span>
                         </li>
                     </a>

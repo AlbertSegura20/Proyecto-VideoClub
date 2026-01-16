@@ -1,10 +1,11 @@
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-[Table("TiposArticulos")]
-public class TipoArticulo
+namespace VideoClub.Models
 {
-    
+    public class TiposArticulos {
+
     public enum EstadoArticulo
     {
         Activo = 1,
@@ -24,3 +25,4 @@ public class TipoArticulo
     public EstadoArticulo Estado { get; set; }
 }
 
+}

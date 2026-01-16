@@ -4,18 +4,13 @@ using VideoClub.Models;
 
 namespace VideoClub.Controllers;
 
-public class HomeController : Controller
+public class DashboardController : Controller
 {
     public IActionResult Index()
     {
         var path = HttpContext.Request.Path;
         
         return View(new ViewPathModel { Path = path });
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
     }
 
 
