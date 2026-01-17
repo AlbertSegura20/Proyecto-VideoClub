@@ -2,24 +2,25 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VideoClub.Models
-{
-    [Table("Tipos_de_Articulos")]
-    public class TiposArticulos {
+{ 
 
-    public enum EstadoArticulo
+    [Table("Idiomas")]
+    public class Idiomas
+    {
+
+    public enum EstadoIdioma
     {
         Activo = 1,
         Inactivo = 0
     }
 
-    
-    [Key] 
+    [Key]
     public int Id { get; set; }
 
     [MaxLength(100)]
     public string? Descripcion { get; set; }
 
-    public EstadoArticulo Estado { get; set; }
+    public EstadoIdioma Estado { get; set; }
 }
 
 }

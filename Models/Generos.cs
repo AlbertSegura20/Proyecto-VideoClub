@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VideoClub.Models
 {
-    [Table("Tipos_de_Articulos")]
-    public class TiposArticulos {
+    [Table("Géneros")]
+    public class Generos {
 
-    public enum EstadoArticulo
+    public enum EstadoGenero
     {
         Activo = 1,
         Inactivo = 0
@@ -19,7 +19,7 @@ namespace VideoClub.Models
     [MaxLength(100)]
     public string? Descripcion { get; set; }
 
-    public EstadoArticulo Estado { get; set; }
+    public EstadoGenero Estado { get; set; }
 }
 
 }
