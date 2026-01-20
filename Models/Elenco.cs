@@ -17,7 +17,7 @@ namespace VideoClub.Models
         public int Id { get; set; }
 
         [MaxLength(100)]
-        public string Nombre { get; set; } = string.Empty;
+        public string Nombre { get; set; }
 
         public EstadoElenco Estado { get; set; }
     }
