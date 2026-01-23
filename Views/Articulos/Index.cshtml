@@ -29,13 +29,32 @@
       </div>
       <div id="modal-create" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
          <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
-         <div id="modal-content-create" class="relative flex flex-col h-auto w-full max-w-2xl bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
-            <div class="flex py-2 px-4">
+         <div id="modal-content-create" class="relative flex flex-col h-[calc(100vh-370px)] w-full max-w-2xl bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
+            <div class="flex py-2 px-4 h-16">
                <h1 class="text-2xl font-bold">Nuevo Artículo</h1>
             </div>
-            <div class="h-full">
-               <div class="flex flex-col h-full">
-                  <form asp-action="Create" asp-controller="Articulos" method="post" class="flex flex-col gap-1 p-4 h-full">
+
+           
+            <div class="w-full px-4 mx-auto">
+    <!-- Botones de las tabs -->
+    <div class="flex border-b">
+        <button class="tab-btn px-4 py-2 border-b-2 font-medium text-blue-600 border-blue-600"
+                onclick="openTab('tab1', this)">
+            Datos del Artículo
+        </button>
+        <button class="tab-btn px-4 py-2 text-gray-600 hover:text-blue-600"
+                onclick="openTab('tab2', this)">
+            Elenco del Artículo
+        </button>
+       
+    </div>
+
+    <!-- Contenido de las tabs -->
+    <div class="mt-4">
+        <div id="tab1" class="tab-content">
+           <div class="flex flex-col h-full">
+               <div class="flex flex-col h-full border">
+                  <form asp-action="Create" asp-controller="Articulos" method="post" class="flex flex-col gap-1 p-4 h-full justify-center">
                      <div>
                         <label class="font-mono " name="Titulo">Titulo</label>
                      </div>
@@ -71,15 +90,18 @@
                           <div class="py-2 flex flex-col">
                            <label for="Tipo_de_Articulos" class="mb-1">Idioma</label>
                            <div class="relative">
-                              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                                  </svg>
                               </div>
+
+                              
                               <select name="estado" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                 <!-- <option value="" selected disabled hidden>Estado</option> -->
-                                 <option value="1" class="text-green-500">Activo</option>
-                                 <option value="0" class="text-red-500">Inactivo</option>
+
+                                    <option value="1" class="text-green-500">Activo</option>
+                                    <option value="0" class="text-red-500">Inactivo</option>
+                             
                               </select>
                            </div>
                      
@@ -193,6 +215,138 @@
                   </form>
                </div>
             </div>
+        </div>
+
+        <div id="tab2" class="tab-content hidden">
+
+
+      <div class="rounded-md border bg-gray-50 p-4">
+    <!-- <h3 class="mb-4 text-sm font-semibold text-gray-800">Elenco del Artículo</h3> -->
+
+    <!-- Fila de selección -->
+    <div class="mb-4 grid grid-cols-12 gap-4">
+        <!-- Elenco -->
+        <div class="col-span-12 md:col-span-5">
+            <label class="mb-1 block text-xs font-medium text-gray-700">Elenco:</label>
+            <select
+                class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm
+                       focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                <option>Al Pacino</option>
+                <option>Marlon Brando</option>
+                <option>Francis Ford Coppola</option>
+            </select>
+        </div>
+
+        <!-- Rol -->
+        <div class="col-span-12 md:col-span-5">
+            <label class="mb-1 block text-xs font-medium text-gray-700">Rol:</label>
+            <select
+                class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm
+                       focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                <option>Actor</option>
+                <option>Director</option>
+                <option>Guionista</option>
+            </select>
+        </div>
+
+        <!-- Botón Agregar -->
+        <div class="col-span-12 md:col-span-2 flex items-end">
+            <button
+                type="button"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 px-4 py-2
+                       text-sm font-semibold text-white shadow-sm hover:bg-emerald-700
+                       focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                <span class="text-base leading-none">+</span>
+                Agregar
+            </button>
+        </div>
+    </div>
+
+    <!-- Tabla de elenco -->
+    <div class="overflow-hidden rounded-md border bg-white">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-gray-100 text-xs font-semibold uppercase text-gray-600">
+                <tr>
+                    <th class="w-10 px-4 py-3"></th>
+                    <th class="px-4 py-3">Nombre</th>
+                    <th class="px-4 py-3">Rol</th>
+                    <th class="px-4 py-3 text-right">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 text-gray-500">1.</td>
+                    <td class="px-4 py-3 text-gray-800">Al Pacino</td>
+                    <td class="px-4 py-3 text-gray-700">Actor</td>
+                    <td class="px-4 py-3">
+                        <div class="flex justify-end">
+                            <button
+                                type="button"
+                                class="inline-flex items-center justify-center rounded-md bg-red-600 px-3 py-2
+                                       text-white hover:bg-red-700"
+                                title="Eliminar">
+                                <!-- Icono papelera -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M9 3h6l1 2h5v2H3V5h5l1-2zm1 6h2v10h-2V9zm4 0h2v10h-2V9zM6 9h2v10H6V9z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 text-gray-500">2.</td>
+                    <td class="px-4 py-3 text-gray-800">Marlon Brando</td>
+                    <td class="px-4 py-3 text-gray-700">Actor</td>
+                    <td class="px-4 py-3">
+                        <div class="flex justify-end">
+                            <button
+                                type="button"
+                                class="inline-flex items-center justify-center rounded-md bg-red-600 px-3 py-2
+                                       text-white hover:bg-red-700"
+                                title="Eliminar">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 3h6l1 2h5v2H3V5h5l1-2zm1 6h2v10h-2V9zm4 0h2v10h-2V9zM6 9h2v10H6V9z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 text-gray-500">3.</td>
+                    <td class="px-4 py-3 text-gray-800">Francis Ford Coppola</td>
+                    <td class="px-4 py-3 text-gray-700">Director</td>
+                    <td class="px-4 py-3">
+                        <div class="flex justify-end">
+                            <button
+                                type="button"
+                                class="inline-flex items-center justify-center rounded-md bg-red-600 px-3 py-2
+                                       text-white hover:bg-red-700"
+                                title="Eliminar">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 3h6l1 2h5v2H3V5h5l1-2zm1 6h2v10h-2V9zm4 0h2v10h-2V9zM6 9h2v10H6V9z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+           
          </div>
       </div>
       <div class="mb-5 px-8">
@@ -261,7 +415,7 @@
                      </select>
                   </div>
                </div>
-               <div class="flex justify-end mb-2">
+               <div class="flex justify-end">
                   <div class="px-2 py-1">
                      <button type="button" class="bg-green-500 px-4 py-2 text-white rounded-md hover:bg-green-600 transition-all duration-300"
                         onclick="updateData()">
@@ -377,5 +531,27 @@
                  content.classList.add('scale-95', 'translate-y-4');
              }
          }
+
+         function openTab(tabId, button) {
+    // Ocultar todos los contenidos
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+    });
+
+    // Quitar estilo activo de todos los botones
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('text-blue-600', 'border-blue-600', 'border-b-2');
+        btn.classList.add('text-gray-600');
+    });
+
+    // Mostrar la tab seleccionada
+    document.getElementById(tabId).classList.remove('hidden');
+
+    // Activar botón actual
+    button.classList.remove('text-gray-600');
+    button.classList.add('text-blue-600', 'border-blue-600', 'border-b-2');
+}
+
+
       </script>
 </div>
