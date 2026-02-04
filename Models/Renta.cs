@@ -8,9 +8,13 @@ namespace VideoClub.Models
 
         public enum EstadoRenta
         {
+            [Display(Name = "Activa")]
             Activa = 1,
+            [Display(Name = "Devuelta")]
             Devuelta = 2,
+            [Display(Name = "Atrasada")]
             Atrasada = 3,
+            [Display(Name = "Cancelada")]
             Cancelada = 4
         }
 

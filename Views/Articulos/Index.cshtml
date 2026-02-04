@@ -60,20 +60,20 @@ var tab = "";
                                        <div class="flex justify-between">
                                           <div class="py-2 flex flex-col">
                                              <!-- Select -->
-                                             <label for="Tipo_de_Articulos" class="mb-1">Tipo de Artículo</label>
+                                             <label for="TiposArticulosId" class="mb-1">Tipo de Artículo</label>
                                              <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                                       <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                                                    </svg>
                                                 </div>
-                                                <select name="Tipo_de_Articulos" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                                <select name="TiposArticulosId" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
                                                    <option value="" selected disabled hidden>Seleccione un artículo</option>
                                                    @if (ViewBag.TiposArticulos != null)
                                                    {
                                                    foreach (var tipo in ViewBag.TiposArticulos)
                                                    {
-                                                   <option value="@tipo.Id">@tipo.Descripcion</option>
+                                                   <option value="@tipo.Id">@tipo.Tipo</option>
                                                    }
                                                    }
                                                 </select>
@@ -83,7 +83,7 @@ var tab = "";
                                           <!-------------------------------------------------------------->
                                           <!-- Select -->
                                           <div class="py-2 flex flex-col">
-                                             <label for="Tipo_de_Articulos" class="mb-1">Idioma</label>
+                                             <label for="IdiomaId" class="mb-1">Idioma</label>
                                              <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -107,7 +107,7 @@ var tab = "";
                                        <div class="flex justify-between">
                                           <div class="py-2 flex flex-col">
                                              <!-- Select -->
-                                             <label for="Tipo_de_Articulos" class="mb-1">Renta por día</label>
+                                             <label for="RentaPorDia" class="mb-1">Renta por día</label>
                                              <div>
                                                 <input type="number" name="RentaPorDia" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
                                                    placeholder="0.00$">
@@ -117,7 +117,7 @@ var tab = "";
                                           <!-------------------------------------------------------------->
                                           <div class="py-2 flex flex-col">
                                              <!-- Select -->
-                                             <label for="Tipo_de_Articulos" class="mb-1">Días de Renta</label>
+                                             <label for="DiasDeRenta" class="mb-1">Días de Renta</label>
                                              <div>
                                                 <input type="number" name="DiasDeRenta" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
                                                    placeholder="0">
@@ -128,7 +128,7 @@ var tab = "";
                                        <div class="flex justify-between">
                                           <div class="py-2 flex flex-col">
                                              <!-- Select -->
-                                             <label for="Tipo_de_Articulos" class="mb-1">Monto Entrega Tardia</label>
+                                             <label for="MontoEntregaTardia" class="mb-1">Monto Entrega Tardia</label>
                                              <div>
                                                 <input type="number" name="MontoEntregaTardia" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
                                                    placeholder="0.00$">
@@ -138,17 +138,19 @@ var tab = "";
                                           <!-------------------------------------------------------------->
                                           <div class="py-2 flex flex-col">
                                              <!-- Select -->
-                                             <label for="Tipo_de_Articulos" class="mb-1">Estado</label>
+                                             <label for="Estado" class="mb-1">Estado</label>
                                              <div class="relative">
                                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                                       <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                                                    </svg>
                                                 </div>
-                                                <select name="estado" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                                <select name="Estado" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
                                                    <option value="" selected disabled hidden>Estado</option>
-                                                   <option value="1" class="text-green-500">Activo</option>
-                                                   <option value="0" class="text-red-500">Inactivo</option>
+                                                   <option value="1" class="text-green-500">Disponible</option>
+                                                   <option value="2" class="text-yellow-500">Rentado</option>
+                                                   <option value="3" class="text-red-500">Retrasado</option>
+                                                   <option value="0" class="text-gray-500">Inactivo</option>
                                                 </select>
                                              </div>
                                           </div>
@@ -183,53 +185,57 @@ var tab = "";
                               <div class="flex-1 min-h-0 overflow-y-auto">
                                  <!-- <h3 class="mb-4 text-sm font-semibold text-gray-800">Elenco del Artículo</h3> -->
                                  <!-- Fila de selección -->
-                                 <div class="mb-4 grid grid-cols-12 gap-4 ">
-                                    <!-- Elenco -->
-                                    <div class="col-span-12 md:col-span-5 relative">
-                                       <label class="mb-1 block text-xs font-medium text-gray-700">Elenco:</label>
-                                       <div class="pointer-events-none absolute inset-y-0 right-0 top-4  flex items-center px-2">
-                                          <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                          </svg>
-                                       </div>
-                                       <select name="ElencoId" class="block w-56 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                          <option value="" selected disabled hidden>Seleccione un elenco</option>
-                                          @if (ViewBag.Elenco != null)
-                                          {
-                                          foreach (var Elenco in ViewBag.Elenco)
-                                          {
-                                          <option value="@Elenco.Id">@Elenco.Nombre</option>
-                                          }
-                                          }
-                                       </select>
-                                    </div>
-                                    <!-- Rol -->
-                                    <div class="col-span-12 md:col-span-5">
-                                       <label class="mb-1 block text-xs font-medium text-gray-700">Rol:</label>
-                                       <select
-                                          class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm
-                                          focus:border-blue-500 font-mono focus:outline-none focus:ring-2 focus:ring-blue-200">
-                                          <option value="" selected disabled hidden>Seleccione un rol</option>
-                                          <option value="Actor">Actor</option>
-                                          <option value="Director">Director</option>
-                                          <option value="Guionista">Guionista</option>
-                                       </select>
-                                    </div>
-                                    <!-- Botón Agregar -->
-                                    <div class="col-span-12 md:col-span-2 flex items-end">
-                                       <button
-                                          type="button"
-                                          class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 px-5 py-2
-                                          text-sm font-semibold text-white shadow-sm hover:bg-emerald-700
-                                          focus:outline-none focus:ring-2 focus:ring-emerald-200">
-                                       <span class="text-base leading-none">+</span>
-                                       Agregar
-                                       </button>
-                                    </div>
-                                 </div>
-                                 <!-- Tabla de elenco -->
-                                 <div class="overflow-hidden rounded-md border bg-white">
-                                    <table class="w-full text-left text-sm">
+                                 <form asp-action="Create" asp-controller="Articulos" method="post" class="contents">
+                                         <div class="mb-4 grid grid-cols-12 gap-4 ">
+                                            <!-- Elenco -->
+                                            <div class="col-span-12 md:col-span-5 relative">
+                                               <label class="mb-1 block text-xs font-medium text-gray-700">Elenco:</label>
+                                               <div class="pointer-events-none absolute inset-y-0 right-0 top-4  flex items-center px-2">
+                                                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                     <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                                  </svg>
+                                               </div>
+                                               <select name="ElencoId" class="block w-56 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                                  <option value="" selected disabled hidden>Seleccione un elenco</option>
+                                                  @if (ViewBag.Elenco != null)
+                                                  {
+                                                  foreach (var Elenco in ViewBag.Elenco)
+                                                  {
+                                                  <option value="@Elenco.Id">@Elenco.Nombre</option>
+                                                  }
+                                                  }
+                                               </select>
+                                            </div>
+                                            <!-- Rol -->
+                                            <div class="col-span-12 md:col-span-5">
+                                               <label class="mb-1 block text-xs font-medium text-gray-700">Rol:</label>
+                                               <select
+                                                  name="Rol"
+                                                  class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm
+                                                  focus:border-blue-500 font-mono focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                  <option value="" selected disabled hidden>Seleccione un rol</option>
+                                                  <option value="Actor">Actor</option>
+                                                  <option value="Director">Director</option>
+                                                  <option value="Guionista">Guionista</option>
+                                               </select>
+                                            </div>
+                                            <!-- Botón Agregar -->
+                                            <div class="col-span-12 md:col-span-2 flex items-end">
+                                               <button
+                                                  type="submit"
+                                                  class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 px-5 py-2
+                                                  text-sm font-semibold text-white shadow-sm hover:bg-emerald-700
+                                                  focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                                               <span class="text-base leading-none">+</span>
+                                               Agregar
+                                               </button>
+                                            </div>
+                                         </div>
+                                     </form>
+
+                                     <!-- Tabla de elenco -->
+                                     <div class="overflow-hidden rounded-md border bg-white">
+                                        <table class="w-full text-left text-sm">
                                        <thead class="bg-gray-100 text-xs font-semibold uppercase text-gray-600">
                                           <tr>
                                              <th class="w-10 px-4 py-3">ID</th>
@@ -280,6 +286,7 @@ var tab = "";
                            </div>
                         </div>
                      </div>
+
                   </div>
                </div>
             </div>
@@ -295,6 +302,11 @@ var tab = "";
                   <tr>
                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Idioma</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Renta por día</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Días de renta</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto entrega tardía</th>
                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                      <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                   </tr>
@@ -303,9 +315,15 @@ var tab = "";
                   @foreach (var item in Model) {
                   <tr key="@item.Id" class="hover:bg-gray-50 transition-colors">
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Id</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Titulo</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.TiposArticulos?.Tipo</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Idioma?.Descripcion</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.RentaPorDia</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.DiasDeRenta</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.MontoEntregaTardia</td>
                      <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                        @(item.Estado == Articulos.EstadoArticulo.Activo ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
+                        @(item.Estado == Articulos.EstadoArticulo.Disponible ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
                         @item.Estado
                         </span>
                      </td>
@@ -322,48 +340,114 @@ var tab = "";
    </div>
    <div id="modal-update" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
       <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
-      <div id="modal-content-update" class="relative flex flex-col w-full max-w-xl h-96 bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
+      <div id="modal-content-update" class="relative flex flex-col w-full max-w-xl h-[calc(100vh-200px)] bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
          <div class="flex py-2 px-4">
             <h1 class="text-2xl font-bold">Editar Artículo</h1>
          </div>
-         <div class="h-full">
+         <div class="h-full overflow-y-auto">
             <div class="flex flex-col h-full">
                <form asp-action="Update" asp-controller="Articulos" method="post" class="flex flex-col gap-1 p-4 h-full">
                   <div class="flex-1 flex flex-col justify-center">
                      <div>
                         <input type="hidden" id="Id" name="Id" />
-                        <label class="font-mono " name="Descripcion">Descripción</label>
+                        <label class="font-mono " name="Titulo">Titulo</label>
                      </div>
                      <div class="py-2 mb-2">
-                        <input type="text" id="Descripcion" name="Descripcion" placeholder="Escribe la descripción..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                        <input type="text" id="Titulo" name="Titulo" placeholder="Escribe el titulo..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
                      </div>
-                     <div class="py-2 mb-4 flex justify-end">
-                        <!-- Select -->
-                        <div>
-                           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-8">
-                              <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                              </svg>
+                     
+                     <!-- TiposArticulosId -->
+                     <div class="py-2 flex flex-col">
+                        <label for="TiposArticulosIdUpdate" class="mb-1">Tipo de Artículo</label>
+                         <div class="relative">
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                               <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                               </svg>
+                            </div>
+                            <select id="TiposArticulosIdUpdate" name="TiposArticulosId" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                               <option value="" selected disabled hidden>Seleccione un artículo</option>
+                               @if (ViewBag.TiposArticulos != null)
+                               {
+                               foreach (var tipo in ViewBag.TiposArticulos)
+                               {
+                               <option value="@tipo.Id">@tipo.Tipo</option>
+                               }
+                               }
+                            </select>
+                         </div>
+                     </div>
+
+                     <!-- IdiomaId -->
+                     <div class="py-2 flex flex-col">
+                        <label for="IdiomaIdUpdate" class="mb-1">Idioma</label>
+                         <div class="relative">
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                               <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                               </svg>
+                            </div>
+                            <select id="IdiomaIdUpdate" name="IdiomaId" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                               <option value="" selected disabled hidden>Seleccione un idioma</option>
+                               @if (ViewBag.Idiomas != null)
+                               {
+                               foreach (var idioma in ViewBag.Idiomas)
+                               {
+                               <option value="@idioma.Id">@idioma.Descripcion</option>
+                               }
+                               }
+                            </select>
+                         </div>
+                     </div>
+
+                     <div class="flex justify-between gap-4">
+                        <div class="py-2 flex flex-col flex-1">
+                           <label for="RentaPorDiaUpdate" class="mb-1">Renta por día</label>
+                           <input type="number" id="RentaPorDiaUpdate" name="RentaPorDia" class="no-spinner block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400" placeholder="0.00$">
+                        </div>
+                        <div class="py-2 flex flex-col flex-1">
+                           <label for="DiasDeRentaUpdate" class="mb-1">Días de Renta</label>
+                           <input type="number" id="DiasDeRentaUpdate" name="DiasDeRenta" class="no-spinner block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400" placeholder="0">
+                        </div>
+                     </div>
+
+                     <div class="flex justify-between gap-4">
+                        <div class="py-2 flex flex-col flex-1">
+                           <label for="MontoEntregaTardiaUpdate" class="mb-1">Monto Entrega Tardia</label>
+                           <input type="number" id="MontoEntregaTardiaUpdate" name="MontoEntregaTardia" class="no-spinner block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400" placeholder="0.00$">
+                        </div>
+                   
+                        <div class="py-2 flex flex-col flex-1">
+                           <!-- Select -->
+                           <label for="EstadoUpdate" class="mb-1">Estado</label>
+                           <div class="relative">
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                               <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                               </svg>
+                            </div>
+                            <select id="EstadoUpdate" name="Estado" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                               <option value="" selected disabled hidden>Estado</option>
+                               <option value="1" class="text-green-500">Disponible</option>
+                               <option value="2" class="text-yellow-500">Rentado</option>
+                               <option value="3" class="text-red-500">Retrasado</option>
+                               <option value="0" class="text-gray-500">Inactivo</option>
+                            </select>
                            </div>
-                           <select id="Estado" name="Estado" class="block w-32 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                              <option value="" selected disabled hidden>Estado</option>
-                              <option value="1" class="text-green-500">Activo</option>
-                              <option value="0" class="text-red-500">Inactivo</option>
-                           </select>
                         </div>
                      </div>
                   </div>
-                  <div class="flex justify-end">
-                     <div class="px-2 py-1">
-                        <button type="button" class="bg-green-500 px-4 py-2 text-white rounded-md hover:bg-green-600 transition-all duration-300"
-                           onclick="updateData()">
-                        Guardar
-                        </button>
-                     </div>
+                  <div class="flex justify-end mt-4">
                      <div class="px-2 py-1">
                         <button type="button" class="bg-red-500 px-4 py-2 text-white rounded-md hover:bg-red-600 transition-all duration-300"
                            onclick="handleData(false)">
                         Cerrar
+                        </button>
+                     </div>
+                     <div class="px-2 py-1">
+                        <button type="button" class="bg-green-500 px-4 py-2 text-white rounded-md hover:bg-green-600 transition-all duration-300"
+                           onclick="updateData()">
+                        Guardar
                         </button>
                      </div>
                   </div>
@@ -396,12 +480,22 @@ var tab = "";
    
    function updateData() {
       const id = document.getElementById('Id').value;
-      const descripcion = document.getElementById('Descripcion').value;
-      const estado = document.getElementById('Estado').value;
+      const titulo = document.getElementById('Titulo').value;
+      const tiposArticulosId = document.getElementById('TiposArticulosIdUpdate').value;
+      const idiomaId = document.getElementById('IdiomaIdUpdate').value;
+      const rentaPorDia = document.getElementById('RentaPorDiaUpdate').value;
+      const diasDeRenta = document.getElementById('DiasDeRentaUpdate').value;
+      const montoEntregaTardia = document.getElementById('MontoEntregaTardiaUpdate').value;
+      const estado = document.getElementById('EstadoUpdate').value;
    
       const data = {
           id: parseInt(id),
-          descripcion: descripcion,
+          titulo: titulo,
+          tiposArticulosId: parseInt(tiposArticulosId),
+          idiomaId: parseInt(idiomaId),
+          rentaPorDia: parseFloat(rentaPorDia),
+          diasDeRenta: parseInt(diasDeRenta),
+          montoEntregaTardia: parseFloat(montoEntregaTardia),
           estado: parseInt(estado)
       };
    
@@ -436,9 +530,30 @@ var tab = "";
    
       var allData = @Html.Raw(Json.Serialize(Model));
       var data = allData.find(item => item.id == id);
-      document.getElementById('Descripcion').value = data.descripcion;
-      document.getElementById('Estado').value = data.estado;
+      
       document.getElementById('Id').value = data.id;
+      document.getElementById('Titulo').value = data.titulo;
+      
+      // Use camelCase assuming standard serialization. 
+      // If it fails, users might see empty fields, but it will save correctly (validation might fail if empty).
+      // We will assume standard serialization.
+      if (data.tiposArticulosId) document.getElementById('TiposArticulosIdUpdate').value = data.tiposArticulosId;
+      else if (data.TiposArticulosId) document.getElementById('TiposArticulosIdUpdate').value = data.TiposArticulosId; // Fallback
+
+      if (data.idiomaId) document.getElementById('IdiomaIdUpdate').value = data.idiomaId;
+      else if (data.IdiomaId) document.getElementById('IdiomaIdUpdate').value = data.IdiomaId;
+
+      if (data.rentaPorDia) document.getElementById('RentaPorDiaUpdate').value = data.rentaPorDia;
+      else if (data.RentaPorDia) document.getElementById('RentaPorDiaUpdate').value = data.RentaPorDia;
+      
+      if (data.diasDeRenta) document.getElementById('DiasDeRentaUpdate').value = data.diasDeRenta;
+      else if (data.DiasDeRenta) document.getElementById('DiasDeRentaUpdate').value = data.DiasDeRenta;
+
+      if (data.montoEntregaTardia) document.getElementById('MontoEntregaTardiaUpdate').value = data.montoEntregaTardia;
+      else if (data.MontoEntregaTardia) document.getElementById('MontoEntregaTardiaUpdate').value = data.MontoEntregaTardia;
+
+      if (data.estado) document.getElementById('EstadoUpdate').value = data.estado;
+      else if (data.Estado) document.getElementById('EstadoUpdate').value = data.Estado;
    
        overlay.classList.remove('invisible', 'opacity-0');
        overlay.classList.add('visible', 'opacity-100');

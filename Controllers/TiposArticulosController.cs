@@ -35,6 +35,11 @@ public class TiposArticulosController : Controller
         {
             return View(tipoArticulo);
         }
+
+        tipoArticulo.Estado = (TiposArticulos.EstadoArticulo)tipoArticulo.Estado;
+        tipoArticulo.Tipo = (TiposArticulos.TipoArticulo)tipoArticulo.Tipo;
+        Console.WriteLine(tipoArticulo.Estado);
+        Console.WriteLine(tipoArticulo.Tipo);
         _context.TiposArticulos.Add(tipoArticulo);
         _context.SaveChanges();
 
@@ -55,8 +60,8 @@ public class TiposArticulosController : Controller
             return NotFound();
         }
 
-        existing.Descripcion = tipoArticulo.Descripcion;
         existing.Estado = tipoArticulo.Estado;
+        existing.Tipo = tipoArticulo.Tipo;
         
         _context.TiposArticulos.Update(existing);
         _context.SaveChanges();

@@ -9,7 +9,9 @@ namespace VideoClub.Models
 
         public enum EstadoElenco
         {
+            [Display(Name = "Activo")]
             Activo = 1,
+            [Display(Name = "Inactivo")]
             Inactivo = 0
         }
 

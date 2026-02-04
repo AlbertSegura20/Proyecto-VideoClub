@@ -97,8 +97,8 @@ namespace VideoClub.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Descripcion = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    Estado = table.Column<int>(type: "integer", nullable: false)
+                    Estado = table.Column<int>(type: "integer", nullable: false),
+                    Tipo = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

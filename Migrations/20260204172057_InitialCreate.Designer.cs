@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace VideoClub.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260120003922_InitialCreate")]
+    [Migration("20260204172057_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -278,11 +278,10 @@ namespace VideoClub.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descripcion")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
                     b.Property<int>("Estado")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Tipo")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

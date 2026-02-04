@@ -1,295 +1,300 @@
 @model IEnumerable<VideoClub.Models.TiposArticulos>
 @using VideoClub.Models
-
-
 @{
 ViewData["Title"] = "Tipos de Articulos";
 }
-
 <div class="Content grid [grid-template-rows:100px_1fr_auto] [grid-template-areas:'header'_'main'_'footer']">
+<header class="[grid-area:header]">
+   <div class="">
+      <h1 class="text-2xl font-bold py-5 px-8">Tipos de Articulos</h1>
+   </div>
+</header>
+<main class="[grid-area:main] ">
+   <div class="mb-10 container mx-auto">
+   </div>
+   <div class="container mx-auto shadow-2xl rounded-lg bg-white pb-4">
+   <div class="mb-5 pt-5">
+      <div class="flex justify-between">
+         <div>
+            <span class="text-2xl py-5 px-8 font-semibold text-gray-700">Listado</span>
+         </div>
+         <div class="px-4 mb-5">
+            <button onclick="toggleModal(true)" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-1">
+            + &nbsp;Nuevo Tipo
+            </button>
+         </div>
+      </div>
+      <div id="modal-create" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
+         <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
+         <div id="modal-content-create" class="relative flex flex-col w-full max-w-xl h-96 bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
+            <div class="flex py-2 px-4">
+               <h1 class="text-2xl font-bold">Tipo de Articulo</h1>
+            </div>
+            <div class="h-full">
+               <div class="flex flex-col h-full">
+                  <form asp-action="Create" asp-controller="TiposArticulos" method="post" class="flex flex-col gap-1 p-4 h-full">
+                     <!-- <div>
+                        <label class="font-mono " name="Descripcion">Descripción</label>
+                        </div>
+                        <div class="py-2 mb-2">
+                        <input type="text" name="Descripcion" placeholder="Escribe la descripción..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                        </div> -->
+                     <!-- <div class="relative flex">
+                        <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                           <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                           </svg>
+                        </div>
+                        <select id="Descripcion" name="Descripcion" class="block w-72 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                           <option value="" selected disabled hidden>Seleccione una descripción</option>
+                           <option value="1" class="text-green-500">Pelicula</option>
+                           <option value="2" class="text-green-500">CD Musica</option>
+                           <option value="3" class="text-red-500">Libro</option>
+                        </select>
+                     </div> -->
 
-   <header class="[grid-area:header]">
-      <div class="">
-         <h1 class="text-2xl font-bold py-5 px-8">Tipos de Articulos</h1>
-      </div>
-   </header>
-   
-   <main class="[grid-area:main] ">
-      <div class="mb-10 container mx-auto">
-      </div>
-      <div class="container mx-auto shadow-2xl rounded-lg bg-white pb-4">
-         <div class="mb-5 pt-5">
-            <div class="flex justify-between">
-               <div>
-                  <span class="text-2xl py-5 px-8 font-semibold text-gray-700">Listado</span>
+                      <div class="flex justify-between">
+
+                       <div class="py-2 mb-4 flex">
+                        <!-- Select -->
+                        <div class="relative">
+                           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                              <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                              </svg>
+                           </div>
+                           <select name="Tipo" class="block w-72 font-mono appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                              <option value="" selected disabled hidden>Seleccione un tipo</option>
+                              <option value="1" >Pelicula</option>
+                              <option value="2" >CD Musica</option>
+                              <option value="3" >Libro</option>
+                           </select>
+                        </div>
+                     </div>
+
+                     <div class="py-2 mb-4 flex justify-end relative">
+                        <!-- Select -->
+                        <div>
+                           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                              <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                              </svg>
+                           </div>
+                           <select name="estado" class="block w-32 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                              <option value="" selected disabled hidden>Estado</option>
+                              <option value="1" class="text-green-500">Activo</option>
+                              <option value="0" class="text-red-500">Inactivo</option>
+                           </select>
+                        </div>
+                     </div>
+                      </div>
+
+                     <div class="flex flex-1">
+                     </div>
+                     <div class="flex justify-end mb-2">
+                        <div class="px-2 py-1">
+                           <button type="button" class="bg-gray-500 px-4 py-2 text-white rounded-md hover:bg-gray-600 transition-all duration-300"
+                              onclick="toggleModal(false)">
+                           Cerrar
+                           </button>
+                        </div>
+                        <div class="px-2 py-1">
+                           <button type="submit" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
+                              onclick="toggleModal(false)">
+                           Guardar
+                           </button>
+                        </div>
+                     </div>
+                  </form>
                </div>
-            
-            <div class="px-4 mb-5">
-               <button onclick="toggleModal(true)" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-1">
-               + &nbsp;Nuevo Tipo
-               </button>
-            </div>
-
-            </div>
-            <div id="modal-create" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
-               <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
-               <div id="modal-content-create" class="relative flex flex-col w-full max-w-xl h-96 bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
-                  <div class="flex py-2 px-4">
-                     <h1 class="text-2xl font-bold">Tipo de Articulo</h1>
-                  </div>
-                     <div class="h-full">
-
-                        <div class="flex flex-col h-full">
-                           <form asp-action="Create" asp-controller="TiposArticulos" method="post" class="flex flex-col gap-1 p-4 h-full">
-                              <div>
-                                 <label class="font-mono " name="Descripcion">Descripción</label>
-                              </div>
-                              <div class="py-2 mb-2">
-                                 <input type="text" name="Descripcion" placeholder="Escribe la descripción..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
-                              </div>
-                              <div class="py-2 mb-4 flex flex-1 justify-end">
-                                 <!-- Select -->
-
-                               <div>
-                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-8">
-                                 <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                   <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                 </svg>
-                               </div>
-
-                              <select name="estado" class="block w-32 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                 <option value="" selected disabled hidden>Estado</option>
-                                 <option value="1" class="text-green-500">Activo</option>
-                                 <option value="0" class="text-red-500">Inactivo</option>
-                              </select>
-
-                               </div>
-
-                              </div>
-
-                              <div class="flex justify-end mb-2">
-                                 <div class="px-2 py-1">
-                                    <button type="button" class="bg-gray-500 px-4 py-2 text-white rounded-md hover:bg-gray-600 transition-all duration-300"
-                                       onclick="toggleModal(false)">
-                                    Cerrar
-                                    </button>
-                                 </div>
-
-                                  <div class="px-2 py-1">
-                                    <button type="submit" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
-                                       onclick="toggleModal(false)">
-                                    Guardar
-                                    </button>
-                                 </div>
-                              </div>
-                           </form>
-                        </div>
-
-                     </div>
-            </div>
-
-         </div>
-
-         <div class="mb-5 px-8">
-            <input type="text" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
-         </div>
-         <div class="px-8 mb-5">
-            <div class="overflow-x-auto border border-gray-200 rounded-lg">
-               <table class="min-w-full divide-y divide-gray-200">
-                  <thead class="bg-gray-100">
-                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                     </tr>
-                  </thead>
-                  <tbody class="bg-white divide-y divide-gray-200">
-                  @foreach (var item in Model) {
-                     <tr key="@item.Id" class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Id</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@item.Descripcion</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                           <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                           @(item.Estado == TiposArticulos.EstadoArticulo.Activo ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
-                          
-                           @item.Estado
-                           </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                           <a onclick="handleData(@item.Id, true)" class="text-indigo-600 hover:text-indigo-900 mr-3 hover:cursor-pointer">Editar</a>
-                           <a onclick="deleteData(@item.Id)" class="text-red-600 hover:text-red-900 hover:cursor-pointer">Eliminar</a>
-                        </td>
-                     </tr>
-                  }
-               
-                  </tbody>
-               </table>
             </div>
          </div>
       </div>
-
-<div id="modal-update" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
-               <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
-               <div id="modal-content-update" class="relative flex flex-col w-full max-w-xl h-96 bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
-                  <div class="flex py-2 px-4">
-                     <h1 class="text-2xl font-bold">Editar Tipo de Articulo</h1>
+      <div class="mb-5 px-8">
+         <input type="text" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+      </div>
+      <div class="px-8 mb-5">
+         <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+               <thead class="bg-gray-100">
+                  <tr>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                  </tr>
+               </thead>
+               <tbody class="bg-white divide-y divide-gray-200">
+                  @foreach (var item in Model) {
+                  <tr key="@item.Id" class="hover:bg-gray-50 transition-colors">
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Id</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@item.Tipo</td>
+                     <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                        @(item.Estado == TiposArticulos.EstadoArticulo.Activo ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
+                        @item.Estado
+                        </span>
+                     </td>
+                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <a onclick="handleData(@item.Id, true)" class="text-indigo-600 hover:text-indigo-900 mr-3 hover:cursor-pointer">Editar</a>
+                        <a onclick="deleteData(@item.Id)" class="text-red-600 hover:text-red-900 hover:cursor-pointer">Eliminar</a>
+                     </td>
+                  </tr>
+                  }
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+   <div id="modal-update" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
+      <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
+      <div id="modal-content-update" class="relative flex flex-col w-full max-w-xl h-96 bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
+         <div class="flex py-2 px-4">
+            <h1 class="text-2xl font-bold">Editar Tipo de Articulo</h1>
+         </div>
+         <div class="h-full">
+            <div class="flex flex-col h-full">
+               <form asp-action="Create" asp-controller="TiposArticulos" method="post" class="flex flex-col gap-1 p-4 h-full">
+                  <div>
+                     <input type="hidden" id="Id" name="Id" />
+                     <label class="font-mono " name="Tipo">Descripción</label>
                   </div>
-                     <div class="h-full">
-
-                        <div class="flex flex-col h-full">
-                           <form asp-action="Create" asp-controller="TiposArticulos" method="post" class="flex flex-col gap-1 p-4 h-full">
-                              <div>
-                                 <input type="hidden" id="Id" name="Id" />
-                                 <label class="font-mono " name="Descripcion">Descripción</label>
-                              </div>
-                              <div class="py-2 mb-2">
-                                 <input type="text" id="Descripcion" name="Descripcion" placeholder="Escribe la descripción..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
-                              </div>
-                              <div class="py-2 mb-4 flex flex-1 justify-end">
-                                 <!-- Select -->
-
-                               <div>
-                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-8">
-                                 <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                   <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                 </svg>
-                               </div>
-
-                              <select id="Estado" name="Estado" class="block w-32 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                 <option value="" selected disabled hidden>Estado</option>
-                                 <option value="1" class="text-green-500">Activo</option>
-                                 <option value="0" class="text-red-500">Inactivo</option>
-                              </select>
-
-                               </div>
-
-                              </div>
-
-                              <div class="flex justify-end mb-2">
-                                
-                                 <div class="px-2 py-1">
-                                    <button type="button" class="bg-gray-500 px-4 py-2 text-white rounded-md hover:bg-gray-600 transition-all duration-300"
-                                       onclick="handleData(false)">
-                                    Cerrar
-                                    </button>
-                                 </div>
-                                  <div class="px-2 py-1">
-                                    <button type="button" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
-                                       onclick="updateData()">
-                                    Guardar
-                                    </button>
-                                 </div>
-                              </div>
-                           </form>
+                  <div class="py-2 mb-2">
+                     <select id="TipoUpdate" name="Tipo" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all">
+                        <option value="" selected disabled hidden>Seleccione un tipo</option>
+                        <option value="1">Pelicula</option>
+                        <option value="2">CD Musica</option>
+                        <option value="3">Libro</option>
+                     </select>
+                  </div>
+                  <div class="py-2 mb-4 flex flex-1 justify-end">
+                     <!-- Select -->
+                     <div>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-8">
+                           <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                           </svg>
                         </div>
-
+                        <select id="EstadoUpdate" name="Estado" class="block w-32 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                           <option value="" selected disabled hidden>Estado</option>
+                           <option value="1" class="text-green-500">Activo</option>
+                           <option value="0" class="text-red-500">Inactivo</option>
+                        </select>
                      </div>
+                  </div>
+                  <div class="flex justify-end mb-2">
+                     <div class="px-2 py-1">
+                        <button type="button" class="bg-gray-500 px-4 py-2 text-white rounded-md hover:bg-gray-600 transition-all duration-300"
+                           onclick="handleData(false)">
+                        Cerrar
+                        </button>
+                     </div>
+                     <div class="px-2 py-1">
+                        <button type="button" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
+                           onclick="updateData()">
+                        Guardar
+                        </button>
+                     </div>
+                  </div>
+               </form>
             </div>
-
-
-
-
-
-
-
-
-   </main>
-   <footer class="[grid-area:footer]"></footer>
-   <script>
-
-      function deleteData(id) {
-          if(!confirm('¿Estás seguro de eliminar el tipo de articulo?')) return;
-
-          fetch('/TiposArticulos/Delete', {
-             method: 'DELETE',
-             headers: {
-                 'Content-Type': 'application/json'
-             },
-             body: JSON.stringify(parseInt(id))
-         })
-         .then(response => {
-             if (response.ok) {
-                 location.reload();
-             } else {
-                 alert('Error deleting data');
-             }
-         })
-         .catch(error => console.error('Error:', error));
-       }
-
-      function updateData() {
-         const id = document.getElementById('Id').value;
-         const descripcion = document.getElementById('Descripcion').value;
-         const estado = document.getElementById('Estado').value;
-
-         const data = {
-             id: parseInt(id),
-             descripcion: descripcion,
-             estado: parseInt(estado)
-         };
-
-         fetch('/TiposArticulos/Update', {
-             method: 'PUT',
-             headers: {
-                 'Content-Type': 'application/json'
-             },
-             body: JSON.stringify(data)
-         })
-         .then(response => {
-             if (response.ok) {
-                 location.reload();
-             } else {
-                 alert('Error updating data');
-             }
-         })
-         .catch(error => console.error('Error:', error));
-       }
-
-      function handleData(id, show){
-          const overlay = document.getElementById('modal-update');
-          const content = document.getElementById('modal-content-update');
-          
-          if (!show) {
-              overlay.classList.remove('visible', 'opacity-100');
-              overlay.classList.add('invisible', 'opacity-0');
-              content.classList.remove('scale-100', 'translate-y-0');
-              content.classList.add('scale-95', 'translate-y-4');
-              return;
-          }
-         
-         var allData = @Html.Raw(Json.Serialize(Model));
-         var data = allData.find(item => item.id == id);
-         document.getElementById('Descripcion').value = data.descripcion;
-         document.getElementById('Estado').value = data.estado;
-         document.getElementById('Id').value = data.id;
-        
-          overlay.classList.remove('invisible', 'opacity-0');
-          overlay.classList.add('visible', 'opacity-100');
-          content.classList.remove('scale-95', 'translate-y-4');
-          content.classList.add('scale-100', 'translate-y-0');
-      }
-
-
-      function toggleModal(show) {
-          const overlay = document.getElementById('modal-create');
-          const content = document.getElementById('modal-content-create');
-      
-          if (show) {
-             
-              overlay.classList.remove('invisible', 'opacity-0');
-              overlay.classList.add('visible', 'opacity-100');
-      
-              content.classList.remove('scale-95', 'translate-y-4');
-              content.classList.add('scale-100', 'translate-y-0');
+         </div>
+      </div>
+</main>
+<footer class="[grid-area:footer]"></footer>
+<script>
+   function deleteData(id) {
+       if(!confirm('¿Estás seguro de eliminar el tipo de articulo?')) return;
+   
+       fetch('/TiposArticulos/Delete', {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(parseInt(id))
+      })
+      .then(response => {
+          if (response.ok) {
+              location.reload();
           } else {
-              
-              overlay.classList.remove('visible', 'opacity-100');
-              overlay.classList.add('invisible', 'opacity-0');
-      
-              content.classList.remove('scale-100', 'translate-y-0');
-              content.classList.add('scale-95', 'translate-y-4');
+              alert('Error deleting data');
           }
-      }
-   </script>
+      })
+      .catch(error => console.error('Error:', error));
+    }
+   
+   function updateData() {
+      const id = document.getElementById('Id').value;
+      const tipo = document.getElementById('TipoUpdate').value;
+      const estado = document.getElementById('EstadoUpdate').value;
+   
+      const data = {
+          id: parseInt(id),
+          tipo: parseInt(tipo),
+          estado: parseInt(estado)
+      };
+   
+      fetch('/TiposArticulos/Update', {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then(response => {
+          if (response.ok) {
+              location.reload();
+          } else {
+              alert('Error updating data');
+          }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+   
+   function handleData(id, show){
+       const overlay = document.getElementById('modal-update');
+       const content = document.getElementById('modal-content-update');
+       
+       if (!show) {
+           overlay.classList.remove('visible', 'opacity-100');
+           overlay.classList.add('invisible', 'opacity-0');
+           content.classList.remove('scale-100', 'translate-y-0');
+           content.classList.add('scale-95', 'translate-y-4');
+           return;
+       }
+      
+      var allData = @Html.Raw(Json.Serialize(Model));
+      var data = allData.find(item => item.id == id);
+      document.getElementById('TipoUpdate').value = data.tipo;
+      document.getElementById('EstadoUpdate').value = data.estado;
+      document.getElementById('Id').value = data.id;
+     
+       overlay.classList.remove('invisible', 'opacity-0');
+       overlay.classList.add('visible', 'opacity-100');
+       content.classList.remove('scale-95', 'translate-y-4');
+       content.classList.add('scale-100', 'translate-y-0');
+   }
+   
+   
+   function toggleModal(show) {
+       const overlay = document.getElementById('modal-create');
+       const content = document.getElementById('modal-content-create');
+   
+       if (show) {
+          
+           overlay.classList.remove('invisible', 'opacity-0');
+           overlay.classList.add('visible', 'opacity-100');
+   
+           content.classList.remove('scale-95', 'translate-y-4');
+           content.classList.add('scale-100', 'translate-y-0');
+       } else {
+           
+           overlay.classList.remove('visible', 'opacity-100');
+           overlay.classList.add('invisible', 'opacity-0');
+   
+           content.classList.remove('scale-100', 'translate-y-0');
+           content.classList.add('scale-95', 'translate-y-4');
+       }
+   }
+</script>
 </div>

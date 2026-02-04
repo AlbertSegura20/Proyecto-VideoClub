@@ -8,7 +8,9 @@ namespace VideoClub.Models
 
     public enum EstadoGenero
     {
+        [Display(Name = "Activo")]
         Activo = 1,
+        [Display(Name = "Inactivo")]
         Inactivo = 0
     }
 
