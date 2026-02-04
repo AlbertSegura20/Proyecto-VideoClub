@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
     public DbSet<Clientes> Clientes { get; set; }
     public DbSet<Empleados> Empleados { get; set; }
     public DbSet<Articulos> Articulos { get; set; }
-    public DbSet<ElencoArticulo> ElencoArticulos { get; set; }
+    public DbSet<ElencoArticulo> ElencoArticulo { get; set; }
 
  
 }

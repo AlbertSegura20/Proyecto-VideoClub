@@ -13,8 +13,13 @@ public class ArticulosController : Controller
     }
     public IActionResult Index()
     {
+        ViewBag.Elenco = _context.Elenco.Where(e => e.Estado == Elenco.EstadoElenco.Activo).ToList();
+        ViewBag.Idiomas = _context.Idiomas.Where(i => i.Estado == Idiomas.EstadoIdioma.Activo).ToList();
+        ViewBag.TiposArticulos = _context.TiposArticulos.Where(t => t.Estado == TiposArticulos.EstadoArticulo.Activo).ToList();
         return View(_context.Articulos.ToList());
     }
+
+
 
 
     [HttpPost]
