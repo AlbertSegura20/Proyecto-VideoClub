@@ -1,4 +1,4 @@
-@model IEnumerable<VideoClub.Models.Articulos>
+@model VideoClub.ViewModels.ArticuloElencoViewModel
 @using VideoClub.Models
 @{
 ViewData["Title"] = "Artículos";
@@ -29,6 +29,13 @@ var tab = "";
             <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
             <div id="modal-content-create" class="relative flex flex-col h-[calc(100vh-370px)] w-full max-w-2xl bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
                <div class="w-full px-4 mx-auto flex flex-col h-full">
+                  <!-- Botón de cerrar X -->
+                  <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 z-10 transition-colors">
+                     <span class="sr-only">Cerrar</span>
+                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                     </svg>
+                  </button>
                   <!-- Botones de las tabs -->
                   <div class="flex border-b shrink-0">
                      <button class="tab-btn px-4 py-2 border-b-2 font-medium text-blue-600 border-blue-600"
@@ -40,11 +47,13 @@ var tab = "";
                      Elenco del Artículo
                      </button>
                   </div>
+
                   <!-- Contenido de las tabs -->
                   <div class="mt-4 flex-1 flex flex-col min-h-0">
+                     <!-- TAB 1: DATOS -->
                      <div id="tab1" class="tab-content h-full min-h-0">
                         <div class="flex flex-col h-full min-h-0 border">
-                           <form asp-action="Create" asp-controller="Articulos" method="post" class="flex flex-col h-full min-h-0 p-4">
+                     <form id="formArticuloCreate" class="flex flex-col h-full min-h-0 p-4" onsubmit="event.preventDefault();">
                               <!-- ZONA CENTRAL (crece y empuja el footer) -->
                               <div class="flex-1 min-h-0 overflow-y-auto">
                                  <div class="flex flex-col">
@@ -169,8 +178,8 @@ var tab = "";
                                     </button>
                                  </div>
                                  <div class="px-2 py-1">
-                                    <button type="submit" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
-                                       onclick="toggleModal(false)">
+                                    <button type="button" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
+                                       onclick="submitArticle()">
                                     Guardar
                                     </button>
                                  </div>
@@ -178,114 +187,100 @@ var tab = "";
                            </form>
                         </div>
                      </div>
-                     <div id="tab2" class="tab-content hidden flex-1 flex flex-col min-h-0">
+                     
+                     <!-- TAB 2: ELENCO -->
+                     <div id="tab2" class="tab-content h-full min-h-0 hidden">
                         <div class="flex flex-col h-full min-h-0 p-4">
                            <div class="rounded-md border bg-gray-50 p-4 flex flex-col min-h-0 flex-1">
-                              <!-- CONTENIDO (crece y puede scrollear) -->
+                              <!-- CONTENIDO -->
                               <div class="flex-1 min-h-0 overflow-y-auto">
-                                 <!-- <h3 class="mb-4 text-sm font-semibold text-gray-800">Elenco del Artículo</h3> -->
                                  <!-- Fila de selección -->
-                                 <form asp-action="Create" asp-controller="Articulos" method="post" class="contents">
-                                         <div class="mb-4 grid grid-cols-12 gap-4 ">
-                                            <!-- Elenco -->
-                                            <div class="col-span-12 md:col-span-5 relative">
-                                               <label class="mb-1 block text-xs font-medium text-gray-700">Elenco:</label>
-                                               <div class="pointer-events-none absolute inset-y-0 right-0 top-4  flex items-center px-2">
-                                                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                     <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                                  </svg>
-                                               </div>
-                                               <select name="ElencoId" class="block w-56 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                                  <option value="" selected disabled hidden>Seleccione un elenco</option>
-                                                  @if (ViewBag.Elenco != null)
-                                                  {
-                                                  foreach (var Elenco in ViewBag.Elenco)
-                                                  {
-                                                  <option value="@Elenco.Id">@Elenco.Nombre</option>
-                                                  }
-                                                  }
-                                               </select>
-                                            </div>
-                                            <!-- Rol -->
-                                            <div class="col-span-12 md:col-span-5">
-                                               <label class="mb-1 block text-xs font-medium text-gray-700">Rol:</label>
-                                               <select
-                                                  name="Rol"
-                                                  class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm
-                                                  focus:border-blue-500 font-mono focus:outline-none focus:ring-2 focus:ring-blue-200">
-                                                  <option value="" selected disabled hidden>Seleccione un rol</option>
-                                                  <option value="Actor">Actor</option>
-                                                  <option value="Director">Director</option>
-                                                  <option value="Guionista">Guionista</option>
-                                               </select>
-                                            </div>
-                                            <!-- Botón Agregar -->
-                                            <div class="col-span-12 md:col-span-2 flex items-end">
-                                               <button
-                                                  type="submit"
-                                                  class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 px-5 py-2
-                                                  text-sm font-semibold text-white shadow-sm hover:bg-emerald-700
-                                                  focus:outline-none focus:ring-2 focus:ring-emerald-200">
-                                               <span class="text-base leading-none">+</span>
-                                               Agregar
-                                               </button>
-                                            </div>
-                                         </div>
-                                     </form>
-
-                                     <!-- Tabla de elenco -->
-                                     <div class="overflow-hidden rounded-md border bg-white">
-                                        <table class="w-full text-left text-sm">
-                                       <thead class="bg-gray-100 text-xs font-semibold uppercase text-gray-600">
-                                          <tr>
-                                             <th class="w-10 px-4 py-3">ID</th>
-                                             <th class="px-4 py-3">Nombre</th>
-                                             <th class="px-4 py-3">Rol</th>
-                                             <th class="px-4 py-3 text-right">Acciones</th>
-                                          </tr>
-                                       </thead>
-                                       <tbody class="divide-y">
-                                          <tr class="hover:bg-gray-50">
-                                          <td>
-                                             
-                                          </td>
-                                          <td>
-                                             
-                                          </td>
-                                          <td>
-                                             
-                                          </td>
-                                             <td>
-                                                <div class="flex justify-end">
-                                                <button
-                                                   type="button"
-                                                   class="inline-flex items-center justify-center rounded-md bg-red-600 px-3 py-2
-                                                   text-white hover:bg-red-700"
-                                                   title="Eliminar">
-                                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                                                      <path d="M9 3h6l1 2h5v2H3V5h5l1-2zm1 6h2v10h-2V9zm4 0h2v10h-2V9zM6 9h2v10H6V9z" />
-                                                   </svg>
-                                                </button>
-                                             </div>
-                                             </td>
-                                          </tr>
-                                       </tbody>
-                                    </table>
-                                 </div>
+                                 <form asp-action="Create" method="post" asp-controller="ElencoArticulo" class="contents" id="formElencoCreate">
+                                    <input type="hidden" name="ArticuloId" value="0" />
+                                    <div class="mb-4 grid grid-cols-12 gap-4 ">
+                                       <!-- Elenco -->
+                                       <div class="col-span-12 md:col-span-5 relative">
+                                          <label class="mb-1 block text-xs font-medium text-gray-700">Elenco:</label>
+                                          <div class="pointer-events-none absolute inset-y-0 right-0 top-4  flex items-center px-2">
+                                             <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                             </svg>
+                                          </div>
+                                          <select name="ElencoId" id="ElencoCreate" class="block w-56 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                             <option value="" selected disabled hidden>Seleccione un elenco</option>
+                                             @if (ViewBag.Elenco != null)
+                                             {
+                                             foreach (var Elenco in ViewBag.Elenco)
+                                             {
+                                             <option value="@Elenco.Id">@Elenco.Nombre</option>
+                                             }
+                                             }
+                                          </select>
+                                       </div>
+                                       <!-- Rol -->
+                                       <div class="col-span-12 md:col-span-5">
+                                          <label class="mb-1 block text-xs font-medium text-gray-700">Rol:</label>
+                                          <select
+                                             name="Rol" id="RolCreate"
+                                             class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm
+                                             focus:border-blue-500 font-mono focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                             <option value="" selected disabled hidden>Seleccione un rol</option>
+                                             <option value="Actor">Actor</option>
+                                             <option value="Director">Director</option>
+                                             <option value="Guionista">Guionista</option>
+                                          </select>
+                                       </div>
+                                       <!-- Botón Agregar -->
+                                       <div class="col-span-12 md:col-span-2 flex items-end">
+                                          <button type="button"
+                                             class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 px-5 py-2
+                                             text-sm font-semibold text-white shadow-sm hover:bg-emerald-700
+                                             focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                                             focus-visible:outline-emerald-600 transition-all duration-200"
+                                             onclick="addElencoToList()">
+                                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                             </svg>
+                                             Agregar
+                                          </button>
+                                       </div>
+                                    </div>
+                                    <!-- Tabla de Elenco Agregado (Placeholder visual) -->
+                                    <div class="relative overflow-hidden rounded-lg border border-gray-200 shadow-sm">
+                                       <table class="w-full text-left text-sm text-gray-500">
+                                          <thead class="bg-gray-100 text-xs uppercase text-gray-700">
+                                             <tr>
+                                                <th scope="col" class="px-4 py-3 font-semibold">Elenco</th>
+                                                <th scope="col" class="px-4 py-3 font-semibold">Rol</th>
+                                                <th scope="col" class="px-4 py-3 text-right font-semibold">Acciones</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody class="divide-y divide-gray-200 bg-white" id="elencoTableBodyCreate">
+                                             <!-- Items agregados aparecerían aquí -->
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </form>
                               </div>
-                              <!-- FOOTER (siempre al final) -->
-                              <div class="mt-auto pt-3 border-t flex justify-end shrink-0">
-                                 <div class="px-2 py-1">
-                                    <button type="button"
-                                       class="px-4 py-2 text-black rounded-md bg-gray-100 transition-all duration-300"
-                                       onclick="toggleModal(false)">
-                                    Cerrar
-                                    </button>
-                                 </div>
+                           </div>
+                           <!-- Footer de Botones -->
+                           <div class="flex justify-end mt-2">
+                              <div class="px-2 py-1">
+                                 <button type="button" class=" px-4 py-2 text-black rounded-md bg-transparent transition-all duration-300"
+                                    onclick="toggleModal(false)">
+                                 Cerrar
+                                 </button>
+                              </div>
+                              <div class="px-2 py-1">
+                                 <button type="button" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
+                                    onclick="submitArticle()">
+                                 Guardar
+                                 </button>
                               </div>
                            </div>
                         </div>
                      </div>
+
 
                   </div>
                </div>
@@ -312,18 +307,21 @@ var tab = "";
                   </tr>
                </thead>
                <tbody class="bg-white divide-y divide-gray-200">
-                  @foreach (var item in Model) {
+                  @foreach (var item in Model.Articulos) {
                   <tr key="@item.Id" class="hover:bg-gray-50 transition-colors">
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Id</td>
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Titulo</td>
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.TiposArticulos?.Tipo</td>
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Idioma?.Descripcion</td>
-                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.RentaPorDia</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.RentaPorDia.ToString("C")</td>
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.DiasDeRenta</td>
-                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.MontoEntregaTardia</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.MontoEntregaTardia.ToString("C")</td>
                      <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                        @(item.Estado == Articulos.EstadoArticulo.Disponible ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
+                        @(item.Estado == Articulos.EstadoArticulo.Disponible ? "bg-green-100 text-green-800" : 
+                        item.Estado == Articulos.EstadoArticulo.Rentado ? "bg-yellow-100 text-yellow-800" : 
+                        item.Estado == Articulos.EstadoArticulo.Retrasado ? "bg-red-100 text-red-800" : 
+                        "bg-gray-100 text-gray-800")">
                         @item.Estado
                         </span>
                      </td>
@@ -338,120 +336,246 @@ var tab = "";
          </div>
       </div>
    </div>
+
+
+
    <div id="modal-update" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
       <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
-      <div id="modal-content-update" class="relative flex flex-col w-full max-w-xl h-[calc(100vh-200px)] bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
-         <div class="flex py-2 px-4">
-            <h1 class="text-2xl font-bold">Editar Artículo</h1>
-         </div>
-         <div class="h-full overflow-y-auto">
-            <div class="flex flex-col h-full">
-               <form asp-action="Update" asp-controller="Articulos" method="post" class="flex flex-col gap-1 p-4 h-full">
-                  <div class="flex-1 flex flex-col justify-center">
-                     <div>
-                        <input type="hidden" id="Id" name="Id" />
-                        <label class="font-mono " name="Titulo">Titulo</label>
-                     </div>
-                     <div class="py-2 mb-2">
-                        <input type="text" id="Titulo" name="Titulo" placeholder="Escribe el titulo..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
-                     </div>
-                     
-                     <!-- TiposArticulosId -->
-                     <div class="py-2 flex flex-col">
-                        <label for="TiposArticulosIdUpdate" class="mb-1">Tipo de Artículo</label>
-                         <div class="relative">
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                               <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                               </svg>
-                            </div>
-                            <select id="TiposArticulosIdUpdate" name="TiposArticulosId" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                               <option value="" selected disabled hidden>Seleccione un artículo</option>
-                               @if (ViewBag.TiposArticulos != null)
-                               {
-                               foreach (var tipo in ViewBag.TiposArticulos)
-                               {
-                               <option value="@tipo.Id">@tipo.Tipo</option>
-                               }
-                               }
-                            </select>
-                         </div>
-                     </div>
-
-                     <!-- IdiomaId -->
-                     <div class="py-2 flex flex-col">
-                        <label for="IdiomaIdUpdate" class="mb-1">Idioma</label>
-                         <div class="relative">
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                               <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                               </svg>
-                            </div>
-                            <select id="IdiomaIdUpdate" name="IdiomaId" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                               <option value="" selected disabled hidden>Seleccione un idioma</option>
-                               @if (ViewBag.Idiomas != null)
-                               {
-                               foreach (var idioma in ViewBag.Idiomas)
-                               {
-                               <option value="@idioma.Id">@idioma.Descripcion</option>
-                               }
-                               }
-                            </select>
-                         </div>
-                     </div>
-
-                     <div class="flex justify-between gap-4">
-                        <div class="py-2 flex flex-col flex-1">
-                           <label for="RentaPorDiaUpdate" class="mb-1">Renta por día</label>
-                           <input type="number" id="RentaPorDiaUpdate" name="RentaPorDia" class="no-spinner block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400" placeholder="0.00$">
+      <div id="modal-content-update" class="relative flex flex-col h-[calc(100vh-370px)] w-full max-w-2xl bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
+         <div class="w-full px-4 mx-auto flex flex-col h-full">
+            <!-- Botones de las tabs -->
+            <div class="flex border-b shrink-0">
+               <button class="tab-btn px-4 py-2 border-b-2 font-medium text-blue-600 border-blue-600"
+                  onclick="openTabUpdate('tabUpdate1', this)">
+               Datos del Artículo
+               </button>
+               <button class="tab-btn px-4 py-2 text-gray-600 hover:text-blue-600"
+                  onclick="openTabUpdate('tabUpdate2', this)">
+               Elenco del Artículo
+               </button>
+            </div>
+            <!-- Contenido de las tabs -->
+            <div class="mt-4 flex-1 flex flex-col min-h-0">
+               <!-- TAB 1: DATOS -->
+               <div id="tabUpdate1" class="tab-content h-full min-h-0">
+                  <div class="flex flex-col h-full min-h-0 border">
+     <form asp-action="Update" asp-controller="Articulos" method="post" class="flex flex-col h-full min-h-0 p-4" onsubmit="event.preventDefault(); updateData();">
+                        <!-- ZONA CENTRAL (crece y empuja el footer) -->
+                        <div class="flex-1 min-h-0 overflow-y-auto">
+                           <div class="flex flex-col">
+                              <div>
+                                 <input type="hidden" id="Id" name="Id" />
+                                 <label class="font-mono" name="Titulo">Titulo</label>
+                              </div>
+                              <div class="py-2 mb-2">
+                                 <input type="text" id="Titulo" name="Titulo" placeholder="Escribe el titulo..."
+                                    class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                              </div>
+                              <!--Start-->
+                              <div class="flex flex-col">
+                                 <div class="flex justify-between">
+                                    <div class="py-2 flex flex-col">
+                                       <!-- Select -->
+                                       <label for="TiposArticulosIdUpdate" class="mb-1">Tipo de Artículo</label>
+                                       <div class="relative">
+                                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                                             <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                             </svg>
+                                          </div>
+                                          <select id="TiposArticulosIdUpdate" name="TiposArticulosId" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                             <option value="" selected disabled hidden>Seleccione un artículo</option>
+                                             @if (ViewBag.TiposArticulos != null)
+                                             {
+                                             foreach (var tipo in ViewBag.TiposArticulos)
+                                             {
+                                             <option value="@tipo.Id">@tipo.Tipo</option>
+                                             }
+                                             }
+                                          </select>
+                                       </div>
+                                       <!-- End Select -->
+                                    </div>
+                                    <!-------------------------------------------------------------->
+                                    <!-- Select -->
+                                    <div class="py-2 flex flex-col">
+                                       <label for="IdiomaIdUpdate" class="mb-1">Idioma</label>
+                                       <div class="relative">
+                                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                                             <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                             </svg>
+                                          </div>
+                                          <select id="IdiomaIdUpdate" name="IdiomaId" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                             <option value="" selected disabled hidden>Seleccione un idioma</option>
+                                             @if (ViewBag.Idiomas != null)
+                                             {
+                                             foreach (var idioma in ViewBag.Idiomas)
+                                             {
+                                             <option value="@idioma.Id">@idioma.Descripcion</option>
+                                             }
+                                             }
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <!-- End Select -->
+                                 </div>
+                                 <div class="flex justify-between">
+                                    <div class="py-2 flex flex-col">
+                                       <!-- Select -->
+                                       <label for="RentaPorDiaUpdate" class="mb-1">Renta por día</label>
+                                       <div>
+                                          <input type="number" id="RentaPorDiaUpdate" name="RentaPorDia" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                             placeholder="0.00$">
+                                       </div>
+                                       <!-- End Select -->
+                                    </div>
+                                    <!-------------------------------------------------------------->
+                                    <div class="py-2 flex flex-col">
+                                       <!-- Select -->
+                                       <label for="DiasDeRentaUpdate" class="mb-1">Días de Renta</label>
+                                       <div>
+                                          <input type="number" id="DiasDeRentaUpdate" name="DiasDeRenta" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                             placeholder="0">
+                                       </div>
+                                    </div>
+                                    <!-- End Select -->
+                                 </div>
+                                 <div class="flex justify-between">
+                                    <div class="py-2 flex flex-col">
+                                       <!-- Select -->
+                                       <label for="MontoEntregaTardiaUpdate" class="mb-1">Monto Entrega Tardia</label>
+                                       <div>
+                                          <input type="number" id="MontoEntregaTardiaUpdate" name="MontoEntregaTardia" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                             placeholder="0.00$">
+                                       </div>
+                                       <!-- End Select -->
+                                    </div>
+                                    <!-------------------------------------------------------------->
+                                    <div class="py-2 flex flex-col">
+                                       <!-- Select -->
+                                       <label for="EstadoUpdate" class="mb-1">Estado</label>
+                                       <div class="relative">
+                                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                                             <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                             </svg>
+                                          </div>
+                                          <select id="EstadoUpdate" name="Estado" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                             <option value="" selected disabled hidden>Estado</option>
+                                             <option value="1" class="text-green-500">Disponible</option>
+                                             <option value="2" class="text-yellow-500">Rentado</option>
+                                             <option value="3" class="text-red-500">Retrasado</option>
+                                             <option value="0" class="text-gray-500">Inactivo</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <!-- End Select -->
+                                 </div>
+                              </div>
+                              <!-- End -->
+                           </div>
                         </div>
-                        <div class="py-2 flex flex-col flex-1">
-                           <label for="DiasDeRentaUpdate" class="mb-1">Días de Renta</label>
-                           <input type="number" id="DiasDeRentaUpdate" name="DiasDeRenta" class="no-spinner block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400" placeholder="0">
+                        <!------------------------------------------------------------>
+                        <div class="flex justify-end mt-2">
+                           <div class="px-2 py-1">
+                              <button type="button" class=" px-4 py-2 text-black rounded-md bg-transparent transition-all duration-300"
+                                 onclick="handleData(false)">
+                              Cancelar
+                              </button>
+                           </div>
+                           <div class="px-2 py-1">
+                              <button type="button" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
+                                 onclick="updateData()">
+                              Guardar
+                              </button>
+                           </div>
                         </div>
-                     </div>
-
-                     <div class="flex justify-between gap-4">
-                        <div class="py-2 flex flex-col flex-1">
-                           <label for="MontoEntregaTardiaUpdate" class="mb-1">Monto Entrega Tardia</label>
-                           <input type="number" id="MontoEntregaTardiaUpdate" name="MontoEntregaTardia" class="no-spinner block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400" placeholder="0.00$">
+                     </form>
+                  </div>
+               </div>
+               <!-- TAB 2: ELENCO (Estructura Copiada) -->
+               <div id="tabUpdate2" class="tab-content hidden flex-1 flex flex-col min-h-0">
+                  <div class="flex flex-col h-full min-h-0 p-4">
+                     <div class="rounded-md border bg-gray-50 p-4 flex flex-col min-h-0 flex-1">
+                        <!-- CONTENIDO (crece y puede scrollear) -->
+                        <div class="flex-1 min-h-0 overflow-y-auto">
+                           <!-- Fila de selección -->
+                           <form asp-action="Update" asp-controller="ElencoArticulo" method="post" class="contents">
+                              <div class="mb-4 grid grid-cols-12 gap-4 ">
+                                 <!-- Elenco -->
+                                 <div class="col-span-12 md:col-span-5 relative">
+                                    <label class="mb-1 block text-xs font-medium text-gray-700">Elenco:</label>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 top-4  flex items-center px-2">
+                                       <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                       </svg>
+                                    </div>
+                                    <select name="Elenco" id="Elenco" class="block w-56 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                       <option value="" selected disabled hidden>Seleccione un elenco</option>
+                                       @if (ViewBag.Elenco != null)
+                                       {
+                                       foreach (var Elenco in ViewBag.Elenco)
+                                       {
+                                       <option value="@Elenco.Id">@Elenco.Nombre</option>
+                                       }
+                                       }
+                                    </select>
+                                 </div>
+                                 <!-- Rol -->
+                                 <div class="col-span-12 md:col-span-5">
+                                    <label class="mb-1 block text-xs font-medium text-gray-700">Rol:</label>
+                                    <select
+                                       name="Rol" id="Rol"
+                                       class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm
+                                       focus:border-blue-500 font-mono focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                       <option value="" selected disabled hidden>Seleccione un rol</option>
+                                       <option value="Actor">Actor</option>
+                                       <option value="Director">Director</option>
+                                       <option value="Guionista">Guionista</option>
+                                    </select>
+                                 </div>
+                                 <!-- Botón Agregar -->
+                                 <div class="col-span-12 md:col-span-2 flex items-end">
+                                    <button onclick="addElencoToExistingArticle()"
+                                       type="button"
+                                       class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-emerald-600 px-5 py-2
+                                       text-sm font-semibold text-white shadow-sm hover:bg-emerald-700
+                                       focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                                    Agregar
+                                    </button>
+                                 </div>
+                              </div>
+                           </form>
+                           <!-- Tabla de elenco -->
+                           <div class="overflow-hidden rounded-md border bg-white">
+                              <table class="w-full text-left text-sm">
+                                 <thead class="bg-gray-100 text-xs font-semibold uppercase text-gray-600">
+                                    <tr>
+                                       <th class="w-10 px-4 py-3">ID</th>
+                                       <th class="px-4 py-3">Nombre</th>
+                                       <th class="px-4 py-3">Rol</th>
+                                       <th class="px-4 py-3 text-right">Acciones</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody class="divide-y" id="elencoTableBodyUpdate">
+                                    <!-- Populated by loadElencoForUpdate(id) -->
+                                 </tbody>
+                              </table>
+                           </div>
                         </div>
-                   
-                        <div class="py-2 flex flex-col flex-1">
-                           <!-- Select -->
-                           <label for="EstadoUpdate" class="mb-1">Estado</label>
-                           <div class="relative">
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                               <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                               </svg>
-                            </div>
-                            <select id="EstadoUpdate" name="Estado" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                               <option value="" selected disabled hidden>Estado</option>
-                               <option value="1" class="text-green-500">Disponible</option>
-                               <option value="2" class="text-yellow-500">Rentado</option>
-                               <option value="3" class="text-red-500">Retrasado</option>
-                               <option value="0" class="text-gray-500">Inactivo</option>
-                            </select>
+                        <!-- FOOTER (siempre al final) -->
+                        <div class="mt-auto pt-3 border-t flex justify-end shrink-0">
+                           <div class="px-2 py-1">
+                              <button type="button" class=" px-4 py-2 text-black rounded-md bg-transparent transition-all duration-300"
+                                 onclick="handleData(null, false)">
+                              Cerrar
+                              </button>
                            </div>
                         </div>
                      </div>
                   </div>
-                  <div class="flex justify-end mt-4">
-                     <div class="px-2 py-1">
-                        <button type="button" class="bg-red-500 px-4 py-2 text-white rounded-md hover:bg-red-600 transition-all duration-300"
-                           onclick="handleData(false)">
-                        Cerrar
-                        </button>
-                     </div>
-                     <div class="px-2 py-1">
-                        <button type="button" class="bg-green-500 px-4 py-2 text-white rounded-md hover:bg-green-600 transition-all duration-300"
-                           onclick="updateData()">
-                        Guardar
-                        </button>
-                     </div>
-                  </div>
-               </form>
+               </div>
             </div>
          </div>
       </div>
@@ -515,6 +639,38 @@ var tab = "";
       })
       .catch(error => console.error('Error:', error));
     }
+
+
+    function addElencoArticulo() {
+      const Elenco = document.getElementById('Elenco')?.value;
+      const Articulo = document.getElementById('Id')?.value;
+      const Rol = document.getElementById('Rol')?.value;
+     
+   
+      const data = {
+          ArticuloId: parseInt(Articulo),
+          ElencoId: parseInt(Elenco),
+          Rol: Rol
+      };  
+
+      console.log(data);
+   
+      // fetch('/ElencoArticulo/Update', {
+      //     method: 'PUT',
+      //     headers: {
+      //         'Content-Type': 'application/json'
+      //     },
+      //     body: JSON.stringify(data)
+      // })
+      // .then(response => {
+      //     if (response.ok) {
+      //         location.reload();
+      //     } else {
+      //         alert('Error updating data');
+      //     }
+      // })
+      // .catch(error => console.error('Error:', error));
+    }
    
    function handleData(id, show){
        const overlay = document.getElementById('modal-update');
@@ -528,17 +684,15 @@ var tab = "";
            return;
        }
    
-      var allData = @Html.Raw(Json.Serialize(Model));
+      var allData = @Html.Raw(Json.Serialize(Model.Articulos));
       var data = allData.find(item => item.id == id);
       
       document.getElementById('Id').value = data.id;
       document.getElementById('Titulo').value = data.titulo;
       
-      // Use camelCase assuming standard serialization. 
-      // If it fails, users might see empty fields, but it will save correctly (validation might fail if empty).
-      // We will assume standard serialization.
+      
       if (data.tiposArticulosId) document.getElementById('TiposArticulosIdUpdate').value = data.tiposArticulosId;
-      else if (data.TiposArticulosId) document.getElementById('TiposArticulosIdUpdate').value = data.TiposArticulosId; // Fallback
+      else if (data.TiposArticulosId) document.getElementById('TiposArticulosIdUpdate').value = data.TiposArticulosId; 
 
       if (data.idiomaId) document.getElementById('IdiomaIdUpdate').value = data.idiomaId;
       else if (data.IdiomaId) document.getElementById('IdiomaIdUpdate').value = data.IdiomaId;
@@ -552,13 +706,17 @@ var tab = "";
       if (data.montoEntregaTardia) document.getElementById('MontoEntregaTardiaUpdate').value = data.montoEntregaTardia;
       else if (data.MontoEntregaTardia) document.getElementById('MontoEntregaTardiaUpdate').value = data.MontoEntregaTardia;
 
-      if (data.estado) document.getElementById('EstadoUpdate').value = data.estado;
-      else if (data.Estado) document.getElementById('EstadoUpdate').value = data.Estado;
+      if (data.estado !== undefined && data.estado !== null) document.getElementById('EstadoUpdate').value = data.estado;
+      else if (data.Estado !== undefined && data.Estado !== null) document.getElementById('EstadoUpdate').value = data.Estado;
    
        overlay.classList.remove('invisible', 'opacity-0');
        overlay.classList.add('visible', 'opacity-100');
        content.classList.remove('scale-95', 'translate-y-4');
        content.classList.add('scale-100', 'translate-y-0');
+       
+       // Load Elenco for this article
+       const articleId = data.id || data.Id;
+       loadElencoForUpdate(articleId);
    }
    
    
@@ -584,15 +742,15 @@ var tab = "";
    }
    
    function openTab(tabId, button) {
-   // Ocultar todos los contenidos
-   document.querySelectorAll('.tab-content').forEach(tab => {
+   const container = document.getElementById('modal-content-create');
+   
+   // Ocultar todos los contenidos dentro del modal create
+   container.querySelectorAll('.tab-content').forEach(tab => {
    tab.classList.add('hidden');
    });
    
-   
-   
-   // Quitar estilo activo de todos los botones
-   document.querySelectorAll('.tab-btn').forEach(btn => {
+   // Quitar estilo activo de todos los botones dentro del modal create
+   container.querySelectorAll('.tab-btn').forEach(btn => {
    btn.classList.remove('text-blue-600', 'border-blue-600', 'border-b-2');
    btn.classList.add('text-gray-600');
    });
@@ -600,6 +758,27 @@ var tab = "";
    // Mostrar la tab seleccionada
    document.getElementById(tabId).classList.remove('hidden');
    
+   // Activar botón actual
+   button.classList.remove('text-gray-600');
+   button.classList.add('text-blue-600', 'border-blue-600', 'border-b-2');
+   }
+
+    function openTabUpdate(tabId, button) {
+   const container = document.getElementById('modal-content-update');
+
+   // Ocultar todos los contenidos dentro del modal update
+   container.querySelectorAll('.tab-content').forEach(tab => {
+   tab.classList.add('hidden');
+   });
+   
+   // Quitar estilo activo de todos los botones dentro del modal update
+   container.querySelectorAll('.tab-btn').forEach(btn => {
+   btn.classList.remove('text-blue-600', 'border-blue-600', 'border-b-2');
+   btn.classList.add('text-gray-600');
+   });
+   
+   // Mostrar la tab seleccionada
+   document.getElementById(tabId).classList.remove('hidden');
    
    // Activar botón actual
    button.classList.remove('text-gray-600');
@@ -607,5 +786,188 @@ var tab = "";
    }
    
    
+
+    // --- Transactional Save Logic ---
+    let elencoList = [];
+
+    function addElencoToList() {
+        const elencoSelect = document.getElementById('ElencoCreate');
+        const rolSelect = document.getElementById('RolCreate');
+        
+        const elencoId = elencoSelect.value;
+        const elencoNombre = elencoSelect.options[elencoSelect.selectedIndex].text;
+        const rol = rolSelect.value;
+
+        if (!elencoId || !rol) {
+            alert("Por favor seleccione Elenco y Rol");
+            return;
+        }
+
+        // Add to list
+        elencoList.push({
+            elencoId: parseInt(elencoId),
+            rol: rol,
+            nombre: elencoNombre
+        });
+
+        renderElencoList();
+        
+        elencoSelect.value = "";
+        rolSelect.value = "";
+    }
+
+    function renderElencoList() {
+        const tbody = document.getElementById('elencoTableBodyCreate');
+        tbody.innerHTML = '';
+
+        elencoList.forEach((item, index) => {
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-gray-50";
+            tr.innerHTML = `
+                <td class="px-4 py-3 text-gray-900">${item.nombre}</td>
+                <td class="px-4 py-3 text-gray-500">${item.rol}</td>
+                <td class="px-4 py-3 text-right">
+                    <button type="button" onclick="removeElencoFromList(${index})" class="text-red-600 hover:text-red-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                           <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function removeElencoFromList(index) {
+        elencoList.splice(index, 1);
+        renderElencoList();
+    }
+
+    function submitArticle() {
+        const form = document.getElementById('formArticuloCreate');
+        
+        // Helper to safely get value by Name within the form
+        const getVal = (name) => {
+             // Target only input, select, or textarea to avoid matching labels with the same name
+             const input = form.querySelector(`input[name="${name}"], select[name="${name}"], textarea[name="${name}"]`);
+             if (!input) {
+                 console.error(`Field [name="${name}"] not found in formArticuloCreate (checked input/select/textarea)`);
+                 return "";
+             }
+             return input.value;
+        };
+
+        const data = {
+            Titulo: getVal('Titulo'),
+            TiposArticulosId: parseInt(getVal('TiposArticulosId')),
+            IdiomaId: parseInt(getVal('IdiomaId')),
+            RentaPorDia: parseFloat(getVal('RentaPorDia')),
+            DiasDeRenta: parseInt(getVal('DiasDeRenta')),
+            MontoEntregaTardia: parseFloat(getVal('MontoEntregaTardia')),
+            Estado: parseInt(getVal('Estado')),
+            Elenco: elencoList
+        };
+        
+        console.log("Submitting Article Data:", data); // Debug log
+
+        fetch('/Articulos/Create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                console.error("Response not OK:", response.statusText);
+                alert('Error creando el artículo. Verifique los datos.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function loadElencoForUpdate(articuloId) {
+        const tbody = document.getElementById('elencoTableBodyUpdate'); // Need to ensure this ID exists or created
+        // Check if tbody exists, if not finding it might be tricky if not added yet.
+        // Assuming tbody in update modal needs an ID. 
+        // Let's assume we will add the ID 'elencoTableBodyUpdate' to the HTML next.
+        
+        if(!tbody) return; 
+
+        tbody.innerHTML = '<tr><td colspan="4" class="px-4 py-3 text-center">Cargando...</td></tr>';
+
+        fetch(`/Articulos/GetElencoByArticuloId?id=${articuloId}`)
+            .then(res => res.json())
+            .then(data => {
+                tbody.innerHTML = '';
+                if(data.length === 0) {
+                     tbody.innerHTML = '<tr><td colspan="4" class="px-4 py-3 text-center text-gray-500">No hay elenco asignado</td></tr>';
+                     return;
+                }
+                
+                data.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-gray-50";
+                    tr.innerHTML = `
+                        <td class="px-4 py-3 text-gray-900">${item.id}</td>
+                        <td class="px-4 py-3 text-gray-900">${item.nombre}</td>
+                        <td class="px-4 py-3 text-gray-500">${item.rol}</td>
+                        <td class="px-4 py-3 text-right">
+                             <!-- Actions could go here, e.g. Delete specific relation -->
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(err => {
+                console.error("Error loading elenco:", err);
+                tbody.innerHTML = '<tr><td colspan="4" class="px-4 py-3 text-center text-red-500">Error cargando elenco</td></tr>';
+            });
+    }
+
+    function addElencoToExistingArticle() {
+        const elencoSelect = document.getElementById('Elenco');
+        const rolSelect = document.getElementById('Rol');
+        const articuloInput = document.getElementById('Id'); 
+        
+        // Note: 'Id' is the hidden input in tabUpdate1 (line 367 in previous views).
+        
+        const elencoId = parseInt(elencoSelect.value);
+        const rol = rolSelect.value;
+        const articuloId = parseInt(articuloInput.value);
+
+        if (!elencoId || !rol || !articuloId) {
+            alert("Por favor seleccione Elenco, Rol y asegúrese de que el artículo es válido.");
+            return;
+        }
+
+        const data = {
+            ArticuloId: articuloId,
+            ElencoId: elencoId,
+            Rol: rol
+        };
+
+        fetch('/ElencoArticulo/Add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                // Refresh the list
+                loadElencoForUpdate(articuloId);
+                // Clear inputs
+                elencoSelect.value = "";
+                rolSelect.value = "";
+            } else {
+                alert('Error agregando elenco. Verifique los datos.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 </script>
 </div>

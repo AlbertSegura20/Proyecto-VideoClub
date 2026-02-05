@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VideoClub.Models;
+using VideoClub.ViewModels;
 
 namespace VideoClub.Controllers;
 
@@ -12,24 +13,64 @@ public class ArticulosController : Controller
     {
         _context = context;
     }
-    public IActionResult Index()
+    
+    public async Task<IActionResult> Index()
     {
-        ViewBag.Elenco = _context.Elenco.Where(e => e.Estado == Elenco.EstadoElenco.Activo).ToList();
-        ViewBag.Idiomas = _context.Idiomas.Where(i => i.Estado == Idiomas.EstadoIdioma.Activo).ToList();
-        ViewBag.TiposArticulos = _context.TiposArticulos.Where(t => t.Estado == TiposArticulos.EstadoArticulo.Activo).ToList();
-        return View(_context.Articulos.Include(a => a.TiposArticulos).Include(a => a.Idioma).ToList());
+        var vm = new ArticuloElencoViewModel
+        {
+            Articulos = await _context.Articulos.Include(a => a.TiposArticulos).Include(a => a.Idioma).ToListAsync(),
+            Idiomas   = await _context.Idiomas.Where(i => i.Estado == Idiomas.EstadoIdioma.Activo).ToListAsync(),
+            Elenco    = await _context.Elenco.Where(e => e.Estado == Elenco.EstadoElenco.Activo).ToListAsync(),
+            ElencoArticulo = await _context.ElencoArticulo.ToListAsync(),
+            TiposArticulos = await _context.TiposArticulos.Where(t => t.Estado == TiposArticulos.EstadoArticulo.Activo).ToListAsync()
+        };
+
+        ViewBag.TiposArticulos = vm.TiposArticulos; 
+        ViewBag.Idiomas = vm.Idiomas;
+        ViewBag.Elenco = vm.Elenco;
+
+        return View(vm);
     }
 
 
     [HttpPost]
-    public IActionResult Create(Articulos articulos)
+    public IActionResult Create([FromBody] ArticuloCreationViewModel vm)
     {
-        if(ModelState.IsValid)
+        if (ModelState.IsValid)
         {
-             _context.Articulos.Add(articulos);
-             _context.SaveChanges();
+           
+            var articulo = new Articulos
+            {
+                Titulo = vm.Titulo,
+                TiposArticulosId = vm.TiposArticulosId,
+                IdiomaId = vm.IdiomaId,
+                RentaPorDia = vm.RentaPorDia,
+                DiasDeRenta = vm.DiasDeRenta,
+                MontoEntregaTardia = vm.MontoEntregaTardia,
+                Estado = (Articulos.EstadoArticulo)vm.Estado
+            };
+
+            _context.Articulos.Add(articulo);
+            _context.SaveChanges(); 
+
+            if (vm.Elenco != null && vm.Elenco.Any())
+            {
+                foreach (var item in vm.Elenco)
+                {
+                    _context.ElencoArticulo.Add(new ElencoArticulo
+                    {
+                        ArticuloId = articulo.Id,
+                        ElencoId = item.ElencoId,
+                        Rol = item.Rol
+                    });
+                }
+                _context.SaveChanges();
+            }
+
+            return Ok(); 
         }
-        return RedirectToAction(nameof(Index));
+
+        return BadRequest(ModelState);
     }
 
     [HttpPut]
@@ -65,4 +106,21 @@ public class ArticulosController : Controller
         return Ok(data);
     }
 
+    [HttpGet]
+    public IActionResult GetElencoByArticuloId(int id)
+    {
+        var elencoItems = _context.ElencoArticulo
+            .Include(ea => ea.Elenco)
+            .Where(ea => ea.ArticuloId == id)
+            .Select(ea => new 
+            {
+                ea.Id,
+                ea.ElencoId,
+                Nombre = ea.Elenco.Nombre,
+                ea.Rol
+            })
+            .ToList();
+
+        return Json(elencoItems);
+    }
 }

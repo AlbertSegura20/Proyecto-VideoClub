@@ -11,21 +11,36 @@ public class ElencoArticuloController : Controller
     {
         _context = context;
     }
-    public IActionResult Index()
-    {
-        return View(_context.ElencoArticulo.ToList());
-    }
+
 
     [HttpPost]
-    public IActionResult Create(ElencoArticulo elencoArticulo)
+    public IActionResult Add([FromBody] VideoClub.ViewModels.ElencoArticuloCreationDto dto)
     {
-        if(!ModelState.IsValid)
+        if (ModelState.IsValid)
         {
-            return View(elencoArticulo);
+            var entity = new ElencoArticulo
+            {
+                ArticuloId = dto.ArticuloId,
+                ElencoId = dto.ElencoId,
+                Rol = dto.Rol
+            };
+            
+            _context.ElencoArticulo.Add(entity);
+            _context.SaveChanges();
+            return Ok();
         }
+        return BadRequest(ModelState);
+    }
 
-        _context.ElencoArticulo.Add(elencoArticulo);
+
+    [HttpDelete]
+    public IActionResult Delete([FromBody] int id)
+    {
+        var data = _context.ElencoArticulo.Find(id);
+        if (data == null) return NotFound();
+
+        _context.ElencoArticulo.Remove(data);
         _context.SaveChanges();
-        return RedirectToAction(nameof(Index));
+        return Ok(data);
     }
 }
