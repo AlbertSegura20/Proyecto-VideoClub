@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using VideoClub.Models;
 using VideoClub.ViewModels;
 
 namespace VideoClub.Controllers;
 
+[Authorize]
 public class ArticulosController : Controller
 {
     private readonly AppDbContext _context;

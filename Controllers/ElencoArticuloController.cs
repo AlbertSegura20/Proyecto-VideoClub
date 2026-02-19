@@ -1,8 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VideoClub.Models;
 
 namespace VideoClub.Controllers;
 
+[Authorize]
 public class ElencoArticuloController : Controller
 {
     private readonly AppDbContext _context;

@@ -1,9 +1,12 @@
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VideoClub.Models;
 
 namespace VideoClub.Controllers;
 
+[Authorize]
 public class GenerosController : Controller
 {
 

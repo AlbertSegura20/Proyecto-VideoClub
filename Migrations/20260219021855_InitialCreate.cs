@@ -52,6 +52,8 @@ namespace VideoClub.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Correo = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
                     Cedula = table.Column<string>(type: "text", nullable: false),
                     TandaLabor = table.Column<string>(type: "text", nullable: false),
                     PorcentajeComision = table.Column<double>(type: "double precision", nullable: false),

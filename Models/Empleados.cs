@@ -20,6 +20,10 @@ namespace VideoClub.Models
         [MaxLength(100)]
         public string Nombre { get; set; }
 
+        public string Correo { get; set; }
+
+        public string Password { get; set; }
+
         public string Cedula { get; set; }
 
         public string TandaLabor { get; set; }

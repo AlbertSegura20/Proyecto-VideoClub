@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace VideoClub.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260204172057_InitialCreate")]
+    [Migration("20260219021855_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -32,8 +32,9 @@ namespace VideoClub.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Dias_de_renta")
-                        .HasColumnType("integer");
+                    b.Property<int>("DiasDeRenta")
+                        .HasColumnType("integer")
+                        .HasColumnName("Dias_de_renta");
 
                     b.Property<int>("Estado")
                         .HasColumnType("integer");
@@ -41,14 +42,17 @@ namespace VideoClub.Migrations
                     b.Property<int>("IdiomaId")
                         .HasColumnType("integer");
 
-                    b.Property<double>("Monto_Entrega_Tardia")
-                        .HasColumnType("double precision");
+                    b.Property<double>("MontoEntregaTardia")
+                        .HasColumnType("double precision")
+                        .HasColumnName("Monto_Entrega_Tardia");
 
-                    b.Property<double>("Renta_por_dia")
-                        .HasColumnType("double precision");
+                    b.Property<double>("RentaPorDia")
+                        .HasColumnType("double precision")
+                        .HasColumnName("Renta_por_dia");
 
-                    b.Property<int>("Tipos_de_ArticulosId")
-                        .HasColumnType("integer");
+                    b.Property<int>("TiposArticulosId")
+                        .HasColumnType("integer")
+                        .HasColumnName("Tipos_de_ArticulosId");
 
                     b.Property<string>("Titulo")
                         .HasMaxLength(100)
@@ -58,7 +62,7 @@ namespace VideoClub.Migrations
 
                     b.HasIndex("IdiomaId");
 
-                    b.HasIndex("Tipos_de_ArticulosId");
+                    b.HasIndex("TiposArticulosId");
 
                     b.ToTable("Articulos");
                 });
@@ -161,6 +165,10 @@ namespace VideoClub.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Correo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("Estado")
                         .HasColumnType("integer");
 
@@ -171,6 +179,10 @@ namespace VideoClub.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<double>("PorcentajeComision")
                         .HasColumnType("double precision");
@@ -297,15 +309,15 @@ namespace VideoClub.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VideoClub.Models.TiposArticulos", "Tipos_de_Articulos")
+                    b.HasOne("VideoClub.Models.TiposArticulos", "TiposArticulos")
                         .WithMany()
-                        .HasForeignKey("Tipos_de_ArticulosId")
+                        .HasForeignKey("TiposArticulosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Idioma");
 
-                    b.Navigation("Tipos_de_Articulos");
+                    b.Navigation("TiposArticulos");
                 });
 
             modelBuilder.Entity("VideoClub.Models.ElencoArticulo", b =>

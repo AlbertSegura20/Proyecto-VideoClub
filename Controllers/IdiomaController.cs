@@ -1,9 +1,12 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using VideoClub.Models;
 
 namespace VideoClub.Controllers;
 
+[Authorize]
 public class IdiomaController : Controller
 {   
     private readonly AppDbContext _context;

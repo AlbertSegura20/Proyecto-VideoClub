@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using VideoClub.Models;
 
 namespace VideoClub.Controllers;
 
+[Authorize]
 public class DashboardController : Controller
 {
     public IActionResult Index()
