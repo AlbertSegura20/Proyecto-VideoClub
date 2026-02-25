@@ -87,21 +87,21 @@
                     </div>
 
                     <!-- Enlaces Deshabilitados: Falta Controller -->
-                    <!-- <a href="/D">
+                    <a href="/Clientes">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(path.Equals("/D") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                        @(path.Equals("/Clientes") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Clientes</span>
                         </li>
-                    </a> -->
+                    </a>
 
-                    <!-- <a href="/B">
+                    <a href="/Empleados">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(path.Equals("/B") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                        @(path.Equals("/Empleados") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Empleados</span>
                         </li>
-                    </a> -->
+                    </a>
 
                     @if (User?.Identity?.IsAuthenticated == true)
                     {

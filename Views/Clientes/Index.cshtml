@@ -1,0 +1,427 @@
+@model IEnumerable<VideoClub.Models.Clientes>
+@using VideoClub.Models
+@{
+    ViewData["Title"] = "Clientes";
+}
+<div class="Content grid [grid-template-rows:100px_1fr_auto] [grid-template-areas:'header'_'main'_'footer']">
+<header class="[grid-area:header]">
+   <div class="">
+      <h1 class="text-2xl font-bold py-5 px-8">Clientes</h1>
+   </div>
+</header>
+<main class="[grid-area:main] ">
+   <div class="mb-10 container mx-auto">
+   </div>
+   <div class="container mx-auto shadow-2xl rounded-lg bg-white pb-4">
+   <div class="mb-5 pt-5">
+      <div class="flex justify-between">
+         <div>
+            <span class="text-2xl py-5 px-8 font-semibold text-gray-700">Listado</span>
+         </div>
+         <div class="px-4 mb-5">
+            <button onclick="toggleModal(true)" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-1">
+            + &nbsp;Nuevo Cliente
+            </button>
+         </div>
+      </div>
+      <!-- CREATE MODAL -->
+      <div id="modal-create" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
+         <div onclick="toggleModal(false)" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
+         <div id="modal-content-create" class="relative flex flex-col w-full max-w-2xl bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4" style="max-height: 90vh;">
+            <div class="flex py-4 px-6 border-b">
+               <h1 class="text-xl font-bold">Crear Cliente</h1>
+            </div>
+            <div class="flex-1 overflow-y-auto">
+               <form asp-action="Create" asp-controller="Clientes" method="post" class="flex flex-col p-6 gap-4">
+                  
+                  <div class="grid grid-cols-2 gap-4">
+                      <div class="flex flex-col">
+                          <label class="font-mono text-sm mb-1" name="Nombre">Nombre</label>
+                          <input type="text" name="Nombre" placeholder="Nombre completo" required class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                      </div>
+                      <div class="flex flex-col">
+                          <label class="font-mono text-sm mb-1" name="Cedula">Cédula</label>
+                          <input type="text" name="Cedula" oninput="formatCedula(this)" maxlength="13" placeholder="000-0000000-0" required class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all font-mono" />
+                      </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-4">
+                      <div class="flex flex-col">
+                          <label class="font-mono text-sm mb-1" name="NumeroTarjetaCR">Número de Tarjeta Credito</label>
+                          <input type="text" name="NumeroTarjetaCR" oninput="formatTarjeta(this)" maxlength="19" placeholder="0000-0000-0000-0000" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all font-mono" />
+                      </div>
+                      <div class="flex flex-col">
+                          <label class="font-mono text-sm mb-1" name="Limite_Credito">Límite de Crédito</label>
+                          <input type="number" step="0.01" name="Limite_Credito" placeholder="0.00" class="no-spinner w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                      </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-4">
+                      <div class="flex flex-col">
+                          <label class="font-mono text-sm mb-1" name="Tipo_Persona">Tipo Persona</label>
+                          <div class="relative">
+                              <select name="Tipo_Persona" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400">
+                                  <option value="" selected disabled hidden>Seleccione tipo</option>
+                                  <option value="1">Física</option>
+                                  <option value="2">Jurídica</option>
+                              </select>
+                              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                  </svg>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="flex flex-col">
+                          <label class="font-mono text-sm mb-1" name="Monto_Entrega_Tardia">Monto Entrega Tardía</label>
+                          <input type="number" step="0.01" name="Monto_Entrega_Tardia" placeholder="0.00" class="no-spinner w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                      </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-4">
+                      <div class="flex flex-col">
+                          <label class="font-mono text-sm mb-1" name="Estado">Estado</label>
+                          <div class="relative">
+                              <select name="Estado" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400">
+                                  <option value="" selected disabled hidden>Seleccione estado</option>
+                                  <option value="1" class="text-green-500">Activo</option>
+                                  <option value="0" class="text-red-500">Inactivo</option>
+                              </select>
+                              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                  </svg>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="flex justify-end mt-4 pt-4 border-t border-gray-100">
+                     <div class="px-2 py-1">
+                        <button type="button" class="px-4 py-2 text-gray-600 rounded-md bg-gray-100 hover:bg-gray-200 transition-all duration-300"
+                           onclick="toggleModal(false)">
+                        Cerrar
+                        </button>
+                     </div>
+                     <div class="px-2 py-1">
+                        <button type="submit" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300">
+                        Guardar
+                        </button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      
+      <div class="mb-5 px-8">
+         <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+      </div>
+      
+      <div class="px-8 mb-5">
+         <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+               <thead class="bg-gray-100">
+                  <tr>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cédula</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">T. Persona</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Límite Crédito</th>
+                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                  </tr>
+               </thead>
+               <tbody id="dataTableBody" class="bg-white divide-y divide-gray-200">
+                  @foreach (var item in Model) {
+                  <tr key="@item.Id" class="hover:bg-gray-50 transition-colors">
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Id</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@item.Nombre</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@item.Cedula</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@item.Tipo_Persona</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@item.Limite_Credito.ToString("C")</td>
+                     <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                        @(item.Estado == Clientes.EstadoCliente.Activo ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800")">
+                        @item.Estado
+                        </span>
+                     </td>
+                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <a onclick="handleData(@item.Id, true)" class="text-indigo-600 hover:text-indigo-900 mr-3 hover:cursor-pointer">Editar</a>
+                        <a onclick="deleteData(@item.Id)" class="text-red-600 hover:text-red-900 hover:cursor-pointer">Eliminar</a>
+                     </td>
+                  </tr>
+                  }
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+
+   <!-- UPDATE MODAL -->
+   <div id="modal-update" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
+      <div onclick="handleData(null, false)" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
+      <div id="modal-content-update" class="relative flex flex-col w-full max-w-2xl bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4" style="max-height: 90vh;">
+         <div class="flex py-4 px-6 border-b">
+            <h1 class="text-xl font-bold">Editar Cliente</h1>
+         </div>
+         <div class="flex-1 overflow-y-auto">
+            <form onsubmit="event.preventDefault(); updateData();" class="flex flex-col p-6 gap-4">
+               <input type="hidden" id="Id" name="Id" />
+               
+               <div class="grid grid-cols-2 gap-4">
+                   <div class="flex flex-col">
+                       <label class="font-mono text-sm mb-1" name="Nombre">Nombre</label>
+                       <input type="text" id="NombreUpdate" name="Nombre" placeholder="Nombre completo" required class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                   </div>
+                   <div class="flex flex-col">
+                       <label class="font-mono text-sm mb-1" name="Cedula">Cédula</label>
+                       <input type="text" id="CedulaUpdate" name="Cedula" oninput="formatCedula(this)" maxlength="13" placeholder="000-0000000-0" required class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all font-mono" />
+                   </div>
+               </div>
+
+               <div class="grid grid-cols-2 gap-4">
+                   <div class="flex flex-col">
+                       <label class="font-mono text-sm mb-1" name="NumeroTarjetaCR">Número de Tarjeta Credito</label>
+                       <input type="text" id="NumeroTarjetaCRUpdate" name="NumeroTarjetaCR" oninput="formatTarjeta(this)" maxlength="19" placeholder="0000-0000-0000-0000" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all font-mono" />
+                   </div>
+                   <div class="flex flex-col">
+                       <label class="font-mono text-sm mb-1" name="Limite_Credito">Límite de Crédito</label>
+                       <input type="number" step="0.01" id="Limite_CreditoUpdate" name="Limite_Credito" placeholder="0.00" class="no-spinner w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                   </div>
+               </div>
+
+               <div class="grid grid-cols-2 gap-4">
+                   <div class="flex flex-col">
+                       <label class="font-mono text-sm mb-1" name="Tipo_Persona">Tipo Persona</label>
+                       <div class="relative">
+                           <select id="Tipo_PersonaUpdate" name="Tipo_Persona" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400">
+                               <option value="" selected disabled hidden>Seleccione tipo</option>
+                               <option value="1">Física</option>
+                               <option value="2">Jurídica</option>
+                           </select>
+                           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                               <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                   <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                               </svg>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="flex flex-col">
+                       <label class="font-mono text-sm mb-1" name="Monto_Entrega_Tardia">Monto Entrega Tardía</label>
+                       <input type="number" step="0.01" id="Monto_Entrega_TardiaUpdate" name="Monto_Entrega_Tardia" placeholder="0.00" class="no-spinner w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                   </div>
+               </div>
+
+               <div class="grid grid-cols-2 gap-4">
+                   <div class="flex flex-col">
+                       <label class="font-mono text-sm mb-1" name="Estado">Estado</label>
+                       <div class="relative">
+                           <select id="EstadoUpdate" name="Estado" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400">
+                               <option value="" selected disabled hidden>Seleccione estado</option>
+                               <option value="1" class="text-green-500">Activo</option>
+                               <option value="0" class="text-red-500">Inactivo</option>
+                           </select>
+                           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                               <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                   <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                               </svg>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+               <div class="flex justify-end mt-4 pt-4 border-t border-gray-100">
+                  <div class="px-2 py-1">
+                     <button type="button" class="px-4 py-2 text-gray-600 rounded-md bg-gray-100 hover:bg-gray-200 transition-all duration-300"
+                        onclick="handleData(null, false)">
+                     Cerrar
+                     </button>
+                  </div>
+                  <div class="px-2 py-1">
+                     <button type="submit" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300">
+                     Guardar
+                     </button>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</main>
+<footer class="[grid-area:footer]"></footer>
+<script>
+   function filterTable() {
+       const input = document.getElementById("searchInput");
+       const filter = input.value.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+       const tbody = document.getElementById("dataTableBody");
+       const trs = tbody.getElementsByTagName("tr");
+
+       for (let i = 0; i < trs.length; i++) {
+           const tds = trs[i].getElementsByTagName("td");
+           let visible = false;
+           // Exclude the last column (Acciones) from filtering
+           for (let j = 0; j < (tds.length - 1); j++) {
+               if (tds[j]) {
+                   const cellText = tds[j].innerText.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+                   if (cellText.indexOf(filter) > -1) {
+                       visible = true;
+                       break;
+                   }
+               }
+           }
+           trs[i].style.display = visible ? "" : "none";
+       }
+   }
+
+   function formatCedula(input) {
+       let value = input.value.replace(/\D/g, ''); // Eliminar todo lo que no sea número
+       
+       if (value.length > 11) {
+           value = value.substring(0, 11);
+       }
+
+       let formatted = '';
+       if (value.length > 0) {
+           formatted += value.substring(0, 3);
+       }
+       if (value.length > 3) {
+           formatted += '-' + value.substring(3, 10);
+       }
+       if (value.length > 10) {
+           formatted += '-' + value.substring(10, 11);
+       }
+       input.value = formatted;
+   }
+
+   function formatTarjeta(input) {
+       let value = input.value.replace(/\D/g, ''); 
+       
+       if (value.length > 16) {
+           value = value.substring(0, 16);
+       }
+
+       let formatted = value.match(/.{1,4}/g); 
+       if (formatted) {
+           input.value = formatted.join('-');
+       } else {
+           input.value = value;
+       }
+   }
+
+   function deleteData(id) {
+       if(!confirm('¿Estás seguro de eliminar el cliente?')) return;
+   
+       fetch('/Clientes/Delete', {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(parseInt(id))
+      })
+      .then(response => {
+          if (response.ok) {
+              location.reload();
+          } else {
+              alert('Error deleting data');
+          }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+   
+   function updateData() {
+      const id = document.getElementById('Id').value;
+      const nombre = document.getElementById('NombreUpdate').value;
+      const cedula = document.getElementById('CedulaUpdate').value.replace(/-/g, ''); // Quitar guiones
+      const tcr = document.getElementById('NumeroTarjetaCRUpdate').value.replace(/-/g, '');
+      const limite = document.getElementById('Limite_CreditoUpdate').value;
+      const tipoPersona = document.getElementById('Tipo_PersonaUpdate').value;
+      const atraso = document.getElementById('Monto_Entrega_TardiaUpdate').value;
+      const estado = document.getElementById('EstadoUpdate').value;
+   
+      const data = {
+          id: parseInt(id),
+          nombre: nombre,
+          cedula: cedula,
+          numeroTarjetaCR: tcr,
+          limite_Credito: parseFloat(limite) || 0,
+          tipo_Persona: parseInt(tipoPersona),
+          monto_Entrega_Tardia: parseFloat(atraso) || 0,
+          estado: parseInt(estado)
+      };
+   
+      fetch('/Clientes/Update', {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then(response => {
+          if (response.ok) {
+              location.reload();
+          } else {
+              alert('Error updating data');
+          }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+   
+   function handleData(id, show){
+       const overlay = document.getElementById('modal-update');
+       const content = document.getElementById('modal-content-update');
+       
+       if (!show) {
+           overlay.classList.remove('visible', 'opacity-100');
+           overlay.classList.add('invisible', 'opacity-0');
+           content.classList.remove('scale-100', 'translate-y-0');
+           content.classList.add('scale-95', 'translate-y-4');
+           return;
+       }
+      
+      var allData = @Html.Raw(Json.Serialize(Model));
+      var data = allData.find(item => item.id == id);
+      
+      document.getElementById('Id').value = data.id;
+      document.getElementById('NombreUpdate').value = data.nombre;
+      
+      const cedulaInput = document.getElementById('CedulaUpdate');
+      cedulaInput.value = data.cedula;
+      formatCedula(cedulaInput); // Aplicar máscara inicial
+      
+      const tarjetaInput = document.getElementById('NumeroTarjetaCRUpdate');
+      tarjetaInput.value = data.numeroTarjetaCR || '';
+      if(tarjetaInput.value) formatTarjeta(tarjetaInput);
+
+      document.getElementById('Limite_CreditoUpdate').value = data.limite_Credito;
+      document.getElementById('Tipo_PersonaUpdate').value = data.tipo_Persona;
+      document.getElementById('Monto_Entrega_TardiaUpdate').value = data.monto_Entrega_Tardia;
+      document.getElementById('EstadoUpdate').value = data.estado;
+     
+       overlay.classList.remove('invisible', 'opacity-0');
+       overlay.classList.add('visible', 'opacity-100');
+       content.classList.remove('scale-95', 'translate-y-4');
+       content.classList.add('scale-100', 'translate-y-0');
+   }
+   
+   
+   function toggleModal(show) {
+       const overlay = document.getElementById('modal-create');
+       const content = document.getElementById('modal-content-create');
+   
+       if (show) {
+           overlay.classList.remove('invisible', 'opacity-0');
+           overlay.classList.add('visible', 'opacity-100');
+   
+           content.classList.remove('scale-95', 'translate-y-4');
+           content.classList.add('scale-100', 'translate-y-0');
+       } else {
+           overlay.classList.remove('visible', 'opacity-100');
+           overlay.classList.add('invisible', 'opacity-0');
+   
+           content.classList.remove('scale-100', 'translate-y-0');
+           content.classList.add('scale-95', 'translate-y-4');
+       }
+   }
+</script>
+</div>

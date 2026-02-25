@@ -93,7 +93,7 @@
               </div>
 
               <div class="mb-5 px-8">
-                 <input type="text" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
+                 <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
               </div>
               <div class="px-8 mb-5">
                  <div class="overflow-x-auto border border-gray-200 rounded-lg">
@@ -106,7 +106,7 @@
                              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                           </tr>
                        </thead>
-                       <tbody class="bg-white divide-y divide-gray-200">
+                       <tbody id="dataTableBody" class="bg-white divide-y divide-gray-200">
                        @foreach (var item in Model) {
                           <tr key="@item.Id" class="hover:bg-gray-50 transition-colors">
                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Id</td>
@@ -193,6 +193,28 @@
     <footer class="[grid-area:footer]"></footer>
 
      <script>
+         function filterTable() {
+       const input = document.getElementById("searchInput");
+       const filter = input.value.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+       const tbody = document.getElementById("dataTableBody");
+       const trs = tbody.getElementsByTagName("tr");
+
+       for (let i = 0; i < trs.length; i++) {
+           const tds = trs[i].getElementsByTagName("td");
+           let visible = false;
+           // Exclude the last column (Acciones) from filtering
+           for (let j = 0; j < (tds.length - 1); j++) {
+               if (tds[j]) {
+                   const cellText = tds[j].innerText.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+                   if (cellText.indexOf(filter) > -1) {
+                       visible = true;
+                       break;
+                   }
+               }
+           }
+           trs[i].style.display = visible ? "" : "none";
+       }
+   }
 
          function deleteData(id) {
              if(!confirm('¿Estás seguro de eliminar el tipo de articulo?')) return;

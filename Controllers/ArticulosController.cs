@@ -6,7 +6,7 @@ using VideoClub.ViewModels;
 
 namespace VideoClub.Controllers;
 
-[Authorize]
+// [Authorize]
 public class ArticulosController : Controller
 {
     private readonly AppDbContext _context;
@@ -18,20 +18,37 @@ public class ArticulosController : Controller
     
     public async Task<IActionResult> Index()
     {
-        var vm = new ArticuloElencoViewModel
+        try
         {
-            Articulos = await _context.Articulos.Include(a => a.TiposArticulos).Include(a => a.Idioma).ToListAsync(),
-            Idiomas   = await _context.Idiomas.Where(i => i.Estado == Idiomas.EstadoIdioma.Activo).ToListAsync(),
-            Elenco    = await _context.Elenco.Where(e => e.Estado == Elenco.EstadoElenco.Activo).ToListAsync(),
-            ElencoArticulo = await _context.ElencoArticulo.ToListAsync(),
-            TiposArticulos = await _context.TiposArticulos.Where(t => t.Estado == TiposArticulos.EstadoArticulo.Activo).ToListAsync()
-        };
+            var vm = new ArticuloElencoViewModel
+            {
+                Articulos = await _context.Articulos.Include(a => a.TiposArticulos).Include(a => a.Idioma).ToListAsync(),
+                Idiomas   = await _context.Idiomas.Where(i => i.Estado == Idiomas.EstadoIdioma.Activo).ToListAsync(),
+                Elenco    = await _context.Elenco.Where(e => e.Estado == Elenco.EstadoElenco.Activo).ToListAsync(),
+                ElencoArticulo = await _context.ElencoArticulo.ToListAsync(),
+                TiposArticulos = await _context.TiposArticulos.Where(t => t.Estado == TiposArticulos.EstadoArticulo.Activo).ToListAsync()
+            };
 
-        ViewBag.TiposArticulos = vm.TiposArticulos; 
-        ViewBag.Idiomas = vm.Idiomas;
-        ViewBag.Elenco = vm.Elenco;
+            ViewBag.TiposArticulos = vm.TiposArticulos; 
+            ViewBag.Idiomas = vm.Idiomas;
+            ViewBag.Elenco = vm.Elenco;
 
-        return View(vm);
+            try 
+            {
+                var jsonTest = System.Text.Json.JsonSerializer.Serialize(vm.Articulos);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("SERIALIZATION ERROR: " + ex.ToString());
+            }
+
+            return View(vm);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("EF CORE ERROR: " + ex.ToString());
+            throw;
+        }
     }
 
 
