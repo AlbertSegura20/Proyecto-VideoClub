@@ -13,9 +13,17 @@ namespace VideoClub.Models
             Inactivo = 0
         }
 
+        public enum RolEmpleado
+        {
+            Administrador = 1,
+            Empleado = 2
+        }
+
 
         [Key]
         public int Id { get; set; }
+
+        public RolEmpleado Rol { get; set; }
 
         [MaxLength(100)]
         public string Nombre { get; set; }

@@ -37,7 +37,7 @@ namespace VideoClub.Controllers
                     {
                         new Claim(ClaimTypes.Name, user.Nombre),
                         new Claim(ClaimTypes.Email, user.Correo),
-                        new Claim(ClaimTypes.Role, "Empleado") 
+                        new Claim(ClaimTypes.Role, user.Rol.ToString())
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

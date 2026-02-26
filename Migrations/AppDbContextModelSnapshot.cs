@@ -184,6 +184,9 @@ namespace VideoClub.Migrations
                     b.Property<double>("PorcentajeComision")
                         .HasColumnType("double precision");
 
+                    b.Property<int>("Rol")
+                        .HasColumnType("integer");
+
                     b.Property<string>("TandaLabor")
                         .IsRequired()
                         .HasColumnType("text");

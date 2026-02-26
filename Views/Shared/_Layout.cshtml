@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/Icons/" asp-append-version="true" />
   
 
 </head>
@@ -35,6 +36,7 @@
                          scale-[1.02] rounded-lg
                         @(path.StartsWith("/Dashboard") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "")">
                             <span class="hidden md:block">Dashboard</span>
+                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/house.svg" class="w-5 h-5" alt="alt">
                         </li>
                     </a>
 
@@ -46,7 +48,8 @@
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/TiposArticulos") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
-                            <span class="hidden md:block">Tipos de Articulos</span>
+                            <span class="hidden md:block">Tipos de Articulos </span>
+                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/box.svg" class="w-5 h-5" alt="alt">
                         </li>
                     </a>
 
@@ -55,6 +58,8 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/Generos") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Géneros</span>
+                            <!-- <img src="~/lib/Icons/genre.png" class="w-7 h-7" alt="alt"> -->
+                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/clapperboard.svg" class="w-5 h-5" alt="alt">
                         </li>
                     </a>
 
@@ -63,6 +68,8 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/Idioma") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Idiomas</span>
+                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/language.svg" class="w-5 h-5" alt="alt">    
+                        
                         </li>
                     </a>
 
@@ -71,6 +78,7 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/Elenco") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Elenco</span>
+                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/user-group.svg" class="w-5 h-5 " alt="alt">
                         </li>
                     </a>
 
@@ -79,6 +87,8 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/Articulos") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Articulos</span>
+                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/video.svg" class="w-5 h-5" alt="alt">
+                       
                         </li>
                     </a>
 
@@ -92,16 +102,22 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.Equals("/Clientes") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Clientes</span>
+                           <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/user.svg" class="w-5 h-5" alt="alt">
+                          
                         </li>
                     </a>
 
-                    <a href="/Empleados">
-                        <li class="
-                        flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
-                        @(path.Equals("/Empleados") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
-                            <span class="hidden md:block">Empleados</span>
-                        </li>
-                    </a>
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <a href="/Empleados">
+                            <li class="
+                            flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
+                            @(path.Equals("/Empleados") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                                <span class="hidden md:block">Empleados</span>
+                                <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/user-tie.svg" class="w-5 h-5" alt="alt">
+                            </li>
+                        </a>
+                    }
 
                     @if (User?.Identity?.IsAuthenticated == true)
                     {

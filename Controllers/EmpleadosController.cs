@@ -5,7 +5,7 @@ using VideoClub.Models;
 
 namespace VideoClub.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Administrador")]
 public class EmpleadosController : Controller
 {
     private readonly AppDbContext _context;
