@@ -1,0 +1,604 @@
+@model VideoClub.ViewModels.RentasViewModel
+@using VideoClub.Models
+@{
+    ViewData["Title"] = "Rentas";
+}
+<div class="Content grid [grid-template-rows:100px_1fr_auto] [grid-template-areas:'header'_'main'_'footer']">
+<header class="[grid-area:header]">
+   <div class="">
+      <h1 class="text-2xl font-bold py-5 px-8">Rentas</h1>
+   </div>
+</header>
+<main class="[grid-area:main]">
+   <div class="mb-10 container mx-auto">
+   </div>
+   <div class="container mx-auto shadow-2xl rounded-lg bg-white pb-4">
+      <div class="mb-5 pt-5">
+         <div class="flex justify-between">
+            <div>
+               <span class="text-2xl py-5 px-8 font-semibold text-gray-700">Listado</span>
+            </div>
+            <div class="px-4 mb-5">
+               <button onclick="toggleModal(true)" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-1">
+               + &nbsp;Nueva Renta
+               </button>
+            </div>
+         </div>
+         
+         <!-- CREATE MODAL -->
+         <div id="modal-create" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
+            <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
+            <div id="modal-content-create" class="relative flex flex-col h-[calc(100vh-100px)] lg:h-auto max-h-[90vh] w-full max-w-3xl bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
+               <div class="w-full px-4 mx-auto flex flex-col h-full overflow-hidden">
+                  <!-- Botón de cerrar X -->
+                  <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 z-10 transition-colors">
+                     <span class="sr-only">Cerrar</span>
+                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                     </svg>
+                  </button>
+                  
+                  <div class="flex border-b shrink-0 pt-4">
+                     <button class="tab-btn px-4 py-2 border-b-2 font-medium text-blue-600 border-blue-600">
+                     Datos de la Renta
+                     </button>
+                  </div>
+
+                  <!-- Contenido del modal -->
+                  <div class="mt-4 flex-1 flex flex-col min-h-0">
+                     <div class="flex flex-col h-full min-h-0 border text-sm">
+                         <form id="formRentaCreate" class="flex flex-col h-full min-h-0 p-4" onsubmit="event.preventDefault();">
+                              <div class="flex-1 min-h-0 overflow-y-auto">
+                                 <div class="flex flex-col gap-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- Empleado -->
+                                        <div class="flex flex-col">
+                                           <label for="EmpleadoId" class="mb-1 font-medium text-gray-700">Empleado</label>
+                                           <div class="relative">
+                                              <select name="EmpleadoId" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                 <option value="" selected disabled hidden>Seleccione un empleado</option>
+                                                 @if (ViewBag.Empleados != null)
+                                                 {
+                                                     foreach (var emp in ViewBag.Empleados)
+                                                     {
+                                                         <option value="@emp.Id">@emp.Nombre</option>
+                                                     }
+                                                 }
+                                              </select>
+                                           </div>
+                                        </div>
+                                        <!-- Cliente -->
+                                        <div class="flex flex-col">
+                                           <label for="ClienteId" class="mb-1 font-medium text-gray-700">Cliente</label>
+                                           <div class="relative">
+                                              <select name="ClienteId" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                 <option value="" selected disabled hidden>Seleccione un cliente</option>
+                                                 @if (ViewBag.Clientes != null)
+                                                 {
+                                                     foreach (var cli in ViewBag.Clientes)
+                                                     {
+                                                         <option value="@cli.Id">@cli.Nombre</option>
+                                                     }
+                                                 }
+                                              </select>
+                                           </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 gap-4">
+                                        <!-- Articulo -->
+                                        <div class="flex flex-col">
+                                           <label for="ArticuloId" class="mb-1 font-medium text-gray-700">Artículo (Solo Disponibles)</label>
+                                           <div class="relative">
+                                              <select name="ArticuloId" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                 <option value="" selected disabled hidden>Seleccione un artículo libre</option>
+                                                 @if (ViewBag.Articulos != null)
+                                                 {
+                                                     foreach (var art in ViewBag.Articulos)
+                                                     {
+                                                         <option value="@art.Id">@art.Titulo - (@art.RentaPorDia.ToString("C")/día)</option>
+                                                     }
+                                                 }
+                                              </select>
+                                           </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="flex flex-col">
+                                            <label class="mb-1 font-medium text-gray-700">Fecha de Renta</label>
+                                            <input type="date" name="FechaRenta" id="FechaRenta" required
+                                               class="w-full px-4 py-2 bg-white font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" />
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <label class="mb-1 font-medium text-gray-700">Fecha de Devolución</label>
+                                            <input type="date" name="FechaDevolucion" id="FechaDevolucion" required
+                                               class="w-full px-4 py-2 bg-white font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="flex flex-col">
+                                            <label class="mb-1 font-medium text-gray-700">Monto Por Día</label>
+                                            <input type="number" step="0.01" name="MontoPorDia" required
+                                               class="w-full px-4 py-2 bg-white font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" placeholder="0.00" />
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <label class="mb-1 font-medium text-gray-700">Cantidad Días</label>
+                                            <input type="number" name="CantidadDias" required readonly id="CantidadDias"
+                                               class="w-full px-4 py-2 bg-gray-100 font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" placeholder="0" />
+                                        </div>
+                                        <div class="flex flex-col">
+                                           <label for="Estado" class="mb-1 font-medium text-gray-700">Estado</label>
+                                           <div class="relative">
+                                              <select name="Estado" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                 <option value="1" class="text-green-500">Activa</option>
+                                                 <option value="2" class="text-blue-500">Devuelta</option>
+                                                 <option value="3" class="text-red-500">Atrasada</option>
+                                                 <option value="4" class="text-gray-500">Cancelada</option>
+                                              </select>
+                                           </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex flex-col">
+                                        <label class="mb-1 font-medium text-gray-700">Comentario</label>
+                                        <textarea name="Comentario" class="w-full px-4 py-2 bg-white font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" placeholder="Opcional..." rows="2"></textarea>
+                                    </div>
+
+                                 </div>
+                              </div>
+                              <div class="flex justify-end mt-4 pt-4 border-t">
+                                 <div class="px-2">
+                                    <button type="button" class="px-4 py-2 text-gray-600 rounded-md bg-gray-100 hover:bg-gray-200 transition-all duration-300 font-medium font-mono"
+                                       onclick="toggleModal(false)">
+                                    Cancelar
+                                    </button>
+                                 </div>
+                                 <div class="px-2">
+                                    <button type="button" class="bg-blue-600 px-4 py-2 text-white rounded-md hover:bg-blue-700 shadow-sm transition-all duration-300 font-medium font-mono"
+                                       onclick="submitRenta()">
+                                    Guardar
+                                    </button>
+                                 </div>
+                              </div>
+                           </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+         <!-- UPDATE MODAL -->
+         <div id="modal-update" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
+            <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
+            <div id="modal-content-update" class="relative flex flex-col h-[calc(100vh-100px)] lg:h-auto max-h-[90vh] w-full max-w-3xl bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
+               <div class="w-full px-4 mx-auto flex flex-col h-full overflow-hidden">
+                  <button onclick="handleData(null, false)" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 z-10 transition-colors">
+                     <span class="sr-only">Cerrar</span>
+                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                     </svg>
+                  </button>
+                  
+                  <div class="flex border-b shrink-0 pt-4">
+                     <button class="tab-btn px-4 py-2 border-b-2 font-medium text-blue-600 border-blue-600">
+                     Edición de Renta
+                     </button>
+                  </div>
+
+                  <div class="mt-4 flex-1 flex flex-col min-h-0">
+                     <div class="flex flex-col h-full min-h-0 border text-sm">
+                         <form id="formRentaUpdate" class="flex flex-col h-full min-h-0 p-4" onsubmit="event.preventDefault(); updateData();">
+                              <input type="hidden" id="NoRenta" name="NoRenta" />
+                              <div class="flex-1 min-h-0 overflow-y-auto">
+                                 <div class="flex flex-col gap-4">
+                                     
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <!-- Empleado -->
+                                        <div class="flex flex-col">
+                                           <label for="EmpleadoIdUpdate" class="mb-1 font-medium text-gray-700">Empleado</label>
+                                           <div class="relative">
+                                              <select id="EmpleadoIdUpdate" name="EmpleadoId" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                 <option value="" selected disabled hidden>Seleccione un empleado</option>
+                                                 @if (ViewBag.Empleados != null)
+                                                 {
+                                                     foreach (var emp in ViewBag.Empleados)
+                                                     {
+                                                         <option value="@emp.Id">@emp.Nombre</option>
+                                                     }
+                                                 }
+                                              </select>
+                                           </div>
+                                        </div>
+                                        <!-- Cliente -->
+                                        <div class="flex flex-col">
+                                           <label for="ClienteIdUpdate" class="mb-1 font-medium text-gray-700">Cliente</label>
+                                           <div class="relative">
+                                              <select id="ClienteIdUpdate" name="ClienteId" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                 <option value="" selected disabled hidden>Seleccione un cliente</option>
+                                                 @if (ViewBag.Clientes != null)
+                                                 {
+                                                     foreach (var cli in ViewBag.Clientes)
+                                                     {
+                                                         <option value="@cli.Id">@cli.Nombre</option>
+                                                     }
+                                                 }
+                                              </select>
+                                           </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 gap-4">
+                                        <!-- Articulo -->
+                                        <div class="flex flex-col">
+                                           <label for="ArticuloIdUpdate" class="mb-1 text-red-600 font-medium text-gray-700"><i class="fa fa-info-circle"></i> ID de Artículo (Solo listado por consistencia técnica) </label>
+                                           <div class="relative">
+                                                <input type="number" id="ArticuloIdUpdate" name="ArticuloId" required readonly
+                                               class="w-full px-4 py-2 bg-gray-100 font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" />
+                                              <small class="text-xs text-gray-500">Para cambiar de artículo es preferible anular/devolver esta renta original y crear una nueva renta.</small>
+                                           </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="flex flex-col">
+                                            <label class="mb-1 font-medium text-gray-700">Fecha de Renta</label>
+                                            <input type="date" id="FechaRentaUpdate" name="FechaRenta" required
+                                               class="w-full px-4 py-2 bg-white font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" />
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <label class="mb-1 font-medium text-gray-700">Fecha de Devolución</label>
+                                            <input type="date" id="FechaDevolucionUpdate" name="FechaDevolucion" required
+                                               class="w-full px-4 py-2 bg-white font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" />
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="flex flex-col">
+                                            <label class="mb-1 font-medium text-gray-700">Monto Por Día</label>
+                                            <input type="number" step="0.01" id="MontoPorDiaUpdate" name="MontoPorDia" required
+                                               class="w-full px-4 py-2 bg-white font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" placeholder="0.00" />
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <label class="mb-1 font-medium text-gray-700">Cantidad Días</label>
+                                            <input type="number" id="CantidadDiasUpdate" name="CantidadDias" required
+                                               class="w-full px-4 py-2 bg-gray-100 font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" placeholder="0" />
+                                        </div>
+                                        <div class="flex flex-col">
+                                           <label for="EstadoUpdate" class="mb-1 font-medium text-gray-700">Estado</label>
+                                           <div class="relative">
+                                              <select id="EstadoUpdate" name="Estado" class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                 <option value="1" class="text-green-500">Activa</option>
+                                                 <option value="2" class="text-blue-500">Devuelta</option>
+                                                 <option value="3" class="text-red-500">Atrasada</option>
+                                                 <option value="4" class="text-gray-500">Cancelada</option>
+                                              </select>
+                                           </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex flex-col">
+                                        <label class="mb-1 font-medium text-gray-700">Comentario</label>
+                                        <textarea id="ComentarioUpdate" name="Comentario" class="w-full px-4 py-2 bg-white font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm" placeholder="Opcional..." rows="2"></textarea>
+                                    </div>
+
+                                 </div>
+                              </div>
+                              <div class="flex justify-end mt-4 pt-4 border-t">
+                                 <div class="px-2">
+                                    <button type="button" class="px-4 py-2 text-gray-600 rounded-md bg-gray-100 hover:bg-gray-200 transition-all duration-300 font-medium font-mono"
+                                       onclick="handleData(null, false)">
+                                    Cancelar
+                                    </button>
+                                 </div>
+                                 <div class="px-2">
+                                    <button type="button" class="bg-blue-600 px-4 py-2 text-white rounded-md hover:bg-blue-700 shadow-sm transition-all duration-300 font-medium font-mono"
+                                       onclick="updateData()">
+                                    Guardar
+                                    </button>
+                                 </div>
+                              </div>
+                           </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+      </div>
+
+      <div class="mb-5 px-8">
+         <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar por cliente, empleado o articulo..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm font-mono" />
+      </div>
+      <div class="px-8 mb-5">
+         <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+               <thead class="bg-gray-100">
+                  <tr>
+                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">No. Renta</th>
+                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Empleado</th>
+                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Artículo</th>
+                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Cliente</th>
+                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Fecha Renta</th>
+                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Fecha Devolución</th>
+                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Total</th>
+                     <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Estado</th>
+                     <th class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">Acciones</th>
+                  </tr>
+               </thead>
+               <tbody id="dataTableBody" class="bg-white divide-y divide-gray-200 font-mono text-sm">
+                  @foreach (var item in Model.Rentas) {
+                  <tr key="@item.NoRenta" class="hover:bg-gray-50 transition-colors">
+                     <td class="px-6 py-4 whitespace-nowrap text-gray-900 font-bold">@item.NoRenta</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-gray-700">@item.Empleado.Nombre</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-gray-700 truncate max-w-[150px]" title="@item.Articulo.Titulo">@item.Articulo.Titulo</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-gray-700">@item.Cliente.Nombre</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-gray-700">@item.FechaRenta.ToString("dd/MM/yyyy")</td>
+                     <td class="px-6 py-4 whitespace-nowrap text-gray-700">
+                         @if(item.FechaDevolucion < DateTime.Now && item.Estado == Renta.EstadoRenta.Activa)
+                         {
+                             <span class="text-red-500 font-bold">@item.FechaDevolucion.ToString("dd/MM/yyyy") (Vencido)</span>
+                         }
+                         else
+                         {
+                             @item.FechaDevolucion.ToString("dd/MM/yyyy")
+                         }
+                     </td>
+                     <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-800">
+                         @((item.MontoPorDia * item.CantidadDias).ToString("C"))
+                     </td>
+                     <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full shadow-sm
+                        @(item.Estado == Renta.EstadoRenta.Activa ? "bg-green-100 text-green-800 border-green-200 border" : 
+                        item.Estado == Renta.EstadoRenta.Devuelta ? "bg-blue-100 text-blue-800 border-blue-200 border" : 
+                        item.Estado == Renta.EstadoRenta.Atrasada ? "bg-red-100 text-red-800 border-red-200 border" : 
+                        "bg-gray-100 text-gray-800 border-gray-200 border")">
+                        @item.Estado
+                        </span>
+                     </td>
+                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <a onclick="handleData(@item.NoRenta, true)" class="text-blue-600 hover:text-blue-900 mr-3 hover:cursor-pointer transition-colors"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></a>
+                        <a onclick="deleteData(@item.NoRenta)" class="text-red-500 hover:text-red-700 hover:cursor-pointer transition-colors"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></a>
+                     </td>
+                  </tr>
+                  }
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</main>
+<footer class="[grid-area:footer]"></footer>
+</div>
+
+<script>
+   function filterTable() {
+       const input = document.getElementById("searchInput");
+       const filter = input.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+       const tbody = document.getElementById("dataTableBody");
+       const trs = tbody.getElementsByTagName("tr");
+
+       for (let i = 0; i < trs.length; i++) {
+           const tds = trs[i].getElementsByTagName("td");
+           let visible = false;
+           // Exclude the last column (Acciones)
+           for (let j = 0; j < (tds.length - 1); j++) {
+               if (tds[j]) {
+                   const cellText = tds[j].innerText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                   if (cellText.indexOf(filter) > -1) {
+                       visible = true;
+                       break;
+                   }
+               }
+           }
+           trs[i].style.display = visible ? "" : "none";
+       }
+   }
+   
+   // Auto calculate days when dates change (CREATE)
+   const fechaRentaInput = document.getElementById("FechaRenta");
+   const fechaDevolucionInput = document.getElementById("FechaDevolucion");
+   const cantidadDiasInput = document.getElementById("CantidadDias");
+   
+   function calculateDays() {
+       if(fechaRentaInput.value && fechaDevolucionInput.value) {
+           const f1 = new Date(fechaRentaInput.value);
+           const f2 = new Date(fechaDevolucionInput.value);
+           const diffTime = Math.abs(f2 - f1);
+           const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+           cantidadDiasInput.value = diffDays;
+       }
+   }
+   fechaRentaInput.addEventListener('change', calculateDays);
+   fechaDevolucionInput.addEventListener('change', calculateDays);
+   
+   // Auto calculate days (UPDATE)
+   const fRUpdate = document.getElementById("FechaRentaUpdate");
+   const fDUpdate = document.getElementById("FechaDevolucionUpdate");
+   const cDUpdate = document.getElementById("CantidadDiasUpdate");
+   
+   function calcDaysUpdate() {
+       if(fRUpdate.value && fDUpdate.value) {
+           const f1 = new Date(fRUpdate.value);
+           const f2 = new Date(fDUpdate.value);
+           const diffTime = Math.abs(f2 - f1);
+           const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+           cDUpdate.value = diffDays;
+       }
+   }
+   fRUpdate.addEventListener('change', calcDaysUpdate);
+   fDUpdate.addEventListener('change', calcDaysUpdate);
+
+   function deleteData(id) {
+       if(!confirm('¿Estás seguro de eliminar el registro de Renta?')) return;
+   
+       fetch('/Rentas/Delete', {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(parseInt(id))
+      })
+      .then(response => {
+          if (response.ok) {
+              location.reload();
+          } else {
+              alert('Error al eliminar la renta');
+          }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+   
+    function submitRenta() {
+       const form = document.querySelector('#formRentaCreate');
+       const EmpleadoId = form.querySelector('[name="EmpleadoId"]').value;
+       const ClienteId = form.querySelector('[name="ClienteId"]').value;
+       const ArticuloId = form.querySelector('[name="ArticuloId"]').value;
+       const FechaRenta = form.querySelector('[name="FechaRenta"]').value;
+       const FechaDevolucion = form.querySelector('[name="FechaDevolucion"]').value;
+       const MontoPorDia = form.querySelector('[name="MontoPorDia"]').value;
+       const CantidadDias = form.querySelector('[name="CantidadDias"]').value;
+       const Estado = form.querySelector('[name="Estado"]').value;
+       const Comentario = form.querySelector('[name="Comentario"]').value;
+       
+       if(!EmpleadoId || !ClienteId || !ArticuloId || !FechaRenta || !FechaDevolucion || !MontoPorDia || !CantidadDias) {
+           alert("Por favor rellene los campos requeridos.");
+           return;
+       }
+       
+       const data = {
+           EmpleadoId: parseInt(EmpleadoId),
+           ClienteId: parseInt(ClienteId),
+           ArticuloId: parseInt(ArticuloId),
+           FechaRenta: FechaRenta,
+           FechaDevolucion: FechaDevolucion,
+           MontoPorDia: parseFloat(MontoPorDia),
+           CantidadDias: parseInt(CantidadDias),
+           Estado: parseInt(Estado),
+           Comentario: Comentario
+       };
+       
+       fetch('/Rentas/Create', {
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/json'
+           },
+           body: JSON.stringify(data)
+       })
+       .then(response => {
+           if (response.ok) {
+               location.reload();
+           } else {
+               alert('Error creando la renta');
+           }
+       })
+       .catch(error => console.error('Error:', error));
+    }
+
+   function updateData() {
+      const id = document.getElementById('NoRenta').value;
+      const EmpleadoId = document.getElementById('EmpleadoIdUpdate').value;
+      const ClienteId = document.getElementById('ClienteIdUpdate').value;
+      const ArticuloId = document.getElementById('ArticuloIdUpdate').value;
+      const FechaRenta = document.getElementById('FechaRentaUpdate').value;
+      const FechaDevolucion = document.getElementById('FechaDevolucionUpdate').value;
+      const MontoPorDia = document.getElementById('MontoPorDiaUpdate').value;
+      const CantidadDias = document.getElementById('CantidadDiasUpdate').value;
+      const Estado = document.getElementById('EstadoUpdate').value;
+      const Comentario = document.getElementById('ComentarioUpdate').value;
+   
+      const data = {
+          NoRenta: parseInt(id),
+          EmpleadoId: parseInt(EmpleadoId),
+          ClienteId: parseInt(ClienteId),
+          ArticuloId: parseInt(ArticuloId),
+          FechaRenta: FechaRenta,
+          FechaDevolucion: FechaDevolucion,
+          MontoPorDia: parseFloat(MontoPorDia),
+          CantidadDias: parseInt(CantidadDias),
+          Estado: parseInt(Estado),
+          Comentario: Comentario
+      };
+   
+      fetch('/Rentas/Update', {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then(response => {
+          if (response.ok) {
+              location.reload();
+          } else {
+              alert('Error actualizando la renta');
+          }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+   
+   function handleData(id, show){
+       const overlay = document.getElementById('modal-update');
+       const content = document.getElementById('modal-content-update');
+   
+       if (!show) {
+           overlay.classList.remove('visible', 'opacity-100');
+           overlay.classList.add('invisible', 'opacity-0');
+           content.classList.remove('scale-100', 'translate-y-0');
+           content.classList.add('scale-95', 'translate-y-4');
+           return;
+       }
+   
+      var allData = @Html.Raw(Json.Serialize(Model.Rentas.Select(a => new {
+          noRenta = a.NoRenta,
+          empleadoId = a.EmpleadoId,
+          clienteId = a.ClienteId,
+          articuloId = a.ArticuloId,
+          fechaRenta = a.FechaRenta.ToString("yyyy-MM-dd"),
+          fechaDevolucion = a.FechaDevolucion.ToString("yyyy-MM-dd"),
+          montoPorDia = a.MontoPorDia,
+          cantidadDias = a.CantidadDias,
+          estado = (int)a.Estado,
+          comentario = a.Comentario ?? ""
+      })));
+      var data = allData.find(item => item.noRenta == id);
+      
+      document.getElementById('NoRenta').value = data.noRenta;
+      document.getElementById('EmpleadoIdUpdate').value = data.empleadoId;
+      document.getElementById('ClienteIdUpdate').value = data.clienteId;
+      document.getElementById('ArticuloIdUpdate').value = data.articuloId;
+      document.getElementById('FechaRentaUpdate').value = data.fechaRenta;
+      document.getElementById('FechaDevolucionUpdate').value = data.fechaDevolucion;
+      document.getElementById('MontoPorDiaUpdate').value = data.montoPorDia;
+      document.getElementById('CantidadDiasUpdate').value = data.cantidadDias;
+      document.getElementById('EstadoUpdate').value = data.estado;
+      document.getElementById('ComentarioUpdate').value = data.comentario;
+   
+       overlay.classList.remove('invisible', 'opacity-0');
+       overlay.classList.add('visible', 'opacity-100');
+       content.classList.remove('scale-95', 'translate-y-4');
+       content.classList.add('scale-100', 'translate-y-0');
+   }
+   
+   function toggleModal(show) {
+       const overlay = document.getElementById('modal-create');
+       const content = document.getElementById('modal-content-create');
+   
+       if (show) {
+           // Default values
+           const today = new Date().toISOString().split('T')[0];
+           document.getElementById('FechaRenta').value = today;
+
+           overlay.classList.remove('invisible', 'opacity-0');
+           overlay.classList.add('visible', 'opacity-100');
+           content.classList.remove('scale-95', 'translate-y-4');
+           content.classList.add('scale-100', 'translate-y-0');
+       } else {
+           overlay.classList.remove('visible', 'opacity-100');
+           overlay.classList.add('invisible', 'opacity-0');
+           content.classList.remove('scale-100', 'translate-y-0');
+           content.classList.add('scale-95', 'translate-y-4');
+       }
+   }
+</script>

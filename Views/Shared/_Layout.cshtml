@@ -36,7 +36,10 @@
                          scale-[1.02] rounded-lg
                         @(path.StartsWith("/Dashboard") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "")">
                             <span class="hidden md:block">Dashboard</span>
-                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/house.svg" class="w-5 h-5" alt="alt">
+                            <!-- Heroicon name: outline/home -->
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                            </svg>
                         </li>
                     </a>
 
@@ -49,7 +52,10 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/TiposArticulos") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Tipos de Articulos </span>
-                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/box.svg" class="w-5 h-5" alt="alt">
+                            <!-- Heroicon name: outline/cube -->
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                            </svg>
                         </li>
                     </a>
 
@@ -58,8 +64,10 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/Generos") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Géneros</span>
-                            <!-- <img src="~/lib/Icons/genre.png" class="w-7 h-7" alt="alt"> -->
-                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/clapperboard.svg" class="w-5 h-5" alt="alt">
+                            <!-- Heroicon name: outline/film -->
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75A1.125 1.125 0 007.5 5.625v1.5c0 .621-.504 1.125-1.125 1.125m1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75A1.125 1.125 0 0010.5 5.625v1.5c0 .621-.504 1.125-1.125 1.125m1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75A1.125 1.125 0 0013.5 5.625v1.5c0 .621-.504 1.125-1.125 1.125m1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75A1.125 1.125 0 0016.5 5.625v1.5c0 .621-.504 1.125-1.125 1.125m1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125" />
+                            </svg>
                         </li>
                     </a>
 
@@ -68,8 +76,10 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/Idioma") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Idiomas</span>
-                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/language.svg" class="w-5 h-5" alt="alt">    
-                        
+                            <!-- Heroicon name: outline/language -->
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802" />
+                            </svg>
                         </li>
                     </a>
 
@@ -78,7 +88,10 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/Elenco") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Elenco</span>
-                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/user-group.svg" class="w-5 h-5 " alt="alt">
+                            <!-- Heroicon name: outline/users -->
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                            </svg>
                         </li>
                     </a>
 
@@ -87,8 +100,10 @@
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.StartsWith("/Articulos") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Articulos</span>
-                            <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/video.svg" class="w-5 h-5" alt="alt">
-                       
+                            <!-- Heroicon name: outline/video-camera -->
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
                         </li>
                     </a>
 
@@ -96,14 +111,16 @@
                         <span>Operaciones</span>
                     </div>
 
-                    <!-- Enlaces Deshabilitados: Falta Controller -->
+                    
                     <a href="/Clientes">
                         <li class="
                         flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                         @(path.Equals("/Clientes") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                             <span class="hidden md:block">Clientes</span>
-                           <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/user.svg" class="w-5 h-5" alt="alt">
-                          
+                           <!-- Heroicon name: outline/user -->
+                           <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                           </svg>
                         </li>
                     </a>
 
@@ -114,10 +131,25 @@
                             flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                             @(path.Equals("/Empleados") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                                 <span class="hidden md:block">Empleados</span>
-                                <img src="~/lib/fontawesome-free-7.2.0-web/svgs/solid/user-tie.svg" class="w-5 h-5" alt="alt">
+                                <!-- Heroicon name: outline/briefcase -->
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.896 1.983-1.983 1.983h-12.5a1.983 1.983 0 01-1.983-1.983v-4.25m16.466-2.58A2.25 2.25 0 0019.5 9h-15a2.25 2.25 0 00-2.25 2.25v2.25c0 .324.06.635.168.914M20.25 14.15A2.25 2.25 0 0119.5 16.5h-15a2.25 2.25 0 01-2.25-2.35m16.466-2.58A2.25 2.25 0 0019.5 9h-15a2.25 2.25 0 00-2.25 2.25M15 9V5.625A1.125 1.125 0 0013.875 4.5h-3.75A1.125 1.125 0 009 5.625V9m6 0v1.5M9 9v1.5" />
+                                </svg>
                             </li>
                         </a>
                     }
+
+                    <a href="/Rentas">
+                        <li class="
+                        flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
+                        @(path.StartsWith("/Rentas") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
+                            <span class="hidden md:block">Rentas</span>
+                            <!-- Heroicon name: outline/document-text -->
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                            </svg>
+                        </li>
+                    </a>
 
                     @if (User?.Identity?.IsAuthenticated == true)
                     {
@@ -125,8 +157,9 @@
                             <button type="submit" class="w-full text-left">
                                 <li class="flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-red-500 hover:shadow-xl hover:bg-red-50 hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium text-red-600">
                                     <span class="hidden md:block">Cerrar Sesión</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
+                                    <!-- Heroicon name: outline/arrow-right-on-rectangle -->
+                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                                     </svg>
                                 </li>
                             </button>
@@ -139,6 +172,10 @@
                             flex justify-between py-2 items-center md:px-2 cursor-pointer hover:rounded-lg hover:text-blue-500 hover:shadow-xl hover:bg-[#EEF2FF] hover:scale-[1.02] transition-all duration-300 text-sm md:text-base md:font-bold font-medium
                             @(path.Equals("/Account/Login") ? "bg-blue-500 text-white shadow-xl bg-[#EEF2FF] scale-[1.02] rounded-lg" : "") ">
                                 <span class="hidden md:block">Iniciar Sesión</span>
+                                <!-- Heroicon name: outline/arrow-right-on-rectangle -->
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                                </svg>
                             </li>
                         </a>
                     }
