@@ -1,4 +1,5 @@
-﻿@{
+﻿@model VideoClub.Models.DashboardViewModel
+@{
     ViewData["Title"] = "Dashboard";
 }
 
@@ -12,70 +13,134 @@
 
     <main class="[grid-area:main]">
         
-        <div class="mb-10 container mx-auto">
-            <div class="border-2 border-dashed border-gray-300 rounded-lg p-10 text-center text-gray-500">
-                Aquí se cargan las Cards (Resumen)
+        <div class="mb-10 container mx-auto px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Rentas de Hoy -->
+                <div class="bg-white rounded-lg shadow-xl border border-gray-100 p-6 flex items-center justify-between hover:transform hover:scale-105 transition-all duration-600">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Rentas de Hoy</p>
+                        <h3 class="text-3xl font-bold text-blue-600">@Model.RentasHoy</h3>
+                    </div>
+                    <div class="p-3 bg-blue-50 text-blue-600 rounded-full">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Rentas Pendientes -->
+                <div class="bg-white rounded-lg shadow-xl border border-gray-100 p-6 flex items-center justify-between transition-shadow hover:transform hover:scale-105 transition-all duration-600">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Rentas Pendientes</p>
+                        <h3 class="text-3xl font-bold text-yellow-500">@Model.RentasPendientes</h3>
+                    </div>
+                      <div class="p-3 bg-yellow-50 text-yellow-600 rounded-full">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Entregas Atrasadas -->
+                <div class="bg-white rounded-lg shadow-xl border border-gray-100 p-6 flex items-center justify-between hover:transform hover:scale-105 transition-all duration-600 ">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Entregas Atrasadas</p>
+                        <h3 class="text-3xl font-bold text-red-600">@Model.EntregasAtrasadas</h3>
+                    </div>
+                    <div class="p-3 bg-red-50 text-red-600 rounded-full">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3Z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Artículos Disponibles -->
+                <div class="bg-white rounded-lg shadow-xl border border-gray-100 p-6 flex items-center justify-between hover:transform hover:scale-105 transition-all duration-600">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 mb-1">Artículos Disp.</p>
+                        <h3 class="text-3xl font-bold text-green-800">@Model.ArticulosDisponibles</h3>
+                    </div>
+                    <div class="p-3 bg-green-50 text-green-600 rounded-full">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m0 0h7.5m-7.5 0v1.5c0 .621.504 1.125 1.125 1.125m17.25-2.625h-7.5m7.5 0v1.5c0 .621-.504 1.125-1.125 1.125m-9.75-2.625v-1.5c0-.621.504-1.125 1.125-1.125m0 3.75v-1.5c0-.621.504-1.125 1.125-1.125" />
+                        </svg>
+                    </div>
+                </div>
+
             </div>
         </div>
         
-        <div class="container mx-auto shadow-2xl rounded-lg bg-white pb-5">
+        <div class="container mx-auto shadow-2xl border border-gray-100 rounded-lg bg-white pb-5 mb-10 w-[calc(100%-4rem)]">
             
-            <div class="mb-5 pt-5">
-                <span class="text-2xl px-8 font-bold text-gray-800">Ultimas Rentas</span>
-            </div>
-
-            <div class="mb-5 px-8">
-                <input type="text" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200" />
+            <div class="mb-5 pt-5 flex items-center justify-between px-8">
+                <span class="text-xl font-bold text-gray-800">Últimas Rentas</span>
+                <a asp-controller="Rentas" asp-action="Index" class="text-sm text-blue-600 hover:text-blue-800 font-medium">Ver todas &rarr;</a>
             </div>
             
             <div class="px-8">
-                 <div class="rounded-lg p-10 text-center text-gray-500">
-                  
-
-                    <div>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
-                                <thead class="bg-gray-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ID</th>
-                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Nombre</th>
-                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Correo</th>
-                                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Estado</th>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+                        <thead class="bg-gray-50 border-b border-gray-200">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">No. Renta</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Cliente</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Artículo</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Fecha</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            @if(Model.UltimasRentas.Any())
+                            {
+                                @foreach (var renta in Model.UltimasRentas)
+                                {
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#@renta.NoRenta</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@(renta.Cliente?.Nombre ?? "N/A")</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@(renta.Articulo?.Titulo ?? "N/A")</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">@renta.FechaRenta.ToShortDateString()</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            @if (renta.Estado == VideoClub.Models.Renta.EstadoRenta.Activa)
+                                            {
+                                                <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                    Activa
+                                                </span>
+                                            }
+                                            else if (renta.Estado == VideoClub.Models.Renta.EstadoRenta.Devuelta)
+                                            {
+                                                <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Devuelta
+                                                </span>
+                                            }
+                                            else if (renta.Estado == VideoClub.Models.Renta.EstadoRenta.Atrasada)
+                                            {
+                                                <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                    Atrasada
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                    @renta.Estado
+                                                </span>
+                                            }
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200">
-                
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2 text-sm">1</td>
-                    <td class="px-4 py-2 text-sm">Juan Pérez</td>
-                    <td class="px-4 py-2 text-sm">juan@email.com</td>
-                    <td class="px-4 py-2 text-sm">
-                        <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">
-                            Activo
-                        </span>
-                    </td>
-                </tr>
-
-                <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-2 text-sm">2</td>
-                    <td class="px-4 py-2 text-sm">María López</td>
-                    <td class="px-4 py-2 text-sm">maria@email.com</td>
-                    <td class="px-4 py-2 text-sm">
-                        <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-700">
-                            Inactivo
-                        </span>
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="px-6 py-8 text-center text-sm text-gray-500">
+                                        No hay rentas registradas.
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
         </div>
     </main>
 

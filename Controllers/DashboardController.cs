@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using VideoClub.Models;
 
 namespace VideoClub.Controllers;
@@ -17,9 +18,32 @@ public class DashboardController : Controller
 
     public IActionResult Index()
     {
-        var path = HttpContext.Request.Path;
+        var path = HttpContext.Request.Path.Value ?? string.Empty;
+        var today = DateTime.UtcNow.Date;
+
+        var rentasHoy = _context.Rentas.Count(r => r.FechaRenta.Date == today);
+        var rentasPendientes = _context.Rentas.Count(r => r.Estado == Renta.EstadoRenta.Activa);
+        var entregasAtrasadas = _context.Rentas.Count(r => r.Estado == Renta.EstadoRenta.Activa && r.FechaDevolucion.Date < today);
+        var articulosDisponibles = _context.Articulos.Count(a => a.Estado == Articulos.EstadoArticulo.Disponible);
+
+        var ultimasRentas = _context.Rentas
+            .Include(r => r.Cliente)
+            .Include(r => r.Articulo)
+            .OrderByDescending(r => r.FechaRenta)
+            .Take(5)
+            .ToList();
+
+        var viewModel = new DashboardViewModel
+        {
+            RentasHoy = rentasHoy,
+            RentasPendientes = rentasPendientes,
+            EntregasAtrasadas = entregasAtrasadas,
+            ArticulosDisponibles = articulosDisponibles,
+            UltimasRentas = ultimasRentas,
+            Path = path
+        };
         
-        return View(new ViewPathModel { Path = path });
+        return View(viewModel);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
