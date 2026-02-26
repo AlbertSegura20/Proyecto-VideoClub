@@ -123,16 +123,7 @@ var tab = "";
                                              </div>
                                              <!-- End Select -->
                                           </div>
-                                          <!-------------------------------------------------------------->
-                                          <div class="py-2 flex flex-col">
-                                             <!-- Select -->
-                                             <label for="DiasDeRenta" class="mb-1">Días de Renta</label>
-                                             <div>
-                                                <input type="number" name="DiasDeRenta" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                                                   placeholder="0">
-                                             </div>
-                                          </div>
-                                          <!-- End Select -->
+
                                        </div>
                                        <div class="flex justify-between">
                                           <div class="py-2 flex flex-col">
@@ -300,7 +291,6 @@ var tab = "";
                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Idioma</th>
                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Renta por día</th>
-                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Días de renta</th>
                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto entrega tardía</th>
                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                      <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
@@ -314,7 +304,6 @@ var tab = "";
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.TiposArticulos?.Tipo</td>
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Idioma?.Descripcion</td>
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.RentaPorDia.ToString("C")</td>
-                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.DiasDeRenta</td>
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.MontoEntregaTardia.ToString("C")</td>
                      <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
@@ -326,8 +315,8 @@ var tab = "";
                         </span>
                      </td>
                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a onclick="handleData(@item.Id, true)" class="text-indigo-600 hover:text-indigo-900 mr-3 hover:cursor-pointer">Editar</a>
-                        <a onclick="deleteData(@item.Id)" class="text-red-600 hover:text-red-900 hover:cursor-pointer">Eliminar</a>
+                        <a onclick="handleData(@item.Id, true)" class="text-blue-600 hover:text-blue-900 mr-3 hover:cursor-pointer transition-colors"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></a>
+                        <a onclick="deleteData(@item.Id)" class="text-red-500 hover:text-red-700 hover:cursor-pointer transition-colors"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></a>
                      </td>
                   </tr>
                   }
@@ -430,16 +419,7 @@ var tab = "";
                                        </div>
                                        <!-- End Select -->
                                     </div>
-                                    <!-------------------------------------------------------------->
-                                    <div class="py-2 flex flex-col">
-                                       <!-- Select -->
-                                       <label for="DiasDeRentaUpdate" class="mb-1">Días de Renta</label>
-                                       <div>
-                                          <input type="number" id="DiasDeRentaUpdate" name="DiasDeRenta" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                                             placeholder="0">
-                                       </div>
-                                    </div>
-                                    <!-- End Select -->
+
                                  </div>
                                  <div class="flex justify-between">
                                     <div class="py-2 flex flex-col">
@@ -631,7 +611,6 @@ var tab = "";
       const tiposArticulosId = document.getElementById('TiposArticulosIdUpdate').value;
       const idiomaId = document.getElementById('IdiomaIdUpdate').value;
       const rentaPorDia = document.getElementById('RentaPorDiaUpdate').value;
-      const diasDeRenta = document.getElementById('DiasDeRentaUpdate').value;
       const montoEntregaTardia = document.getElementById('MontoEntregaTardiaUpdate').value;
       const estado = document.getElementById('EstadoUpdate').value;
    
@@ -641,7 +620,6 @@ var tab = "";
           tiposArticulosId: parseInt(tiposArticulosId),
           idiomaId: parseInt(idiomaId),
           rentaPorDia: parseFloat(rentaPorDia),
-          diasDeRenta: parseInt(diasDeRenta),
           montoEntregaTardia: parseFloat(montoEntregaTardia),
           estado: parseInt(estado)
       };
@@ -713,7 +691,6 @@ var tab = "";
           tiposArticulosId = a.TiposArticulosId,
           idiomaId = a.IdiomaId,
           rentaPorDia = a.RentaPorDia,
-          diasDeRenta = a.DiasDeRenta,
           montoEntregaTardia = a.MontoEntregaTardia,
           estado = (int)a.Estado
       })));
@@ -731,10 +708,6 @@ var tab = "";
 
       if (data.rentaPorDia) document.getElementById('RentaPorDiaUpdate').value = data.rentaPorDia;
       else if (data.RentaPorDia) document.getElementById('RentaPorDiaUpdate').value = data.RentaPorDia;
-      
-      if (data.diasDeRenta) document.getElementById('DiasDeRentaUpdate').value = data.diasDeRenta;
-      else if (data.DiasDeRenta) document.getElementById('DiasDeRentaUpdate').value = data.DiasDeRenta;
-
       if (data.montoEntregaTardia) document.getElementById('MontoEntregaTardiaUpdate').value = data.montoEntregaTardia;
       else if (data.MontoEntregaTardia) document.getElementById('MontoEntregaTardiaUpdate').value = data.MontoEntregaTardia;
 
@@ -894,7 +867,6 @@ var tab = "";
             TiposArticulosId: parseInt(getVal('TiposArticulosId')),
             IdiomaId: parseInt(getVal('IdiomaId')),
             RentaPorDia: parseFloat(getVal('RentaPorDia')),
-            DiasDeRenta: parseInt(getVal('DiasDeRenta')),
             MontoEntregaTardia: parseFloat(getVal('MontoEntregaTardia')),
             Estado: parseInt(getVal('Estado')),
             Elenco: elencoList

@@ -64,7 +64,6 @@ public class ArticulosController : Controller
                 TiposArticulosId = vm.TiposArticulosId,
                 IdiomaId = vm.IdiomaId,
                 RentaPorDia = vm.RentaPorDia,
-                DiasDeRenta = vm.DiasDeRenta,
                 MontoEntregaTardia = vm.MontoEntregaTardia,
                 Estado = (Articulos.EstadoArticulo)vm.Estado
             };
@@ -104,7 +103,6 @@ public class ArticulosController : Controller
         existing.TiposArticulosId = articulo.TiposArticulosId;
         existing.IdiomaId = articulo.IdiomaId;
         existing.RentaPorDia = articulo.RentaPorDia;
-        existing.DiasDeRenta = articulo.DiasDeRenta;
         existing.MontoEntregaTardia = articulo.MontoEntregaTardia;
         existing.Estado = articulo.Estado;
 

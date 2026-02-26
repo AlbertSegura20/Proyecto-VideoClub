@@ -44,6 +44,44 @@ public class RentasController : Controller
         }
     }
     
+    [HttpGet, Route("/api/Diag")]
+    public IActionResult Diag()
+    {
+        var arts = _context.Articulos.Select(a => new { a.Id, a.Titulo, a.Estado }).ToList();
+        return Ok(arts);
+    }
+
+    [HttpGet, Route("/api/TestDate")]
+    public IActionResult TestDate()
+    {
+        try {
+            var empId = _context.Empleados.FirstOrDefault()?.Id ?? 0;
+            var cliId = _context.Clientes.FirstOrDefault()?.Id ?? 0;
+            var artId = _context.Articulos.FirstOrDefault()?.Id ?? 0;
+
+            if (empId == 0 || cliId == 0 || artId == 0) return BadRequest("Missing data in DB");
+
+            var renta = new Renta
+            {
+                EmpleadoId = empId,
+                ArticuloId = artId,
+                ClienteId = cliId,
+                FechaRenta = DateTime.UtcNow,
+                FechaDevolucion = DateTime.UtcNow.AddDays(1),
+                MontoPorDia = 10,
+                CantidadDias = 1,
+                Estado = Renta.EstadoRenta.Activa,
+                Comentario = "Test"
+            };
+            _context.Rentas.Add(renta);
+            _context.SaveChanges();
+            return Ok("Success");
+        } catch (Exception ex) {
+            Console.WriteLine("TEST DATE ERROR: " + ex.ToString());
+            return BadRequest(ex.ToString());
+        }
+    }
+
     [HttpPost]
     public IActionResult Create([FromBody] RentaCreationDto dto)
     {
@@ -56,6 +94,8 @@ public class RentasController : Controller
         {
             var errors = string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
             Console.WriteLine("MODEL STATE ERRORS: " + errors);
+            return BadRequest($"Error de Validación: {errors}");
+        }
             return BadRequest($"Error de Validación: {errors}");
         }
 

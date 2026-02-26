@@ -36,9 +36,6 @@ namespace VideoClub.Models
 
         [Column("Renta_por_dia")]
         public double RentaPorDia { get; set; }
-        
-        [Column("Dias_de_renta")]
-        public int DiasDeRenta { get; set; }
 
         [Column("Monto_Entrega_Tardia")]
         public double MontoEntregaTardia {get; set;}

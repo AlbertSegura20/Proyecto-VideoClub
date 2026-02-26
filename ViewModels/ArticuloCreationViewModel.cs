@@ -11,7 +11,6 @@ namespace VideoClub.ViewModels
         public int TiposArticulosId { get; set; }
         public int IdiomaId { get; set; }
         public double RentaPorDia { get; set; }
-        public int DiasDeRenta { get; set; }
         public double MontoEntregaTardia { get; set; }
         public int Estado { get; set; }
 
