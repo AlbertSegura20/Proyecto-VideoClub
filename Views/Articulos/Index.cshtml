@@ -53,17 +53,17 @@ var tab = "";
                      <!-- TAB 1: DATOS -->
                      <div id="tab1" class="tab-content h-full min-h-0">
                         <div class="flex flex-col h-full min-h-0 border">
-                     <form id="formArticuloCreate" class="flex flex-col h-full min-h-0 p-4" onsubmit="event.preventDefault();">
+                     <form id="formArticuloCreate" class="flex flex-col h-full min-h-0 p-4" onsubmit="event.preventDefault(); submitArticle();">
                               <!-- ZONA CENTRAL (crece y empuja el footer) -->
                               <div class="flex-1 min-h-0 overflow-y-auto">
                                  <div class="flex flex-col">
                                     <div>
                                        <label class="font-mono" name="Titulo">Titulo</label>
                                     </div>
-                                    <div class="py-2 mb-2">
-                                       <input type="text" name="Titulo" placeholder="Escribe el titulo..."
-                                          class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
-                                    </div>
+                                     <div class="py-2 mb-2">
+                                        <input type="text" name="Titulo" placeholder="Escribe el titulo..." required maxlength="150"
+                                           class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all font-mono shadow-sm" />
+                                     </div>
                                     <!--Start-->
                                     <div class="flex flex-col">
                                        <div class="flex justify-between">
@@ -76,16 +76,16 @@ var tab = "";
                                                       <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                                                    </svg>
                                                 </div>
-                                                <select name="TiposArticulosId" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                                   <option value="" selected disabled hidden>Seleccione un artículo</option>
-                                                   @if (ViewBag.TiposArticulos != null)
-                                                   {
-                                                   foreach (var tipo in ViewBag.TiposArticulos)
-                                                   {
-                                                   <option value="@tipo.Id">@tipo.Tipo</option>
-                                                   }
-                                                   }
-                                                </select>
+                                                 <select name="TiposArticulosId" required class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                                    <option value="" selected disabled hidden>Seleccione un artículo</option>
+                                                    @if (ViewBag.TiposArticulos != null)
+                                                    {
+                                                    foreach (var tipo in ViewBag.TiposArticulos)
+                                                    {
+                                                    <option value="@tipo.Id">@tipo.Tipo</option>
+                                                    }
+                                                    }
+                                                 </select>
                                              </div>
                                              <!-- End Select -->
                                           </div>
@@ -99,16 +99,16 @@ var tab = "";
                                                       <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                                                    </svg>
                                                 </div>
-                                                <select name="IdiomaId" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                                   <option value="" selected disabled hidden>Seleccione un idioma</option>
-                                                   @if (ViewBag.Idiomas != null)
-                                                   {
-                                                   foreach (var idioma in ViewBag.Idiomas)
-                                                   {
-                                                   <option value="@idioma.Id">@idioma.Descripcion</option>
-                                                   }
-                                                   }
-                                                </select>
+                                                 <select name="IdiomaId" required class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                                    <option value="" selected disabled hidden>Seleccione un idioma</option>
+                                                    @if (ViewBag.Idiomas != null)
+                                                    {
+                                                    foreach (var idioma in ViewBag.Idiomas)
+                                                    {
+                                                    <option value="@idioma.Id">@idioma.Descripcion</option>
+                                                    }
+                                                    }
+                                                 </select>
                                              </div>
                                           </div>
                                           <!-- End Select -->
@@ -118,20 +118,8 @@ var tab = "";
                                              <!-- Select -->
                                              <label for="RentaPorDia" class="mb-1">Renta por día</label>
                                              <div>
-                                                <input type="number" name="RentaPorDia" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                                                   placeholder="0.00$">
-                                             </div>
-                                             <!-- End Select -->
-                                          </div>
-
-                                       </div>
-                                       <div class="flex justify-between">
-                                          <div class="py-2 flex flex-col">
-                                             <!-- Select -->
-                                             <label for="MontoEntregaTardia" class="mb-1">Monto Entrega Tardia</label>
-                                             <div>
-                                                <input type="number" name="MontoEntregaTardia" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                                                   placeholder="0.00$">
+                                                 <input type="number" name="RentaPorDia" required step="0.01" min="0" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                                    placeholder="0.00$">
                                              </div>
                                              <!-- End Select -->
                                           </div>
@@ -139,23 +127,34 @@ var tab = "";
                                           <div class="py-2 flex flex-col">
                                              <!-- Select -->
                                              <label for="Estado" class="mb-1">Estado</label>
-                                             <div class="relative">
-                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                                                   <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                      <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                                   </svg>
-                                                </div>
-                                                <select name="Estado" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                                   <option value="" selected disabled hidden>Estado</option>
-                                                   <option value="1" class="text-green-500">Disponible</option>
-                                                   <option value="2" class="text-yellow-500">Rentado</option>
-                                                   <option value="3" class="text-red-500">Retrasado</option>
-                                                   <option value="0" class="text-gray-500">Inactivo</option>
-                                                </select>
-                                             </div>
-                                          </div>
-                                          <!-- End Select -->
-                                       </div>
+                                              <div class="relative">
+                                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                       <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                                    </svg>
+                                                 </div>
+                                                  <select name="Estado" required class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                                     <option value="" selected disabled hidden>Estado</option>
+                                                     <option value="1" class="text-green-500">Disponible</option>
+                                                     <option value="2" class="text-yellow-500">Rentado</option>
+                                                     <option value="3" class="text-red-500">Retrasado</option>
+                                                     <option value="0" class="text-gray-500">Inactivo</option>
+                                                  </select>
+                                              </div>
+                                           </div>
+                                           <!-- End Select -->
+                                        </div>
+                                        <div class="flex justify-between">
+                                           <div class="py-2 flex flex-col">
+                                              <!-- Select -->
+                                              <label for="MontoEntregaTardia" class="mb-1">Monto Entrega Tardia</label>
+                                              <div>
+                                                  <input type="number" name="MontoEntregaTardia" required step="0.01" min="0" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                                     placeholder="0.00$">
+                                              </div>
+                                              <!-- End Select -->
+                                           </div>
+                                        </div>
                                     </div>
                                     <!-- End -->
                                  </div>
@@ -168,12 +167,11 @@ var tab = "";
                                     Cancelar
                                     </button>
                                  </div>
-                                 <div class="px-2 py-1">
-                                    <button type="button" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
-                                       onclick="submitArticle()">
-                                    Guardar
-                                    </button>
-                                 </div>
+                                  <div class="px-2 py-1">
+                                     <button type="submit" class="bg-blue-600 px-4 py-2 text-white rounded-md hover:bg-blue-700 shadow-sm transition-all duration-300 font-medium font-mono">
+                                     Guardar
+                                     </button>
+                                  </div>
                               </div>
                            </form>
                         </div>
@@ -262,12 +260,12 @@ var tab = "";
                                  Cerrar
                                  </button>
                               </div>
-                              <div class="px-2 py-1">
-                                 <button type="button" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
-                                    onclick="submitArticle()">
-                                 Guardar
-                                 </button>
-                              </div>
+                               <div class="px-2 py-1">
+                                  <button type="button" class="bg-blue-600 px-4 py-2 text-white rounded-md hover:bg-blue-700 shadow-sm transition-all duration-300 font-medium font-mono"
+                                     onclick="submitArticle()">
+                                  Guardar
+                                  </button>
+                               </div>
                            </div>
                         </div>
                      </div>
@@ -279,24 +277,24 @@ var tab = "";
          </div>
       </div>
       <div class="mb-5 px-8">
-         <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
-      </div>
-      <div class="px-8 mb-5">
-         <div class="overflow-x-auto border border-gray-200 rounded-lg">
-            <table class="min-w-full divide-y divide-gray-200">
-               <thead class="bg-gray-100">
-                  <tr>
-                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
-                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Idioma</th>
-                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Renta por día</th>
-                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto entrega tardía</th>
-                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                  </tr>
-               </thead>
-               <tbody id="dataTableBody" class="bg-white divide-y divide-gray-200">
+      <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar por título, ID o estado..." class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all shadow-sm font-mono" />
+   </div>
+   <div class="px-8 mb-5">
+      <div class="overflow-x-auto border border-gray-200 rounded-lg">
+         <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-100">
+               <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Idioma</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Renta por día</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto entrega tardía</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+               </tr>
+            </thead>
+            <tbody id="dataTableBody" class="bg-white divide-y divide-gray-200 font-mono text-sm">
                   @foreach (var item in Model.Articulos) {
                   <tr key="@item.Id" class="hover:bg-gray-50 transition-colors">
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">@item.Id</td>
@@ -328,6 +326,24 @@ var tab = "";
 
 
 
+   <div id="modal-delete" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
+      <div onclick="toggleDeleteModal(false)" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
+      <div id="modal-content-delete" class="relative flex flex-col w-full max-w-md bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4 p-6 text-center">
+         <svg class="mx-auto mb-4 text-red-500 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+         </svg>
+         <h3 class="mb-5 text-lg font-normal text-gray-700">¿Estás seguro de eliminar el artículo?</h3>
+         <div class="flex justify-center gap-4">
+            <button onclick="executeDelete()" type="button" class="text-white bg-red-600 hover:bg-red-800 transition-colors font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+               Sí
+            </button>
+            <button onclick="toggleDeleteModal(false)" type="button" class="text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors rounded-lg text-sm font-medium px-5 py-2.5">
+               No
+            </button>
+         </div>
+      </div>
+   </div>
+
    <div id="modal-update" class="fixed inset-0 z-50 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 invisible">
       <div onclick="event.stopPropagation()" class="absolute inset-0 bg-black/50 transition-opacity duration-300"></div>
       <div id="modal-content-update" class="relative flex flex-col h-[calc(100vh-370px)] w-full max-w-2xl bg-white rounded-md shadow-lg transition-all duration-300 ease-in-out transform scale-95 translate-y-4">
@@ -356,10 +372,10 @@ var tab = "";
                                  <input type="hidden" id="Id" name="Id" />
                                  <label class="font-mono" name="Titulo">Titulo</label>
                               </div>
-                              <div class="py-2 mb-2">
-                                 <input type="text" id="Titulo" name="Titulo" placeholder="Escribe el titulo..."
-                                    class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all" />
-                              </div>
+                               <div class="py-2 mb-2">
+                                  <input type="text" id="Titulo" name="Titulo" placeholder="Escribe el titulo..." required maxlength="150"
+                                     class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all font-mono shadow-sm" />
+                               </div>
                               <!--Start-->
                               <div class="flex flex-col">
                                  <div class="flex justify-between">
@@ -372,16 +388,16 @@ var tab = "";
                                                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                                              </svg>
                                           </div>
-                                          <select id="TiposArticulosIdUpdate" name="TiposArticulosId" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                             <option value="" selected disabled hidden>Seleccione un artículo</option>
-                                             @if (ViewBag.TiposArticulos != null)
-                                             {
-                                             foreach (var tipo in ViewBag.TiposArticulos)
-                                             {
-                                             <option value="@tipo.Id">@tipo.Tipo</option>
-                                             }
-                                             }
-                                          </select>
+                                           <select id="TiposArticulosIdUpdate" name="TiposArticulosId" required class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                              <option value="" selected disabled hidden>Seleccione un artículo</option>
+                                              @if (ViewBag.TiposArticulos != null)
+                                              {
+                                              foreach (var tipo in ViewBag.TiposArticulos)
+                                              {
+                                              <option value="@tipo.Id">@tipo.Tipo</option>
+                                              }
+                                              }
+                                           </select>
                                        </div>
                                        <!-- End Select -->
                                     </div>
@@ -395,16 +411,16 @@ var tab = "";
                                                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                                              </svg>
                                           </div>
-                                          <select id="IdiomaIdUpdate" name="IdiomaId" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                             <option value="" selected disabled hidden>Seleccione un idioma</option>
-                                             @if (ViewBag.Idiomas != null)
-                                             {
-                                             foreach (var idioma in ViewBag.Idiomas)
-                                             {
-                                             <option value="@idioma.Id">@idioma.Descripcion</option>
-                                             }
-                                             }
-                                          </select>
+                                           <select id="IdiomaIdUpdate" name="IdiomaId" required class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                              <option value="" selected disabled hidden>Seleccione un idioma</option>
+                                              @if (ViewBag.Idiomas != null)
+                                              {
+                                              foreach (var idioma in ViewBag.Idiomas)
+                                              {
+                                              <option value="@idioma.Id">@idioma.Descripcion</option>
+                                              }
+                                              }
+                                           </select>
                                        </div>
                                     </div>
                                     <!-- End Select -->
@@ -414,20 +430,8 @@ var tab = "";
                                        <!-- Select -->
                                        <label for="RentaPorDiaUpdate" class="mb-1">Renta por día</label>
                                        <div>
-                                          <input type="number" id="RentaPorDiaUpdate" name="RentaPorDia" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                                             placeholder="0.00$">
-                                       </div>
-                                       <!-- End Select -->
-                                    </div>
-
-                                 </div>
-                                 <div class="flex justify-between">
-                                    <div class="py-2 flex flex-col">
-                                       <!-- Select -->
-                                       <label for="MontoEntregaTardiaUpdate" class="mb-1">Monto Entrega Tardia</label>
-                                       <div>
-                                          <input type="number" id="MontoEntregaTardiaUpdate" name="MontoEntregaTardia" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                                             placeholder="0.00$">
+                                           <input type="number" id="RentaPorDiaUpdate" name="RentaPorDia" required step="0.01" min="0" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                              placeholder="0.00$">
                                        </div>
                                        <!-- End Select -->
                                     </div>
@@ -441,19 +445,30 @@ var tab = "";
                                                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                                              </svg>
                                           </div>
-                                          <select id="EstadoUpdate" name="Estado" class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
-                                             <option value="" selected disabled hidden>Estado</option>
-                                             <option value="1" class="text-green-500">Disponible</option>
-                                             <option value="2" class="text-yellow-500">Rentado</option>
-                                             <option value="3" class="text-red-500">Retrasado</option>
-                                             <option value="0" class="text-gray-500">Inactivo</option>
-                                          </select>
+                                           <select id="EstadoUpdate" name="Estado" required class="block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400">
+                                              <option value="" selected disabled hidden>Estado</option>
+                                              <option value="1" class="text-green-500">Disponible</option>
+                                              <option value="2" class="text-yellow-500">Rentado</option>
+                                              <option value="3" class="text-red-500">Retrasado</option>
+                                              <option value="0" class="text-gray-500">Inactivo</option>
+                                           </select>
                                        </div>
                                     </div>
                                     <!-- End Select -->
+
+                                 </div>
+                                 <div class="flex justify-between">
+                                    <div class="py-2 flex flex-col">
+                                       <!-- Select -->
+                                       <label for="MontoEntregaTardiaUpdate" class="mb-1">Monto Entrega Tardia</label>
+                                       <div>
+                                           <input type="number" id="MontoEntregaTardiaUpdate" name="MontoEntregaTardia" required step="0.01" min="0" class="no-spinner block w-64 appearance-none rounded-md bg-white px-4 py-2 pr-10 text-sm font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                              placeholder="0.00$">
+                                       </div>
+                                       <!-- End Select -->
+                                    </div>
                                  </div>
                               </div>
-                              <!-- End -->
                            </div>
                         </div>
                         <!------------------------------------------------------------>
@@ -465,8 +480,7 @@ var tab = "";
                               </button>
                            </div>
                            <div class="px-2 py-1">
-                              <button type="button" class="bg-blue-500 px-4 py-2 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
-                                 onclick="updateData()">
+                              <button type="submit" class="bg-blue-600 px-4 py-2 text-white rounded-md hover:bg-blue-700 shadow-sm transition-all duration-300 font-medium font-mono">
                               Guardar
                               </button>
                            </div>
@@ -585,15 +599,22 @@ var tab = "";
        }
    }
 
+   let itemToDeleteId = null;
+
    function deleteData(id) {
-       if(!confirm('¿Estás seguro de eliminar el artículo?')) return;
+       itemToDeleteId = id;
+       toggleDeleteModal(true);
+   }
+
+   function executeDelete() {
+       if (itemToDeleteId === null) return;
    
        fetch('/Articulos/Delete', {
           method: 'DELETE',
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify(parseInt(id))
+          body: JSON.stringify(parseInt(itemToDeleteId))
       })
       .then(response => {
           if (response.ok) {
@@ -602,8 +623,29 @@ var tab = "";
               alert('Error deleting data');
           }
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Error:', error))
+      .finally(() => {
+          toggleDeleteModal(false);
+          itemToDeleteId = null;
+      });
     }
+
+   function toggleDeleteModal(show) {
+       const overlay = document.getElementById('modal-delete');
+       const content = document.getElementById('modal-content-delete');
+
+       if (show) {
+           overlay.classList.remove('invisible', 'opacity-0');
+           overlay.classList.add('visible', 'opacity-100');
+           content.classList.remove('scale-95', 'translate-y-4');
+           content.classList.add('scale-100', 'translate-y-0');
+       } else {
+           overlay.classList.remove('visible', 'opacity-100');
+           overlay.classList.add('invisible', 'opacity-0');
+           content.classList.remove('scale-100', 'translate-y-0');
+           content.classList.add('scale-95', 'translate-y-4');
+       }
+   }
    
    function updateData() {
       const id = document.getElementById('Id').value;
