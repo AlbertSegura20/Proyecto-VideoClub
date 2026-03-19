@@ -1,7 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using QuestPDF.Infrastructure;
+
 // Fix PostgreSQL DateTime issue globally
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
 
