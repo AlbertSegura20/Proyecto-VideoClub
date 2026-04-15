@@ -55,16 +55,34 @@
                                         <div class="flex flex-col">
                                            <label for="EmpleadoId" class="mb-1 font-medium text-gray-700">Empleado</label>
                                             <div class="relative">
-                                               <select name="EmpleadoId" required class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
-                                                  <option value="" selected disabled hidden>Seleccione un empleado</option>
-                                                  @if (ViewBag.Empleados != null)
-                                                  {
-                                                      foreach (var emp in ViewBag.Empleados)
+                                               @if (User.IsInRole("Administrador"))
+                                               {
+                                                   <select name="EmpleadoId" required class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                      <option value="" selected disabled hidden>Seleccione un empleado</option>
+                                                      @if (ViewBag.Empleados != null)
                                                       {
-                                                          <option value="@emp.Id">@emp.Nombre</option>
+                                                          foreach (var emp in ViewBag.Empleados)
+                                                          {
+                                                              <option value="@emp.Id">@emp.Nombre</option>
+                                                          }
                                                       }
-                                                  }
-                                               </select>
+                                                   </select>
+                                                   <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                      <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                         <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                                      </svg>
+                                                   </div>
+                                               }
+                                               else
+                                               {
+                                                   var emps = ViewBag.Empleados as IEnumerable<VideoClub.Models.Empleados>;
+                                                   var loggedEmp = emps?.FirstOrDefault();
+                                                   if (loggedEmp != null)
+                                                   {
+                                                       <input type="hidden" name="EmpleadoId" value="@loggedEmp.Id" />
+                                                       <input type="text" readonly value="@loggedEmp.Nombre" class="block w-full rounded-md bg-gray-100 px-4 py-2 font-mono text-gray-700 shadow-sm border border-gray-300 cursor-not-allowed">
+                                                   }
+                                               }
                                             </div>
                                         </div>
                                         <!-- Cliente -->
@@ -81,6 +99,11 @@
                                                       }
                                                   }
                                                </select>
+                                               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                     <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                                  </svg>
+                                               </div>
                                             </div>
                                         </div>
                                     </div>
@@ -222,16 +245,34 @@
                                         <div class="flex flex-col">
                                            <label for="EmpleadoIdUpdate" class="mb-1 font-medium text-gray-700">Empleado</label>
                                            <div class="relative">
-                                              <select id="EmpleadoIdUpdate" name="EmpleadoId" required class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
-                                                 <option value="" selected disabled hidden>Seleccione un empleado</option>
-                                                 @if (ViewBag.Empleados != null)
-                                                 {
-                                                     foreach (var emp in ViewBag.Empleados)
+                                              @if (User.IsInRole("Administrador"))
+                                              {
+                                                  <select id="EmpleadoIdUpdate" name="EmpleadoId" required class="block w-full appearance-none rounded-md bg-white px-4 py-2 pr-10 font-mono text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                                     <option value="" selected disabled hidden>Seleccione un empleado</option>
+                                                     @if (ViewBag.Empleados != null)
                                                      {
-                                                         <option value="@emp.Id">@emp.Nombre</option>
+                                                         foreach (var emp in ViewBag.Empleados)
+                                                         {
+                                                             <option value="@emp.Id">@emp.Nombre</option>
+                                                         }
                                                      }
-                                                 }
-                                              </select>
+                                                  </select>
+                                                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                                     </svg>
+                                                  </div>
+                                              }
+                                              else
+                                              {
+                                                  var emps = ViewBag.Empleados as IEnumerable<VideoClub.Models.Empleados>;
+                                                  var loggedEmp = emps?.FirstOrDefault();
+                                                  if (loggedEmp != null)
+                                                  {
+                                                      <input type="hidden" id="EmpleadoIdUpdate" name="EmpleadoId" value="@loggedEmp.Id" />
+                                                      <input type="text" id="EmpleadoNameUpdate" readonly value="@loggedEmp.Nombre" class="block w-full rounded-md bg-gray-100 px-4 py-2 font-mono text-gray-700 shadow-sm border border-gray-300 cursor-not-allowed">
+                                                  }
+                                              }
                                            </div>
                                         </div>
                                         <!-- Cliente -->
@@ -248,6 +289,11 @@
                                                      }
                                                  }
                                               </select>
+                                              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                 <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                                 </svg>
+                                              </div>
                                            </div>
                                         </div>
                                     </div>

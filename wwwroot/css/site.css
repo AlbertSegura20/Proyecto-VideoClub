@@ -914,6 +914,10 @@ video {
   cursor: pointer;
 }
 
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
 .appearance-none {
   -webkit-appearance: none;
      -moz-appearance: none;

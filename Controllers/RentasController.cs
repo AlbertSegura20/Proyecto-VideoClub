@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System.Security.Claims;
 using VideoClub.Models;
 using VideoClub.ViewModels;
 
@@ -29,10 +30,25 @@ public class RentasController : Controller
                     .Include(r => r.Cliente)
                     .OrderByDescending(r => r.NoRenta)
                     .ToListAsync(),
-                Empleados = await _context.Empleados.Where(e => e.Estado == Empleados.EstadoEmpleados.Activo).ToListAsync(),
+                Empleados = new List<Empleados>(), // Set properly below
                 Articulos = await _context.Articulos.Where(a => a.Estado == Articulos.EstadoArticulo.Disponible).ToListAsync(),
                 Clientes = await _context.Clientes.Where(c => c.Estado == Clientes.EstadoCliente.Activo).ToListAsync()
             };
+
+            var allEmpleados = await _context.Empleados.Where(e => e.Estado == Empleados.EstadoEmpleados.Activo).ToListAsync();
+            
+            if (User.IsInRole("Administrador"))
+            {
+                vm.Empleados = allEmpleados;
+            }
+            else
+            {
+                var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (int.TryParse(userIdString, out int userId))
+                {
+                    vm.Empleados = allEmpleados.Where(e => e.Id == userId).ToList();
+                }
+            }
 
             ViewBag.Empleados = vm.Empleados;
             ViewBag.Articulos = vm.Articulos;

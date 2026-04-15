@@ -35,6 +35,7 @@ namespace VideoClub.Controllers
                 {
                     var claims = new List<Claim>
                     {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.Nombre),
                         new Claim(ClaimTypes.Email, user.Correo),
                         new Claim(ClaimTypes.Role, user.Rol.ToString())
