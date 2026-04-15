@@ -23,6 +23,12 @@ public class GenerosController : Controller
     }
 
     [HttpGet]
+    public IActionResult ConsumeApi()
+    {
+        return View();
+    }
+
+    [HttpGet]
     public IActionResult GetAll() {
         var data = _context.Generos.ToList();
         return Json(data);

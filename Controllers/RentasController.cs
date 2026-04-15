@@ -215,7 +215,6 @@ public class RentasController : Controller
         byte[] pdfBytes = pdf.GeneratePdf();
         return File(pdfBytes, "application/pdf", "Reporte_Rentas.pdf");
 
-        // Helper methods for PDF Layout
         void ComposeHeader(IContainer container)
         {
             var titleStyle = TextStyle.Default.FontSize(20).SemiBold().FontColor(Colors.Blue.Darken2);
@@ -240,17 +239,17 @@ public class RentasController : Controller
                 {
                     table.ColumnsDefinition(columns =>
                     {
-                        columns.ConstantColumn(40); // No
-                        columns.RelativeColumn(); // Empleado
-                        columns.RelativeColumn(); // Articulo
-                        columns.RelativeColumn(); // Cliente
-                        columns.ConstantColumn(65); // F.Renta
-                        columns.ConstantColumn(65); // F.Dev
-                        columns.ConstantColumn(80); // Total
-                        columns.ConstantColumn(70); // Estado
+                        columns.ConstantColumn(40); 
+                        columns.RelativeColumn(); 
+                        columns.RelativeColumn(); 
+                        columns.RelativeColumn(); 
+                        columns.ConstantColumn(65); 
+                        columns.ConstantColumn(65); 
+                        columns.ConstantColumn(80); 
+                        columns.ConstantColumn(70); 
                     });
 
-                    // Header
+                    
                     table.Header(header =>
                     {
                         header.Cell().Element(CellStyle).Text("No").SemiBold();
@@ -265,7 +264,7 @@ public class RentasController : Controller
                         static IContainer CellStyle(IContainer container) => container.DefaultTextStyle(x => x.SemiBold()).PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Black);
                     });
 
-                    // Data
+                    
                     foreach (var renta in rentas)
                     {
                         table.Cell().Element(CellStyle).Text(renta.NoRenta.ToString());
