@@ -36,6 +36,22 @@ public class ElencoArticuloController : Controller
     }
 
 
+    [HttpPut]
+    public IActionResult Update([FromBody] VideoClub.ViewModels.ElencoArticuloCreationDto dto)
+    {
+        if (dto == null || dto.Id == 0) return BadRequest("Invalid Data");
+        
+        var data = _context.ElencoArticulo.Find(dto.Id);
+        if (data == null) return NotFound();
+
+        data.ElencoId = dto.ElencoId;
+        data.Rol = dto.Rol;
+
+        _context.ElencoArticulo.Update(data);
+        _context.SaveChanges();
+        return Ok(data);
+    }
+
     [HttpDelete]
     public IActionResult Delete([FromBody] int id)
     {
