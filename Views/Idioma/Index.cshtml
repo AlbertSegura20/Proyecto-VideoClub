@@ -310,7 +310,7 @@
 
          function updateData() {
             const id = document.getElementById('Id').value;
-            const descripcion = document.getElementById('Descripcion').value;
+            const descripcion = document.getElementById('DescripcionUpdate').value;
             const estado = document.getElementById('Estado').value;
 
             const data = {
@@ -350,7 +350,7 @@
 
             var allData = @Html.Raw(Json.Serialize(Model));
             var data = allData.find(item => item.id == id);
-            document.getElementById('Descripcion').value = data.descripcion;
+            document.getElementById('DescripcionUpdate').value = data.descripcion;
             document.getElementById('Estado').value = data.estado;
             document.getElementById('Id').value = data.id;
 

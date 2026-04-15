@@ -14,21 +14,10 @@ namespace VideoClub.Models
         Inactivo = 0
     }
 
-    public enum TipoArticulo
-    {
-        [Display(Name = "Pelicula")]
-        Pelicula = 1,
-        [Display(Name = "CD Musica")]
-        CD_Musica = 2,
-        [Display(Name = "Libro")]
-        Libro = 3
-    }
-
-    
     [Key] 
     public int Id { get; set; }
     public EstadoArticulo Estado { get; set; }
-    public TipoArticulo Tipo { get; set; }
+    public string Tipo { get; set; }
 }
 
 }

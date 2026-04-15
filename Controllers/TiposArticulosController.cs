@@ -40,7 +40,6 @@ public class TiposArticulosController : Controller
         }
 
         tipoArticulo.Estado = (TiposArticulos.EstadoArticulo)tipoArticulo.Estado;
-        tipoArticulo.Tipo = (TiposArticulos.TipoArticulo)tipoArticulo.Tipo;
         Console.WriteLine(tipoArticulo.Estado);
         Console.WriteLine(tipoArticulo.Tipo);
         _context.TiposArticulos.Add(tipoArticulo);
